@@ -170,7 +170,7 @@ if (webgl) new IntersectionObserver(async (es, io) => {
   if (!es[0].isIntersecting) return; io.disconnect();
   const M = await loadModel(); if (!M) return;
   const m = await M.mount(heroEl, { hero: false });
-  m.update("stairs", { steps: 12, width_cm: 90, rail: "one" }, { finish: "black", wood: "oak" });
+  m.update("hero", {}, { finish: "black", wood: "oak" });
   heroEl.classList.add("live");
   heroEl.addEventListener("pointerdown", () => heroEl.classList.add("touched"), { once: true });
 }, { threshold: 0.1 }).observe(heroEl);

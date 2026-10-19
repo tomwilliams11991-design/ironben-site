@@ -16,7 +16,8 @@ const WOOD = {
   oak: 0xc9924f, walnut: 0x5c3b25, pine: 0xd8b57c, ipe: 0x6b3f22, teak: 0xa8753f, ash: 0xd9c7a3,
   liveedge: 0xb07a3e, metal: 0x5a5d60, none: null,
 };
-const ACCENT = 0xe0763a;
+const ACCENT = 0xb85c38;
+const THEME = { sky: 0xffffff, ground: 0xdedcd6, shadow: 0.22, grid1: 0xc9c7c0, grid2: 0xdedcd6, edge: 0x1a1b1c, flat: 0xf7f6f3, label: "#1a1b1c", labelBg: "#edece8" };
 
 const fmt = (n, u) => `${Number.isInteger(n) ? n : n.toFixed(2).replace(/\.?0+$/, "")}${u ? " " + u : ""}`;
 const num = (v, d) => { const n = Number(v); return Number.isFinite(n) && n > 0 ? n : d; };
@@ -230,6 +231,28 @@ const BUILDERS = {
     g.userData.center = [W / 2, H / 2, 0]; g.userData.size = Math.max(W, H); g.userData.plan = "front";
     return g;
   },
+
+  // הירו: מדרגות + פרופילי ברזל גיאומטריים שמרחפים (I-beam, צינור מרובע, טבעת). אותם חומרים כמו המוצרים.
+  hero(p, M) {
+    const g = BUILDERS.stairs({ steps: 11, width_cm: 90, rail: "one" }, M);
+    const c = g.userData.center;
+    const steel = M.steel, galv = new THREE.MeshStandardMaterial({ ...STEEL.galv });
+    // חתך I-beam מוצק
+    const s = new THREE.Shape(); s.moveTo(-0.22, -0.26); s.lineTo(0.22, -0.26); s.lineTo(0.22, -0.18); s.lineTo(0.05, -0.18); s.lineTo(0.05, 0.18); s.lineTo(0.22, 0.18); s.lineTo(0.22, 0.26); s.lineTo(-0.22, 0.26); s.lineTo(-0.22, 0.18); s.lineTo(-0.05, 0.18); s.lineTo(-0.05, -0.18); s.lineTo(-0.22, -0.18); s.closePath();
+    const beam = new THREE.Mesh(new THREE.ExtrudeGeometry(s, { depth: 0.9, bevelEnabled: false }), galv);
+    beam.position.set(c[0] * 2 + 0.6, c[1] + 1.4, -0.9); beam.rotation.set(0.5, 0.6, 0.2); beam.castShadow = true; beam.userData.float = { a: 0.08, s: 0.7, r: [0.002, 0.004, 0] }; g.add(beam);
+    // צינור מרובע חלול
+    const tube = new THREE.Group();
+    const tw = 0.3, tl = 1.1, th = 0.03;
+    [[0, tw / 2 - th / 2], [0, -(tw / 2 - th / 2)]].forEach(([x, y]) => tube.add(box(tl, th, tw, steel, x, y, 0)));
+    [[tw / 2 - th / 2], [-(tw / 2 - th / 2)]].forEach(([z]) => tube.add(box(tl, tw, th, steel, 0, 0, z)));
+    tube.position.set(-0.8, c[1] + 1.9, 0.8); tube.rotation.set(0.3, -0.5, 0.9); tube.userData.float = { a: 0.1, s: 0.55, r: [0.003, 0.002, 0.001] }; g.add(tube);
+    // טבעת (טבעת ריתוך / חישוק)
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.34, 0.04, 12, 48), new THREE.MeshStandardMaterial({ ...STEEL.corten }));
+    ring.position.set(c[0] * 2 + 0.2, c[1] + 0.3, 1.3); ring.rotation.set(1.1, 0.4, 0); ring.castShadow = true; ring.userData.float = { a: 0.06, s: 0.9, r: [0.004, 0.003, 0.002] }; g.add(ring);
+    g.userData.size = g.userData.size * 1.05; g.userData.plan = "side";
+    return g;
+  },
 };
 
 function materials(finish, wood) {
@@ -261,16 +284,16 @@ export async function mount(el, opts = {}) {
   const scene = new THREE.Scene();
   const cam = new THREE.PerspectiveCamera(32, 1, 0.05, 100);
   const ortho = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.01, 100);
-  scene.add(new THREE.HemisphereLight(0xe8e6e1, 0x17191b, hero ? 0.9 : 0.75));
+  scene.add(new THREE.HemisphereLight(THEME.sky, THEME.ground, hero ? 1.0 : 0.85));
   const sun = new THREE.DirectionalLight(0xfff1e0, 1.6);
   sun.position.set(4, 7, 5); sun.castShadow = true;
   sun.shadow.mapSize.set(1024, 1024); sun.shadow.bias = -0.0005; sun.shadow.radius = 4;
   scene.add(sun);
   const fill = new THREE.DirectionalLight(ACCENT, 0.35); fill.position.set(-5, 2, -4); scene.add(fill);
 
-  const ground = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ opacity: 0.32 }));
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ opacity: THEME.shadow }));
   ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
-  const grid = new THREE.GridHelper(20, 40, 0x33383c, 0x2a2e31); grid.material.transparent = true; grid.material.opacity = 0.5; grid.visible = false; scene.add(grid);
+  const grid = new THREE.GridHelper(20, 40, THEME.grid1, THEME.grid2); grid.material.transparent = true; grid.material.opacity = 0.5; grid.visible = false; scene.add(grid);
 
   const controls = new OrbitControls(cam, renderer.domElement);
   controls.enableDamping = true; controls.dampingFactor = 0.08;
@@ -283,15 +306,15 @@ export async function mount(el, opts = {}) {
 
   // מידות: תוויות HTML מוקרנות
   const labels = document.createElement("div");
-  labels.style.cssText = "position:absolute;inset:0;pointer-events:none;overflow:hidden;font:600 13px/1 Assistant,system-ui,sans-serif;color:#e8e6e1";
+  labels.style.cssText = "position:absolute;inset:0;pointer-events:none;overflow:hidden;font:600 13px/1 Assistant,system-ui,sans-serif;color:" + THEME.label;
   if (getComputedStyle(el).position === "static") el.style.position = "relative";
   el.appendChild(labels);
   const dimLines = new THREE.Group(); scene.add(dimLines);
 
   let model = null, mode = "3d", current = { slug: null, params: {}, mats: {} };
   const lineMat = new THREE.LineBasicMaterial({ color: ACCENT });
-  const edgeMat = new THREE.LineBasicMaterial({ color: 0xe8e6e1, transparent: true, opacity: 0.9 });
-  const flatMat = new THREE.MeshBasicMaterial({ color: 0x202326 });
+  const edgeMat = new THREE.LineBasicMaterial({ color: THEME.edge, transparent: true, opacity: 0.9 });
+  const flatMat = new THREE.MeshBasicMaterial({ color: THEME.flat });
 
   function build() {
     if (model) { scene.remove(model); model.traverse((o) => { if (o.geometry) o.geometry.dispose(); }); }
@@ -301,13 +324,14 @@ export async function mount(el, opts = {}) {
     const c = model.userData.center;
     model.position.set(-c[0], 0, -c[2]);
     scene.add(model);
+    floaters.length = 0; model.traverse((o) => { if (o.userData.float) { o.userData.y0 = o.position.y; floaters.push(o); } });
     if (mode === "plan") {
       model.traverse((o) => { if (o.isMesh) { o.material = flatMat; o.add(new THREE.LineSegments(new THREE.EdgesGeometry(o.geometry, 20), edgeMat)); } });
       (model.userData.dims || []).forEach((d) => {
         const a = new THREE.Vector3(...d.a).sub(new THREE.Vector3(c[0], 0, c[2])), bb = new THREE.Vector3(...d.b).sub(new THREE.Vector3(c[0], 0, c[2]));
         dimLines.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([a, bb]), lineMat));
         const tag = document.createElement("span"); tag.textContent = d.label;
-        tag.style.cssText = "position:absolute;transform:translate(-50%,-50%);background:#17191b;padding:2px 6px;border-radius:2px;color:#e0763a;white-space:nowrap";
+        tag.style.cssText = "position:absolute;transform:translate(-50%,-50%);background:" + THEME.labelBg + ";padding:2px 6px;border-radius:2px;color:#b85c38;white-space:nowrap";
         tag.dataset.mid = JSON.stringify([(a.x + bb.x) / 2, (a.y + bb.y) / 2, (a.z + bb.z) / 2]);
         labels.appendChild(tag);
       });
@@ -354,10 +378,12 @@ export async function mount(el, opts = {}) {
       });
     }
   }
+  const floaters = [];
   function loop() {
     cancelAnimationFrame(raf);
     if (!visible) return;
     controls.update();
+    if (!reduced && floaters.length) { const t = performance.now() / 1000; floaters.forEach((o) => { const f = o.userData.float; o.position.y = o.userData.y0 + Math.sin(t * f.s) * f.a; o.rotation.x += f.r[0]; o.rotation.y += f.r[1]; o.rotation.z += f.r[2]; }); }
     render();
     raf = requestAnimationFrame(loop);
   }
