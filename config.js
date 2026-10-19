@@ -8,11 +8,19 @@ window.IRONBEN_CONFIG = {
   BUCKET_RENDERS: "ironben-renders",
 
   // מספר וואטסאפ בפורמט בינלאומי בלי + ובלי 0 בהתחלה. לדוגמה: 972501234567
-  WHATSAPP: "",
-  PHONE_DISPLAY: "",         // לדוגמה: 050-123-4567
+  WHATSAPP: "972549788277",
+  PHONE_DISPLAY: "054-978-8277",
   EMAIL: "",                 // לדוגמה: hello@ironben.co.il
 
   INSTAGRAM: "https://www.instagram.com/ironben.eindor",
   FACEBOOK: "",
-  ADDRESS: "בית עובד, ליד נס ציונה"
+  ADDRESS: "בית עובד, ליד נס ציונה",
+
+  // מדידה. ריק = לא נטען כלום. GA4: מזהה שמתחיל ב-G-. Meta Pixel: מספר מהמנהל העסקי.
+  GA_ID: "",
+  META_PIXEL_ID: "",
+
+  // רכז/ת נגישות (מופיע בהצהרת הנגישות). ריק = משתמש בטלפון ובמייל למעלה.
+  A11Y_CONTACT_NAME: "",
+  A11Y_STATEMENT_DATE: "אוקטובר 2026"
 };

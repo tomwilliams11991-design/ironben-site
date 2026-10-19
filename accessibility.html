@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>הצהרת נגישות | IRON BEN</title>
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+<link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="styles.css">
+<style>
+.doc{max-width:760px;margin:0 auto;padding:calc(var(--nav) + 40px) var(--gutter) 80px}
+.doc h1{font-size:clamp(40px,6vw,64px);margin-bottom:8px}
+.doc h2{font-size:24px;font-weight:700;margin:36px 0 10px}
+.doc p,.doc li{color:var(--ink);font-size:17px}
+.doc ul{padding-inline-start:20px}
+.doc .meta{color:var(--muted);font-size:14px}
+.doc a{color:var(--ember)}
+</style></head>
+<body>
+<a class="skip" href="#main">דילוג לתוכן</a>
+<header class="top solid"><div class="wrap"><a class="mark" href="./"><img src="brand/logo-120.png" width="40" height="52" alt="IRON BEN"><span>IRON BEN</span></a><a class="btn small" href="./">חזרה לאתר</a></div></header>
+<div class="shop-bg" aria-hidden="true"></div>
+<main id="main" class="doc">
+<h1>הצהרת נגישות</h1>
+<p class="meta">עודכן: <span id="a-date"></span></p>
+<p>IRON BEN רואה חשיבות במתן שירות שוויוני לכל הלקוחות, כולל אנשים עם מוגבלות, ופועלת להנגשת האתר בהתאם לתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע"ג-2013, ולתקן הישראלי ת"י 5568 ברמה AA, המבוסס על הנחיות WCAG 2.1.</p>
+<h2>מה נעשה באתר</h2>
+<ul>
+<li>תפריט נגישות (הכפתור בפינת המסך): הגדלת טקסט, ניגודיות גבוהה, הדגשת קישורים, גופן קריא, עצירת תנועה ואנימציות, ריווח טקסט וסמן גדול. ההעדפות נשמרות בדפדפן.</li>
+<li>ניווט מלא במקלדת: קישור דילוג לתוכן, סימון פוקוס ברור, סגירה ב-Escape של חלונות ותפריטים.</li>
+<li>תאימות לקוראי מסך: מבנה כותרות, תוויות לכל שדה ולכל כפתור, טקסט חלופי לתמונות, הודעות סטטוס בטופס.</li>
+<li>האנימציות של הכניסה לסדנה מכבדות את הגדרת "הפחתת תנועה" של מערכת ההפעלה, וניתן לעצור אותן מהתפריט.</li>
+<li>ההדמיה התלת-ממדית היא תוספת חזותית. כל המידע שבה (מידות, חומרים, טווח מחיר) מופיע גם כטקסט.</li>
+<li>ניגודיות צבעים לפי AA, גדלי מגע של 44 פיקסלים לפחות, ותמיכה בהגדלת תצוגה עד 200%.</li>
+</ul>
+<h2>דפדפנים</h2>
+<p>האתר נבדק בגרסאות העדכניות של Chrome, Safari, Firefox ו-Edge, במחשב ובטלפון.</p>
+<h2>נגישות הסדנה</h2>
+<p>הסדנה נמצאת בבית עובד. לתיאום ביקור נגיש או פגישה במקום אחר, פנו אלינו ונתאם.</p>
+<h2>פנייה בנושא נגישות</h2>
+<p>אם נתקלתם בקושי באתר או בשירות, נשמח לשמוע ולתקן. <span id="a-contact"></span></p>
+<p class="meta">נשתדל להשיב לכל פנייה בנושא נגישות בתוך 5 ימי עסקים.</p>
+</main>
+<script src="config.js"></script>
+<script>
+(function(){var C=window.IRONBEN_CONFIG||{};document.getElementById("a-date").textContent=C.A11Y_STATEMENT_DATE||"";
+var parts=[];if(C.A11Y_CONTACT_NAME)parts.push("רכז/ת הנגישות: "+C.A11Y_CONTACT_NAME+".");
+if(C.PHONE_DISPLAY)parts.push('טלפון: <a href="tel:'+C.PHONE_DISPLAY.replace(/[^0-9+]/g,"")+'">'+C.PHONE_DISPLAY+"</a>.");
+if(C.EMAIL)parts.push('מייל: <a href="mailto:'+C.EMAIL+'">'+C.EMAIL+"</a>.");
+if(C.WHATSAPP)parts.push('וואטסאפ: <a href="https://wa.me/'+C.WHATSAPP+'" target="_blank" rel="noopener">שליחת הודעה</a>.');
+document.getElementById("a-contact").innerHTML=parts.join(" ");})();
+</script>
+<script src="analytics.js" defer></script><script src="a11y.js" defer></script>
+</body></html>

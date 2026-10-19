@@ -23,6 +23,7 @@
 </script>
 </head>
 <body>
+<a class="skip" href="#main">דילוג לתוכן</a>
 
 <header class="top" id="top">
   <div class="wrap">
@@ -40,7 +41,7 @@
 <!-- רקע הסדנה (כהה) מאחורי כל מה שאחרי הכניסה -->
 <div class="shop-bg" aria-hidden="true"></div>
 
-<main>
+<main id="main">
 
 <!-- ===== 0+1+2. השער שנפתח אל הסדנה (נעוץ בזמן הגלילה) ===== -->
 <section class="gate" id="gate">
@@ -133,6 +134,7 @@
             <div class="range"><span class="range-label">הערכה ראשונית לפני מדידה</span><b class="range-num" id="rangeNum">בחרו מידות</b><span class="range-vat" id="rangeVat"></span></div>
             <div class="bars" id="bars"></div>
             <p class="result-note" id="resultNote"></p>
+            <p class="fine">תכנון אדריכלי או תכנון מיוחד מבוצע על ידי המעצבים ואנשי המקצוע שלנו בשטח, אחרי מדידה. ההערכה כאן היא נקודת פתיחה בלבד.</p>
           </div>
           <div class="step-nav"><button type="button" class="btn ghost" data-prev>חזרה</button><button type="button" class="btn primary" data-next>המשך</button></div>
         </fieldset>
@@ -164,6 +166,7 @@
         <div class="step done" data-step="5" hidden>
           <h3>קיבלנו. נחזור אליכם לתיאום מדידה.</h3>
           <p id="doneRange"></p>
+          <p class="fine">תכנון אדריכלי או תכנון מיוחד מבוצע על ידי המעצבים ואנשי המקצוע שלנו בשטח.</p>
           <div class="step-nav"><a class="btn primary js-wa" id="doneWa" href="#" target="_blank" rel="noopener">שלחו לי את זה בוואטסאפ</a><button type="button" class="btn ghost" id="restart">בקשה נוספת</button></div>
         </div>
       </form>
@@ -192,7 +195,8 @@
       <div><dt>לאדריכלים ולעסקים</dt><dd>מבצעים לפי התוכניות שלכם, עם שרטוט ייצור לאישור. <a class="js-wa" href="#bench" data-msg="היי, אני מחברה / משרד אדריכלים ואשמח לדבר על פרויקט.">דברו איתנו</a></dd></div>
     </dl>
   </div>
-  <p class="wrap copy">IRON BEN · ברזל ועץ בהזמנה אישית</p>
+  <p class="wrap fine" style="margin-top:40px">תכנון אדריכלי או תכנון מיוחד מבוצע על ידי המעצבים ואנשי המקצוע שלנו בשטח.</p>
+  <p class="wrap copy">IRON BEN · ברזל ועץ בהזמנה אישית · <a href="accessibility.html">הצהרת נגישות</a></p>
 </section>
 
 </main>
@@ -201,7 +205,7 @@
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.1 1.6 2.5 4 3.5 1.5.6 2.1.7 2.8.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>
 </a>
 
-<dialog class="lb" id="lb">
+<dialog class="lb" id="lb" aria-label="תצוגת תמונה">
   <button type="button" class="lb-close" aria-label="סגירה">✕</button>
   <button type="button" class="lb-prev" aria-label="הקודם">‹</button>
   <figure><img id="lbImg" alt=""><figcaption><b id="lbCap"></b><span id="lbCat"></span><span id="lbCount"></span></figcaption></figure>
@@ -212,5 +216,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
 <script src="admin/pricing.js" defer></script>
 <script type="module" src="app.js"></script>
+<script src="analytics.js" defer></script>
+<script src="a11y.js" defer></script>
 </body>
 </html>

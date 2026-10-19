@@ -4,6 +4,8 @@ const C = window.IRONBEN_CONFIG || {};
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const still = () => REDUCED || document.documentElement.classList.contains("a11y-still");
+const track = (n, p) => window.track?.(n, p);
 const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
 const nf = new Intl.NumberFormat("he-IL");
 const ils = (n) => nf.format(Math.round(n)) + " ₪";
@@ -20,13 +22,17 @@ function tick() {
   ticking = false;
   const total = Math.max(1, gate.offsetHeight - innerHeight);
   const p = Math.min(1, Math.max(0, -gate.getBoundingClientRect().top / total));
-  if (!REDUCED) document.documentElement.style.setProperty("--p", p.toFixed(4));
-  stage.classList.toggle("open", REDUCED || p > 0.88);
+  if (!still()) document.documentElement.style.setProperty("--p", p.toFixed(4));
+  else document.documentElement.style.removeProperty("--p");
+  const open = still() || p > 0.88;
+  if (open && !stage.classList.contains("open")) track("gate_opened");
+  stage.classList.toggle("open", open);
   hdr.classList.toggle("solid", scrollY > 40);
 }
 const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(tick); } };
 addEventListener("scroll", onScroll, { passive: true });
 addEventListener("resize", onScroll);
+document.documentElement.addEventListener("a11ychange", onScroll);
 tick();
 
 // ---------- נקודות על הכלים (ריחוף במחשב, נגיעה בנייד) ----------
@@ -68,9 +74,10 @@ function openDoor(key) {
   const d = DOORS.find((x) => x.key === key), door = $(`.door[data-key="${key}"]`);
   $$(".door").forEach((b) => { b.classList.toggle("open", b === door); b.setAttribute("aria-expanded", String(b === door)); });
   shown = WORK.filter((w) => w[2] === key);
+  track("door_open", { category: key });
   burst.classList.remove("in");
   burst.innerHTML = `<div class="burst-head"><h3>${d.label}</h3><p>${d.desc}</p></div>` +
-    shown.map((w, i) => `<figure style="--i:${i}" data-i="${i}"><div class="ph">${pic(w[0], w[1], "(max-width:560px) 50vw, (max-width:980px) 33vw, 160px")}</div><figcaption>${w[1]}</figcaption></figure>`).join("");
+    shown.map((w, i) => `<figure style="--i:${i}" data-i="${i}"><button type="button" class="ph" aria-label="הגדלה: ${w[1]}">${pic(w[0], w[1], "(max-width:560px) 50vw, (max-width:980px) 33vw, 160px")}</button><figcaption>${w[1]}</figcaption></figure>`).join("");
   burstArea.classList.add("has");
   const dr = door.getBoundingClientRect(), dx0 = dr.left + dr.width / 2, dy0 = dr.top + dr.height / 2;
   $$("figure", burst).forEach((f) => { const r = f.getBoundingClientRect(); f.style.setProperty("--dx", `${dx0 - (r.left + r.width / 2)}px`); f.style.setProperty("--dy", `${dy0 - (r.top + r.height / 2)}px`); });
@@ -116,7 +123,7 @@ if (FINE && !REDUCED) $$("[data-magnet]").forEach((b) => {
 
 // ---------- וואטסאפ, יציאה, שעון הסדנה ----------
 const waLink = (msg) => C.WHATSAPP ? `https://wa.me/${C.WHATSAPP}?text=${encodeURIComponent(msg || "")}` : null;
-$$(".js-wa").forEach((a) => { const u = waLink(a.dataset.msg); if (u) { a.href = u; a.target = "_blank"; a.rel = "noopener"; } });
+$$(".js-wa").forEach((a) => { const u = waLink(a.dataset.msg); if (u) { a.href = u; a.target = "_blank"; a.rel = "noopener"; } a.addEventListener("click", () => track("contact_click", { channel: "whatsapp" })); });
 $("#f-address").textContent = C.ADDRESS || "";
 $("#f-contact").innerHTML = [
   C.PHONE_DISPLAY && `<a href="tel:${C.PHONE_DISPLAY.replace(/[^0-9+]/g, "")}">${C.PHONE_DISPLAY}</a>`,
@@ -190,10 +197,12 @@ async function fetchEstimate() {
   if (seq !== estSeq) return;
   if (error || !data || data.disabled) { estimate = null; $("#rangeNum").textContent = "לא הצלחנו לחשב. נחזור אליכם עם הערכה."; $("#bars").innerHTML = ""; return; }
   estimate = data; renderEstimate();
+  if (lastTracked !== product.slug) { lastTracked = product.slug; track("estimate_shown", { product: product.slug, low: data.low, high: data.high }); }
 }
+let lastTracked = null;
 let lastRange = { low: 0, high: 0 };
 function countTo(el, from, to) {
-  if (REDUCED) { el.textContent = `${ils(to.low)} עד ${ils(to.high)}`; return; }
+  if (still()) { el.textContent = `${ils(to.low)} עד ${ils(to.high)}`; return; }
   const t0 = performance.now(), d = 500;
   (function f(t) { const k = Math.min(1, (t - t0) / d), e = 1 - Math.pow(1 - k, 3); el.textContent = `${ils(from.low + (to.low - from.low) * e)} עד ${ils(from.high + (to.high - from.high) * e)}`; if (k < 1) requestAnimationFrame(f); })(t0);
 }
@@ -208,7 +217,7 @@ function renderEstimate() {
   $("#resultNote").textContent = (e.min_applied ? "זו עבודה קטנה, ולכן המחיר הוא המינימום לעבודה. " : "") + "המחיר הסופי נקבע אחרי מדידה בבית.";
 }
 function goStep(n) {
-  step = n;
+  step = n; track("estimate_step", { step: n, product: product?.slug || null });
   $$(".step").forEach((s) => s.classList.toggle("on", Number(s.dataset.step) === n));
   $(".step.done").hidden = n !== 5;
   $$(".progress li").forEach((li, i) => { li.classList.toggle("on", i + 1 === n); li.classList.toggle("past", i + 1 < n); });
@@ -258,6 +267,7 @@ form.addEventListener("submit", async (e) => {
     };
     const { error } = await sb.rpc("create_lead", { p: payload });
     if (error) throw error;
+    track("lead_submitted", { product: product?.slug || null, value: estimate?.low || 0, currency: "ILS" });
     $("#doneRange").textContent = estimate ? `ההערכה הראשונית ל${product.name}: ${ils(estimate.low)} עד ${ils(estimate.high)} לפני מע"מ.` : "נחזור אליכם עם טווח מחיר אחרי שנראה את התמונות.";
     const msg = estimate ? `היי, שלחתי בקשה באתר ל${product.name}. ההערכה שקיבלתי: ${ils(estimate.low)} עד ${ils(estimate.high)}.` : `היי, שלחתי בקשה באתר להצעת מחיר.`;
     const u = waLink(msg); if (u) $("#doneWa").href = u; else $("#doneWa").hidden = true;
