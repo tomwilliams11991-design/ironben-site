@@ -1,0 +1,35 @@
+/* קיר הדלתות: דלת לכל קטגוריה, חצי פתוחה, ופריצת התמונות (FLIP מ-js/doors.js). */
+.wall{padding:112px 0 72px;position:relative}
+.wall-head{max-width:1240px}
+.door-row{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;max-width:1240px;margin:48px auto 0;padding-inline:var(--gutter-r) var(--gutter)}
+.door{position:relative;aspect-ratio:2/3;border:0;padding:0;background:none;font:inherit;color:inherit;text-align:start;cursor:pointer;perspective:900px;border-radius:3px}
+.door .jamb{position:absolute;inset:0;border-radius:3px;overflow:hidden;background:#15110e;box-shadow:inset 0 0 0 7px #2a221c,inset 0 0 50px rgb(0 0 0/.9)}
+.door .jamb img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform .9s var(--ease)}
+.door .jamb::after{content:"";position:absolute;inset:0;background:linear-gradient(to left,rgb(0 0 0/.55),transparent 45%),linear-gradient(to top,rgb(0 0 0/.55),transparent 50%)}
+.door .count{position:absolute;inset:auto 14px 14px 14px;color:#fff;font-size:14px;font-weight:400;opacity:0;transition:opacity .3s var(--ease) .25s}
+.door .count b{display:block;font-weight:700;font-size:17px}
+.door .panel{position:absolute;inset:0;border-radius:3px;transform-origin:right center;transform:rotateY(52deg);transition:transform .75s var(--ease);background:#3a2a1f url("../img/scene/door-640.jpg") center/cover;box-shadow:-14px 0 26px -10px rgb(0 0 0/.8),inset 0 0 0 1px rgb(255 255 255/.06);backface-visibility:hidden;will-change:transform}
+.door .plate{position:absolute;top:42%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;padding:10px 16px;border-radius:3px;font-weight:700;font-size:clamp(13px,1.15vw,17px);color:#f5f1ea;background:linear-gradient(180deg,#5c6165,#30343a);box-shadow:inset 0 1px 0 rgb(255 255 255/.3),0 3px 8px rgb(0 0 0/.5)}
+.door .plate::before,.door .plate::after{content:"";position:absolute;top:50%;width:5px;height:5px;border-radius:50%;background:#15171a;box-shadow:inset 0 1px 1px rgb(255 255 255/.4);transform:translateY(-50%)}
+.door .plate::before{left:5px}.door .plate::after{right:5px}
+.door.open .panel,.door:focus-visible .panel{transform:rotateY(94deg)}
+.door.open .jamb img,.door:focus-visible .jamb img{transform:scale(1)}
+.door.open .count,.door:focus-visible .count{opacity:1}
+@media (hover:hover) and (pointer:fine){.door:hover .panel{transform:rotateY(94deg)}.door:hover .jamb img{transform:scale(1)}.door:hover .count{opacity:1}}
+/* התמונות שפורצות מהדלת */
+.burst-area{position:relative;max-width:1240px;margin:44px auto 0;padding-inline:var(--gutter-r) var(--gutter);min-height:min(440px,60vh)}
+.burst-hint{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:15px;transition:opacity .3s var(--ease)}
+.burst-area.has .burst-hint{opacity:0}
+.burst{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.burst-head{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px;margin-bottom:4px;opacity:0;transition:opacity .4s var(--ease) .15s}
+.burst.in .burst-head{opacity:1}
+.burst-head h3{font-size:clamp(20px,2vw,26px)}
+.burst-head p{color:var(--muted);font-size:15px;max-width:60ch}
+.burst figure{margin:0;cursor:zoom-in;transform:translate(var(--dx,0px),var(--dy,0px)) scale(.12);opacity:0;transition:transform .55s var(--ease),opacity .35s var(--ease);transition-delay:calc(var(--i,0) * 28ms);will-change:transform}
+.burst.in figure{transform:none;opacity:1}
+.burst .ph{display:block;width:100%;padding:0;border:0;font:inherit;color:inherit;cursor:zoom-in;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;background:#1a1613;box-shadow:0 24px 34px -20px #000}
+.burst img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.burst figcaption{font-size:13px;color:var(--muted);padding-top:6px;line-height:1.4}
+@media (hover:hover) and (pointer:fine){.burst figure:hover img{transform:scale(1.04)}}
+@media (max-width:980px){.door-row{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;scrollbar-width:none}.door-row::-webkit-scrollbar{display:none}.door{flex:0 0 58vw;max-width:300px;scroll-snap-align:center}.door .plate{font-size:15px}.burst{grid-template-columns:repeat(3,1fr);gap:8px}.burst-area{min-height:300px}}
+@media (max-width:560px){.burst{grid-template-columns:1fr 1fr}.door{flex-basis:66vw}}
