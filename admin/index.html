@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IRON BEN · ניהול</title><meta name="robots" content="noindex">
+<link rel="icon" type="image/png" sizes="64x64" href="../favicon-64.png">
+<link rel="stylesheet" href="../fonts.css"><link rel="stylesheet" href="admin.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head>
+<body>
+
+<div class="login" id="login" hidden>
+  <img src="../brand/logo-120.png" alt="IRON BEN">
+  <h1>כניסה לניהול</h1>
+  <p class="help">נשלח קישור כניסה למייל. רק מיילים ברשימת המנהלים נכנסים.</p>
+  <form id="loginForm"><label class="l">מייל<input id="lemail" type="email" required autocomplete="email"></label><div class="bar"><button class="btn primary" type="submit">שלחו לי קישור</button><span class="msg" id="lmsg" role="status"></span></div></form>
+</div>
+
+<div class="app" id="app" hidden>
+  <nav class="side" aria-label="ניהול">
+    <div class="brand"><img src="../brand/logo-120.png" alt="">IRON BEN</div>
+    <button data-p="leads" aria-selected="true">לידים</button>
+    <button data-p="builder">הצעה חדשה</button>
+    <button data-p="quotes">הצעות</button>
+    <button data-p="products">מוצרים ותמחור</button>
+    <button data-p="steel">מחיר ברזל</button>
+    <button data-p="mail">מרכז מיילים</button>
+    <button data-p="settings">הגדרות</button>
+    <div class="who"><span id="who"></span><button class="btn small" id="logout">יציאה</button></div>
+  </nav>
+
+  <main class="main">
+    <!-- לידים -->
+    <section class="panel on" id="p-leads">
+      <h2>לידים</h2>
+      <div class="bar"><select id="leadFilter"><option value="">כל הסטטוסים</option></select><input id="leadSearch" placeholder="חיפוש שם / טלפון / עיר"><span class="grow"></span><span class="msg" id="leadMsg"></span></div>
+      <div class="tw"><table id="leadsT"></table></div>
+    </section>
+
+    <!-- בונה הצעה -->
+    <section class="panel" id="p-builder">
+      <h2>הצעה חדשה</h2>
+      <p class="help" id="b-ctx"></p>
+      <div class="form">
+        <label class="l">שם לקוח<input id="b-name"></label><label class="l">מייל<input id="b-email" type="email"></label><label class="l">טלפון<input id="b-phone"></label><label class="l">כותרת ההצעה<input id="b-title" placeholder="למשל: מדרגות ברזל ועץ, רחובות"></label>
+      </div>
+      <div class="tw"><table id="b-lines"><thead><tr><th>מוצר</th><th>כמות</th><th>יחידה</th><th>גימור / עץ</th><th>עלות ליחידה</th><th>מחיר ליחידה</th><th>מחיר ידני</th><th>סה"כ שורה</th><th>רווח</th><th></th></tr></thead><tbody></tbody></table></div>
+      <div class="bar"><button class="btn small" id="b-add">+ שורה</button><span class="help" id="b-steel"></span></div>
+      <div class="kpi" id="b-kpi"></div>
+      <label class="l">הערות ללקוח<textarea id="b-notes" style="font-family:var(--body);font-size:15px"></textarea></label>
+      <div class="bar"><button class="btn" id="b-save">שמירה כטיוטה</button><button class="btn primary" id="b-send">שמירה ושליחה במייל</button><button class="btn" id="b-wa">שמירה ושליחה בוואטסאפ</button><button class="btn small" id="b-new">הצעה חדשה ריקה</button><span class="msg" id="b-msg" role="status"></span></div>
+    </section>
+
+    <!-- הצעות -->
+    <section class="panel" id="p-quotes">
+      <h2>הצעות</h2>
+      <div class="bar"><select id="quoteFilter"><option value="">כל הסטטוסים</option></select><span class="grow"></span><span class="msg" id="qMsg"></span></div>
+      <div class="tw"><table id="quotesT"></table></div>
+    </section>
+
+    <!-- מוצרים -->
+    <section class="panel" id="p-products">
+      <h2>מוצרים ותמחור</h2>
+      <p class="help">ק"ג ושעות הם הבסיס לכל מחיר. עד שמסמנים "אומת" ההצעות מציגות אזהרה. "מחיר שרת" הוא מה שהאתר מחשב ללקוח (עם ברירות המחדל של הקונפיגורטור), לבדיקה שהשרת והניהול מסכימים.</p>
+      <div class="bar"><button class="btn primary" id="prodSave">שמירת כל המוצרים</button><button class="btn" id="prodParity">בדיקת מחיר שרת</button><span class="msg" id="prodMsg" role="status"></span></div>
+      <div class="tw"><table id="prodT"></table></div>
+      <h3>סכמת קלט לקונפיגורטור</h3>
+      <p class="help">לכל מוצר: אילו מידות הלקוח מזין (fields), איך מחשבים כמות (formula: count / length / area_wl / area_wh / units), אילו גימורים ועצים (עם מקדם מחיר), ואיזה מודל 3D (model).</p>
+      <div class="bar"><select id="schemaPick"></select><button class="btn small" id="schemaSave">שמירת סכמה</button><span class="msg" id="schemaMsg"></span></div>
+      <textarea id="schemaEd" rows="14"></textarea>
+    </section>
+
+    <!-- ברזל -->
+    <section class="panel" id="p-steel">
+      <h2>מחיר ברזל</h2>
+      <div class="kpi" id="steelKpi"></div>
+      <div class="form">
+        <label class="l">מחיר ספק לק"ג בתאריך הבסיס (₪, לפני מע"מ)<input id="s-base" type="number" step="0.01"></label>
+        <label class="l">תאריך הבסיס<input id="s-date" type="date"></label>
+        <label class="l">סטייה על הברזל (%)<input id="s-safety" type="number" step="0.5"></label>
+        <label class="l">סף עדכון מחיר (%)<input id="s-thr" type="number" step="0.5"></label>
+        <label class="l">קוד סדרה בלמ"ס (ברזל לבנייה)<input id="s-series"></label>
+      </div>
+      <div class="bar"><button class="btn primary" id="s-save">שמירה</button><button class="btn" id="s-run">עדכון עכשיו מהלמ"ס</button><button class="btn" id="s-disc">חיפוש קוד הסדרה</button><span class="msg" id="s-msg" role="status"></span></div>
+      <pre id="s-out" hidden></pre>
+      <h3>היסטוריה</h3>
+      <div class="tw"><table id="steelT"></table></div>
+    </section>
+
+    <!-- מרכז מיילים -->
+    <section class="panel" id="p-mail">
+      <h2>מרכז מיילים</h2>
+      <div class="subtabs" role="tablist">
+        <button data-s="queue" aria-selected="true">תור פניות לחברות</button>
+        <button data-s="templates">תבניות</button>
+        <button data-s="log">לוג מיילים</button>
+        <button data-s="supp">רשימת הסרה</button>
+        <button data-s="sending">שליחה וחיבור</button>
+      </div>
+
+      <div class="sub on" id="m-queue">
+        <div class="kpi" id="o-kpi"></div>
+        <p class="help">כל חברה מקבלת מייל פרסומי אחד. מייבאים CSV עם העמודות company, contact_name, email, segment, personal_line, source_url. מסמנים את מי לשלוח ולוחצים "אישור". רק מאושרים נשלחים, לפי המכסה היומית.</p>
+        <div class="bar">
+          <label class="btn">ייבוא CSV<input id="o-file" type="file" accept=".csv,text/csv" hidden></label>
+          <button class="btn" id="o-approve">אישור המסומנים</button>
+          <button class="btn" id="o-preview">מי יקבל היום</button>
+          <button class="btn primary" id="o-send">שליחה עכשיו</button>
+          <select id="o-status"><option value="">כל הסטטוסים</option></select>
+          <select id="o-seg"><option value="">כל הסגמנטים</option></select>
+          <input id="o-search" placeholder="חיפוש חברה / מייל">
+          <span class="msg" id="o-msg" role="status"></span>
+        </div>
+        <div class="tw"><table id="outT"></table></div>
+      </div>
+
+      <div class="sub" id="m-templates">
+        <p class="help">הנוסחים של כל המיילים שיוצאים מהמערכת. משתנים כותבים כך: {{company}}, {{contact_name}}, {{hello}}, {{business_name}}. קישורים ו-HTML שהמערכת בונה: {{{personal_line}}}, {{{work_link}}}, {{{unsubscribe_link}}}, {{{link}}}, {{{render_block}}}.</p>
+        <div class="split">
+          <div>
+            <div class="bar"><select id="t-pick"></select><label style="display:flex;gap:6px;align-items:center;font-size:14px"><input type="checkbox" id="t-enabled"> פעילה</label></div>
+            <label class="l">שם<input id="t-name"></label>
+            <label class="l" style="margin-top:8px">נושא<input id="t-subject"></label>
+            <label class="l" style="margin-top:8px">תוכן (HTML)<textarea id="t-html" rows="18"></textarea></label>
+            <div class="bar"><button class="btn primary" id="t-save">שמירה</button><button class="btn" id="t-preview">תצוגה מקדימה</button><button class="btn" id="t-test">שליחת בדיקה אליי</button><span class="msg" id="t-msg" role="status"></span></div>
+          </div>
+          <div><div class="help" id="t-psub"></div><iframe class="preview" id="t-frame" title="תצוגה מקדימה" sandbox=""></iframe></div>
+        </div>
+      </div>
+
+      <div class="sub" id="m-log">
+        <div class="bar"><select id="l-kind"><option value="">כל הסוגים</option><option value="outreach">פניות</option><option value="quote">הצעות</option><option value="lead_notify">התראות ליד</option><option value="lead_autoreply">אישור ללקוח</option><option value="steel_alert">ברזל</option><option value="test">בדיקות</option></select>
+          <select id="l-status"><option value="">כל המצבים</option><option value="sent">נשלח</option><option value="delivered">נמסר</option><option value="failed">נכשל</option><option value="bounced">חזר</option><option value="complained">דווח כספאם</option></select>
+          <input id="l-search" placeholder="חיפוש כתובת"><button class="btn small" id="l-refresh">רענון</button></div>
+        <div class="tw"><table id="logT"></table></div>
+      </div>
+
+      <div class="sub" id="m-supp">
+        <p class="help">כתובות כאן לא יקבלו שום מייל פרסומי, גם אם ייובאו שוב. מי שלחץ "הסרה" או שהמייל שלו חזר נכנס לכאן אוטומטית.</p>
+        <div class="bar"><input id="sp-email" type="email" placeholder="כתובת להוספה"><input id="sp-reason" placeholder="סיבה (לא חובה)"><button class="btn" id="sp-add">הוספה</button><span class="msg" id="sp-msg"></span></div>
+        <div class="tw"><table id="suppT"></table></div>
+      </div>
+
+      <div class="sub" id="m-sending">
+        <h3>פניות אוטומטיות</h3>
+        <div class="form">
+          <label class="l">שליחה אוטומטית (א'-ה' בבוקר)<select id="snd-enabled"><option value="false">כבויה</option><option value="true">פועלת</option></select></label>
+          <label class="l">מכסה יומית<input id="snd-limit" type="number" min="1" max="50"></label>
+        </div>
+        <div class="bar"><button class="btn primary" id="snd-save">שמירה</button><span class="msg" id="snd-msg"></span></div>
+        <h3>חיבור למייל (Resend)</h3>
+        <p class="help">המפתחות נשמרים ב-Vault של Supabase ולא מוצגים שוב. "כתובת שולח" חייבת להיות מדומיין שאומת ב-Resend, למשל IRON BEN &lt;hello@ironben.co.il&gt;.</p>
+        <div class="form">
+          <label class="l">מפתח API של Resend <span id="st-resend_api_key"></span><input id="sec-resend_api_key" type="password" autocomplete="off" placeholder="re_..."></label>
+          <label class="l">כתובת שולח <span id="st-mail_from"></span><input id="sec-mail_from" placeholder="IRON BEN <hello@domain>"></label>
+          <label class="l">Webhook secret של Resend (לא חובה) <span id="st-resend_webhook_secret"></span><input id="sec-resend_webhook_secret" type="password" autocomplete="off" placeholder="whsec_..."></label>
+          <label class="l">מפתח Metals-API (לא חובה) <span id="st-metals_api_key"></span><input id="sec-metals_api_key" type="password" autocomplete="off"></label>
+        </div>
+        <div class="bar"><button class="btn primary" id="sec-save">שמירת מפתחות</button><span class="msg" id="sec-msg"></span></div>
+        <p class="help" id="sec-urls"></p>
+      </div>
+    </section>
+
+    <!-- הגדרות -->
+    <section class="panel" id="p-settings">
+      <h2>הגדרות</h2>
+      <div class="form" id="setForm"></div>
+      <div class="bar"><button class="btn primary" id="set-save">שמירה</button><span class="msg" id="set-msg" role="status"></span></div>
+      <h3>מנהלים</h3>
+      <p class="help">מי שנכנס לממשק הזה. מוסיפים מייל, והוא נכנס עם קישור למייל.</p>
+      <div class="bar"><input id="adm-email" type="email" placeholder="מייל"><button class="btn" id="adm-add">הוספה</button><span class="msg" id="adm-msg"></span></div>
+      <div class="tw"><table id="admT"></table></div>
+    </section>
+  </main>
+</div>
+
+<dialog id="dlg"><div class="d"><div class="bar"><b id="dlg-title"></b><span class="grow"></span><button class="btn small" id="dlg-close">סגירה</button></div><div id="dlg-body"></div></div></dialog>
+
+<script src="../config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="pricing.js"></script>
+<script type="module" src="admin.js"></script>
+</body>
+</html>

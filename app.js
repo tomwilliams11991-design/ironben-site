@@ -216,6 +216,7 @@ $("#picks").addEventListener("click", (e) => {
   $("[data-step='1'] [data-next]").disabled = false;
   renderFields(); updateModel(); requestEstimate();
   $("#modelCap").textContent = product.name + ": גררו לסיבוב";
+  $(".est-model").classList.add("has");
 });
 function renderFields() {
   const S = product.input_schema;
