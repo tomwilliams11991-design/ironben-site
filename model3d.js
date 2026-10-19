@@ -340,7 +340,8 @@ export async function mount(el, opts = {}) {
   }
 
   function frame() {
-    const s = (model?.userData.size || 2) * (hero ? 0.95 : 1.15), cy = (model?.userData.center[1] || 0.5);
+    const portrait = (el.clientWidth || 1) / (el.clientHeight || 1) < 1 ? 1.35 : 1;
+    const s = (model?.userData.size || 2) * (hero ? 0.95 : 1.15) * portrait, cy = (model?.userData.center[1] || 0.5);
     controls.target.set(0, cy, 0);
     const ang = Math.PI * 0.22;
     cam.position.set(Math.cos(ang) * s * 1.9, cy + s * 0.75, Math.sin(ang) * s * 1.9);
@@ -357,6 +358,7 @@ export async function mount(el, opts = {}) {
   function resize() {
     const w = el.clientWidth || 300, h = el.clientHeight || 300;
     renderer.setSize(w, h, false);
+    if (model) frame();
     cam.aspect = w / h; cam.updateProjectionMatrix();
     const half = ((model?.userData.size || 2) * 1.15) * 0.72;
     ortho.left = -half * (w / h); ortho.right = half * (w / h); ortho.top = half; ortho.bottom = -half; ortho.updateProjectionMatrix();
