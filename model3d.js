@@ -16,8 +16,8 @@ const WOOD = {
   oak: 0xc9924f, walnut: 0x5c3b25, pine: 0xd8b57c, ipe: 0x6b3f22, teak: 0xa8753f, ash: 0xd9c7a3,
   liveedge: 0xb07a3e, metal: 0x5a5d60, none: null,
 };
-const ACCENT = 0xb85c38;
-const THEME = { sky: 0xffffff, ground: 0xdedcd6, shadow: 0.22, grid1: 0xc9c7c0, grid2: 0xdedcd6, edge: 0x1a1b1c, flat: 0xf7f6f3, label: "#1a1b1c", labelBg: "#edece8" };
+const ACCENT = 0xc98a2b;
+const THEME = { sky: 0xffffff, ground: 0xd9d4c8, shadow: 0.22, grid1: 0xc5c0b4, grid2: 0xdad5c9, edge: 0x14231d, flat: 0xf5f3ee, label: "#14231d", labelBg: "#ebe8e0" };
 
 const fmt = (n, u) => `${Number.isInteger(n) ? n : n.toFixed(2).replace(/\.?0+$/, "")}${u ? " " + u : ""}`;
 const num = (v, d) => { const n = Number(v); return Number.isFinite(n) && n > 0 ? n : d; };
@@ -239,17 +239,17 @@ const BUILDERS = {
     const steel = M.steel, galv = new THREE.MeshStandardMaterial({ ...STEEL.galv });
     // חתך I-beam מוצק
     const s = new THREE.Shape(); s.moveTo(-0.22, -0.26); s.lineTo(0.22, -0.26); s.lineTo(0.22, -0.18); s.lineTo(0.05, -0.18); s.lineTo(0.05, 0.18); s.lineTo(0.22, 0.18); s.lineTo(0.22, 0.26); s.lineTo(-0.22, 0.26); s.lineTo(-0.22, 0.18); s.lineTo(-0.05, 0.18); s.lineTo(-0.05, -0.18); s.lineTo(-0.22, -0.18); s.closePath();
-    const beam = new THREE.Mesh(new THREE.ExtrudeGeometry(s, { depth: 0.9, bevelEnabled: false }), galv);
-    beam.position.set(c[0] * 2 + 0.6, c[1] + 1.4, -0.9); beam.rotation.set(0.5, 0.6, 0.2); beam.castShadow = true; beam.userData.float = { a: 0.08, s: 0.7, r: [0.002, 0.004, 0] }; g.add(beam);
+    const beam = new THREE.Mesh(new THREE.ExtrudeGeometry(s, { depth: 0.6, bevelEnabled: false }), galv); beam.scale.set(0.7, 0.7, 1);
+    beam.position.set(c[0] * 1.55, c[1] + 1.5, -0.9); beam.rotation.set(0.5, 0.6, 0.2); beam.castShadow = true; beam.userData.float = { a: 0.08, s: 0.7, r: [0.002, 0.004, 0] }; g.add(beam);
     // צינור מרובע חלול
     const tube = new THREE.Group();
-    const tw = 0.3, tl = 1.1, th = 0.03;
+    const tw = 0.22, tl = 0.8, th = 0.025;
     [[0, tw / 2 - th / 2], [0, -(tw / 2 - th / 2)]].forEach(([x, y]) => tube.add(box(tl, th, tw, steel, x, y, 0)));
     [[tw / 2 - th / 2], [-(tw / 2 - th / 2)]].forEach(([z]) => tube.add(box(tl, tw, th, steel, 0, 0, z)));
-    tube.position.set(-0.8, c[1] + 1.9, 0.8); tube.rotation.set(0.3, -0.5, 0.9); tube.userData.float = { a: 0.1, s: 0.55, r: [0.003, 0.002, 0.001] }; g.add(tube);
+    tube.position.set(c[0] * 0.35, c[1] + 2.0, 0.9); tube.rotation.set(0.3, -0.5, 0.9); tube.userData.float = { a: 0.1, s: 0.55, r: [0.003, 0.002, 0.001] }; g.add(tube);
     // טבעת (טבעת ריתוך / חישוק)
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.34, 0.04, 12, 48), new THREE.MeshStandardMaterial({ ...STEEL.corten }));
-    ring.position.set(c[0] * 2 + 0.2, c[1] + 0.3, 1.3); ring.rotation.set(1.1, 0.4, 0); ring.castShadow = true; ring.userData.float = { a: 0.06, s: 0.9, r: [0.004, 0.003, 0.002] }; g.add(ring);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.035, 12, 48), new THREE.MeshStandardMaterial({ ...STEEL.corten }));
+    ring.position.set(c[0] * 1.7, c[1] + 0.25, 1.2); ring.rotation.set(1.1, 0.4, 0); ring.castShadow = true; ring.userData.float = { a: 0.06, s: 0.9, r: [0.004, 0.003, 0.002] }; g.add(ring);
     g.userData.size = g.userData.size * 1.05; g.userData.plan = "side";
     return g;
   },
@@ -331,7 +331,7 @@ export async function mount(el, opts = {}) {
         const a = new THREE.Vector3(...d.a).sub(new THREE.Vector3(c[0], 0, c[2])), bb = new THREE.Vector3(...d.b).sub(new THREE.Vector3(c[0], 0, c[2]));
         dimLines.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([a, bb]), lineMat));
         const tag = document.createElement("span"); tag.textContent = d.label;
-        tag.style.cssText = "position:absolute;transform:translate(-50%,-50%);background:" + THEME.labelBg + ";padding:2px 6px;border-radius:2px;color:#b85c38;white-space:nowrap";
+        tag.style.cssText = "position:absolute;transform:translate(-50%,-50%);background:" + THEME.labelBg + ";padding:2px 6px;border-radius:2px;color:#c98a2b;white-space:nowrap";
         tag.dataset.mid = JSON.stringify([(a.x + bb.x) / 2, (a.y + bb.y) / 2, (a.z + bb.z) / 2]);
         labels.appendChild(tag);
       });

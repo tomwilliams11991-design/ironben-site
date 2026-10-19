@@ -1,20 +1,20 @@
 /* ממשק הניהול: מצב Operate. אותם טוקנים כמו האתר, צפיפות גבוהה, מעברים מהירים. */
-:root{--bg:#edece8;--surface:#f7f6f3;--surface-2:#e4e2dc;--line:#d3d1ca;--ink:#1a1b1c;--muted:#6b6a66;--ember:#b85c38;--ember-ink:#f7f6f3;--ok:#3f8a4f;--err:#b9402e;--warn:#9a6b12;
-  --display:Karantina,system-ui,sans-serif;--body:Assistant,system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1);--r:4px;color-scheme:light}
+:root{--bg:#ebe8e0;--surface:#f5f3ee;--surface-2:#e1ddd2;--line:#cfcac0;--ink:#14231d;--muted:#5f6b64;--ember:#214f41;--ember-ink:#f5f3ee;--ok:#2f7a4f;--err:#b9402e;--warn:#9a6b12;
+  --display:"Frank Ruhl Libre",Georgia,serif;--body:Heebo,Assistant,system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1);--r:4px;color-scheme:light}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--body);-webkit-font-smoothing:antialiased}
 a{color:inherit;text-underline-offset:3px}
 ::selection{background:var(--ember);color:var(--ember-ink)}
 :focus-visible{outline:2px solid var(--ember);outline-offset:2px}
 html{accent-color:var(--ember);caret-color:var(--ember);scrollbar-color:var(--surface-2) var(--bg)}
-h1,h2,h3{font-family:var(--display);font-weight:700;line-height:.9;margin:0;letter-spacing:-.005em}
-h1{font-size:44px}h2{font-size:38px;margin-bottom:14px}h3{font-size:26px;margin:18px 0 8px}
+h1,h2,h3{font-family:var(--display);font-weight:900;line-height:1.05;margin:0;letter-spacing:-.01em}
+h1{font-size:36px}h2{font-size:30px;margin-bottom:14px}h3{font-size:22px;margin:18px 0 8px}
 p{margin:0}
 .login{max-width:420px;margin:12vh auto;padding:0 20px;display:grid;gap:16px}
 .login img{width:72px}
 .app{display:grid;grid-template-columns:220px 1fr;min-height:100dvh}
 .side{border-inline-end:1px solid var(--line);padding:20px 14px;position:sticky;top:0;height:100dvh;display:flex;flex-direction:column;gap:6px}
-.side .brand{display:flex;align-items:center;gap:10px;margin-bottom:18px;font-family:var(--display);font-size:28px}
+.side .brand{display:flex;align-items:center;gap:10px;margin-bottom:18px;font-family:var(--display);font-weight:900;font-size:22px}
 .side .brand img{width:34px}
 .side button{font:600 15px var(--body);text-align:start;padding:9px 12px;border-radius:var(--r);border:0;background:transparent;color:var(--muted);cursor:pointer;transition:background-color .15s var(--ease),color .15s var(--ease)}
 .side button[aria-selected="true"]{background:var(--surface);color:var(--ink)}
@@ -55,7 +55,7 @@ tr:hover td{background:color-mix(in srgb,var(--surface) 60%,transparent)}
 .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
 .kpi div{padding:12px 14px;border:1px solid var(--line);border-radius:var(--r)}
 .kpi span{font-size:12px;color:var(--muted);display:block}
-.kpi b{font-family:var(--display);font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+.kpi b{font-family:var(--display);font-size:24px;font-weight:900;font-variant-numeric:tabular-nums}
 .pill{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid var(--line);font-size:12px;white-space:nowrap}
 .pill.new{border-color:var(--ember);color:var(--ember)}.pill.ok{border-color:var(--ok);color:var(--ok)}.pill.bad{border-color:var(--err);color:var(--err)}.pill.warn{border-color:var(--warn);color:var(--warn)}
 .msg{font-size:14px;min-height:1.5em}.msg.ok{color:var(--ok)}.msg.err{color:var(--err)}
