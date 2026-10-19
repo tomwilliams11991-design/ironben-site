@@ -202,7 +202,9 @@ function renderEstimate() {
   countTo(el, lastRange, e); lastRange = { low: e.low, high: e.high }; el.classList.add("live");
   $("#rangeVat").textContent = `לפני מע"מ · ${e.qty} ${e.unit}`;
   const names = { steel: "ברזל", wood: "עץ", finish: "גימור ופרזול", labor: "עבודה" };
-  $("#bars").innerHTML = Object.entries(e.breakdown).filter(([, v]) => v.pct > 0).map(([k, v]) => `<li><span>${names[k]}</span><span class="bar"><i style="--w:${v.pct}%"></i></span><em>${v.pct}%</em></li>`).join("");
+  const order = ["steel", "wood", "finish", "labor"];
+  const parts = Object.entries(e.breakdown).filter(([, v]) => v.pct > 0).sort((x, y) => order.indexOf(x[0]) - order.indexOf(y[0]));
+  $("#bars").innerHTML = `<div class="mix" aria-hidden="true">${parts.map(([k, v]) => `<i class="${k}" style="--w:${v.pct}%"></i>`).join("")}</div><p class="mix-legend">${parts.map(([k, v]) => `<span>${names[k]} ${v.pct}%</span>`).join("")}</p>`;
   $("#resultNote").textContent = (e.min_applied ? "זו עבודה קטנה, ולכן המחיר הוא המינימום לעבודה. " : "") + "המחיר הסופי נקבע אחרי מדידה בבית.";
 }
 function goStep(n) {

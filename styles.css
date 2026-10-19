@@ -64,7 +64,7 @@ strong,b{font-weight:500}
 .shop-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(90% 80% at 50% 35%,transparent 30%,rgb(0 0 0/.65))}
 
 /* ---------- 0+1+2. השער שנפתח אל הסדנה ---------- */
-.gate{position:relative;height:300vh}
+.gate{position:relative;height:200vh}
 .gate .anchor{position:absolute;top:calc(100% - 100dvh);left:0;width:1px;height:1px}
 .stage{position:sticky;top:0;height:100dvh;overflow:hidden;background:#070605;isolation:isolate}
 /* הסדנה מאחורי השער: נכנסים פנימה (זום קטן) והחושך מתבהר */
@@ -214,11 +214,11 @@ input[type=range]:focus-visible{outline:2px solid var(--ember);outline-offset:6p
 .range-num{font-weight:900;font-size:clamp(34px,4.2vw,56px);line-height:1.05;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .range-num.live{color:#b85a1c}
 .range-vat{font-size:14px;color:var(--muted)}
-.bars{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.bars li{display:grid;grid-template-columns:7em 1fr 3.2em;gap:12px;align-items:center;font-size:14px}
-.bars li .bar{height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden}
-.bars li .bar i{display:block;height:100%;background:var(--ink);width:var(--w,0%);transition:width .5s var(--ease)}
-.bars li em{font-style:normal;color:var(--muted);text-align:end;font-variant-numeric:tabular-nums}
+.bars{display:grid;gap:6px;margin:0;padding:0}
+.mix{display:flex;height:4px;border-radius:2px;overflow:hidden;background:var(--surface-2)}
+.mix i{display:block;width:var(--w,0%);background:var(--ink);transition:width .5s var(--ease)}
+.mix i.wood{opacity:.6}.mix i.finish{opacity:.4}.mix i.labor{opacity:.22}
+.mix-legend{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px;font-variant-numeric:tabular-nums}
 .result-note{font-size:13px;color:var(--muted)}
 .step-nav{display:flex;gap:10px;justify-content:flex-start;margin-top:8px}
 .drop{display:grid;place-items:center;min-height:120px;border:1px dashed var(--muted);border-radius:var(--r);color:var(--muted);cursor:pointer;padding:16px;text-align:center;transition:border-color .2s var(--ease)}

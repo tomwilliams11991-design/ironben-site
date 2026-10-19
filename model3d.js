@@ -43,7 +43,7 @@ const BUILDERS = {
     beam.rotation.z = ang; g.add(beam);
     for (let i = 0; i < steps; i++) {
       const x = i * run + run / 2, y = (i + 1) * rise;
-      if (M.wood) g.add(box(run + 0.03, th, w, M.wood, x, y - th / 2, 0));
+      g.add(box(run + 0.03, th, w, M.wood || M.steelLight, x, y - th / 2, 0));
       else g.add(box(run + 0.03, 0.012, w, M.steel, x, y - 0.006, 0));
       g.add(box(run - 0.02, 0.02, 0.1, M.steel, x, y - th - 0.01, 0)); // זרוע מהקורה למדרך
       const side = p.rail === "none" ? [] : p.rail === "both" ? [1, -1] : [1];
