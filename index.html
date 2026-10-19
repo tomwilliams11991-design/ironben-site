@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IRON BEN | ברזל ועץ בהזמנה אישית</title>
+<meta name="description" content="IRON BEN, סדנת ברזל ועץ בבית עובד ליד נס ציונה. מדרגות, שערים, פרגולות, מעקות, ספריות ושולחנות בהזמנה אישית. הצעה ראשונית חינם עם הדמיה תלת-ממדית.">
+<meta name="theme-color" content="#17191b">
+<meta property="og:title" content="IRON BEN | ברזל ועץ בהזמנה אישית">
+<meta property="og:description" content="מדרגות, שערים, פרגולות ורהיטים מברזל ועץ. מתכננים, מייצרים בסדנה בבית עובד ומתקינים. הצעה ראשונית חינם עם הדמיה.">
+<meta property="og:image" content="og.jpg">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="fonts/karantina-700-hebrew.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/karantina-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/assistant-400-hebrew.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="styles.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"IRON BEN","description":"עבודות ברזל ועץ בהזמנה אישית","address":{"@type":"PostalAddress","addressLocality":"בית עובד","addressCountry":"IL"},"sameAs":["https://www.instagram.com/ironben.eindor"]}
+</script>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="mark" href="#" aria-label="IRON BEN, לראש העמוד">
+      <img src="brand/logo-120.png" srcset="brand/logo-120.png 1x, brand/logo-240.png 2x" width="46" height="60" alt="IRON BEN">
+    </a>
+    <nav class="nav" aria-label="ראשי">
+      <a href="#work">עבודות</a>
+      <a href="#services">מה אנחנו בונים</a>
+      <a href="#materials">חומרים</a>
+      <a href="#process">איך זה עובד</a>
+      <a href="#business">לאדריכלים ולעסקים</a>
+    </nav>
+    <a class="btn primary small" href="#estimate">הצעה ראשונית חינם</a>
+  </div>
+</header>
+
+<main>
+
+<!-- ===== הירו: כותרת + מודל 3D חי ===== -->
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <h1><span class="w1">ברזל.</span><span class="w2 oak">עץ.</span><span class="w3">בדיוק לבית שלכם.</span></h1>
+      <p class="lede">מדרגות, שערים, פרגולות ורהיטים. מתכננים איתכם, מייצרים בסדנה בבית עובד ומתקינים.</p>
+      <div class="cta">
+        <a class="btn primary" href="#estimate" data-magnet>הצעה ראשונית חינם</a>
+        <a class="btn" href="#work" data-magnet>לתיק העבודות</a>
+      </div>
+    </div>
+    <div class="hero-model" id="hero3d" aria-hidden="true">
+      <picture class="hero-fallback">
+        <source type="image/avif" srcset="img/stairs-floating-black-480.avif 480w, img/stairs-floating-black-960.avif 960w" sizes="(max-width:900px) 100vw, 50vw">
+        <source type="image/webp" srcset="img/stairs-floating-black-480.webp 480w, img/stairs-floating-black-960.webp 960w" sizes="(max-width:900px) 100vw, 50vw">
+        <img src="img/stairs-floating-black-960.jpg" alt="" width="960" height="1106" fetchpriority="high" decoding="async">
+      </picture>
+      <span class="hero-hint">גררו כדי לסובב</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== תיק עבודות: מסלול אופקי בדסקטופ, גריד בנייד ===== -->
+<section class="work" id="work">
+  <div class="wrap work-head">
+    <h2>עבודות מהסדנה</h2>
+    <p>כל עבודה כאן נבנתה לפי מידה, לבית או לעסק מסוים.</p>
+    <div class="filters" role="tablist" aria-label="סינון עבודות" id="filters"></div>
+  </div>
+  <div class="work-stage" id="workStage">
+    <div class="work-sticky">
+      <div class="work-track" id="wall"></div>
+      <div class="work-counter" id="workCounter" aria-hidden="true"><b>01</b><span>/ 41</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== מה אנחנו בונים: טקסט גולל, תמונה דביקה מתחלפת ===== -->
+<section class="services" id="services">
+  <div class="wrap">
+    <h2>מה אנחנו בונים</h2>
+    <div class="story">
+      <div class="story-text">
+        <article class="story-item" data-img="stairs-wood-rail">
+          <h3>מדרגות</h3>
+          <p>מדרגות מרחפות על קורה מרכזית, ספירלה, או גרם קלאסי עם מדרכי עץ מלא. כולל מעקה לפי התקן.</p>
+          <ul><li>מספר המדרגות ורוחבן</li><li>סוג העץ למדרכים</li><li>מעקה בצד אחד או בשניים</li></ul>
+        </article>
+        <article class="story-item" data-img="gate-estate">
+          <h3>שערים ומעקות</h3>
+          <p>שערי כניסה וחניה, שערים בחיתוך לייזר, מעקות למרפסות ולמדרגות, סורגים שנראים כמו עיצוב ולא כמו סורג.</p>
+          <ul><li>רוחב הפתח וגובה</li><li>מילוי: רפפות ברזל, עץ או לייזר</li><li>גלוון, צביעה בתנור או קורטן</li></ul>
+        </article>
+        <article class="story-item" data-img="pergola-stone">
+          <h3>פרגולות וחוץ</h3>
+          <p>פרגולות וסככות ברזל ועץ, מטבחי חוץ עם חזיתות עץ, מנגלים ומעשנות שמחזיקים עשרות שנים.</p>
+          <ul><li>שטח במ"ר וגובה</li><li>רפפות אורן, אלון או איפאה</li><li>מרחק עמודים ועומסי רוח</li></ul>
+        </article>
+        <article class="story-item" data-img="library-ladder">
+          <h3>פנים ורהיטים</h3>
+          <p>ספריות עם סולם, קירות טלוויזיה, מדפים ושולחנות מעץ מלא על רגלי ברזל. לפי מידות הקיר והחלל.</p>
+          <ul><li>רוחב, גובה ועומק</li><li>אלון, אגוז או גזע טבעי</li><li>ברזל שחור, לבן או גולמי בלכה</li></ul>
+        </article>
+      </div>
+      <div class="story-pics" aria-hidden="true" id="storyPics"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== חומרים וגימורים: דוגמיות שמשנות מודל 3D ===== -->
+<section class="materials" id="materials">
+  <div class="wrap">
+    <div class="mat-copy">
+      <h2>חומרים וגימורים</h2>
+      <p>כל עבודה מתחילה בשתי בחירות: איך הברזל מוגמר ואיזה עץ יושב עליו. בחרו ותראו את ההבדל.</p>
+      <div class="swatches" id="matSteel" role="group" aria-label="גימור ברזל"></div>
+      <div class="swatches" id="matWood" role="group" aria-label="סוג עץ"></div>
+      <p class="mat-note" id="matNote"></p>
+    </div>
+    <div class="mat-model" id="mat3d" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ===== איך זה עובד: קו שמצטייר ===== -->
+<section class="process" id="process">
+  <div class="wrap">
+    <h2>איך זה עובד</h2>
+    <svg class="steps-line" viewBox="0 0 1000 8" preserveAspectRatio="none" aria-hidden="true"><path d="M0 4H1000" pathLength="1"/></svg>
+    <ol class="steps">
+      <li><b>הצעה ראשונית</b><span>בוחרים מוצר, מזינים מידות ומקבלים טווח מחיר והדמיה. דקה אחת.</span></li>
+      <li><b>מדידה</b><span>מגיעים למקום, מודדים ומדברים על חומרים וגימור.</span></li>
+      <li><b>שרטוט והצעה</b><span>הצעת מחיר מפורטת ושרטוט ייצור לאישור לפני שמתחילים.</span></li>
+      <li><b>ייצור בסדנה</b><span>ריתוך, עיבוד עץ וגימור בסדנה בבית עובד.</span></li>
+      <li><b>התקנה</b><span>מתקינים, בודקים ומשאירים מקום נקי.</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== לאדריכלים ולעסקים ===== -->
+<section class="biz" id="business">
+  <div class="wrap">
+    <div class="biz-copy">
+      <h2>לאדריכלים ולעסקים</h2>
+      <p>מבצעים לפי התוכניות שלכם, עם שרטוט ייצור לאישור. ברזל ועץ מספק אחד, בלי לתאם בין שני בעלי מקצוע.</p>
+      <ul class="biz-list">
+        <li>מחיצות למשרדים עם אדניות ורשתות</li>
+        <li>דלפקים, ברים ושולחנות ישיבות</li>
+        <li>מדפים, ויטרינות וריהוט לחנויות</li>
+        <li>שלטים מקורטן ומברזל</li>
+        <li>מדרגות בין קומות וגרמים מעוצבים</li>
+      </ul>
+      <a class="btn primary js-wa" href="#estimate" data-msg="היי, אני מחברה / משרד אדריכלים ואשמח לדבר על פרויקט.">דברו איתנו בוואטסאפ</a>
+    </div>
+    <div class="biz-pics" id="bizPics"></div>
+  </div>
+</section>
+
+<!-- ===== הצעה ראשונית: קונפיגורטור ===== -->
+<section class="estimate" id="estimate">
+  <div class="wrap">
+    <div class="est-head">
+      <h2>הצעה ראשונית חינם</h2>
+      <p>בוחרים מה בונים, מזינים מידות בערך, ורואים הדמיה וטווח מחיר. המחיר הסופי אחרי מדידה.</p>
+    </div>
+    <div class="est-grid">
+      <form class="est-form" id="estForm" novalidate>
+        <ol class="progress" aria-label="שלבים"><li class="on">מה בונים</li><li>מידות וגימור</li><li>תמונות</li><li>פרטים</li></ol>
+
+        <fieldset class="step on" data-step="1">
+          <legend>מה בונים?</legend>
+          <div class="picks" id="picks" role="radiogroup" aria-label="סוג העבודה"></div>
+          <div class="step-nav"><button type="button" class="btn primary" data-next disabled>המשך</button></div>
+        </fieldset>
+
+        <fieldset class="step" data-step="2">
+          <legend>מידות וגימור</legend>
+          <div class="fields" id="fields"></div>
+          <div class="chips-row"><span class="chips-label">גימור ברזל</span><div class="chips" id="finishChips"></div></div>
+          <div class="chips-row" id="woodRow"><span class="chips-label">עץ</span><div class="chips" id="woodChips"></div></div>
+          <div class="result" id="result" aria-live="polite">
+            <div class="range"><span class="range-label">הערכה ראשונית לפני מדידה</span><b class="range-num" id="rangeNum">בחרו מידות</b><span class="range-vat" id="rangeVat"></span></div>
+            <ul class="bars" id="bars"></ul>
+            <p class="result-note" id="resultNote"></p>
+          </div>
+          <div class="step-nav"><button type="button" class="btn ghost" data-prev>חזרה</button><button type="button" class="btn primary" data-next>המשך</button></div>
+        </fieldset>
+
+        <fieldset class="step" data-step="3">
+          <legend>תמונות של המקום</legend>
+          <p class="hint">לא חובה, אבל עוזר לנו לדייק. עד 5 תמונות.</p>
+          <label class="drop" for="q-photos"><input id="q-photos" name="photos" type="file" accept="image/*" multiple><span>לחצו לבחירת תמונות או גררו לכאן</span></label>
+          <div class="thumbs" id="thumbs"></div>
+          <div class="field"><label for="q-msg">פרטים נוספים</label><textarea id="q-msg" name="message" rows="3" placeholder="למשל: הקיר מול הכניסה, יש חלון באמצע"></textarea></div>
+          <div class="step-nav"><button type="button" class="btn ghost" data-prev>חזרה</button><button type="button" class="btn primary" data-next>המשך</button></div>
+        </fieldset>
+
+        <fieldset class="step" data-step="4">
+          <legend>לאן לשלוח את ההצעה?</legend>
+          <div class="two">
+            <div class="field"><label for="q-name">שם</label><input id="q-name" name="name" autocomplete="name" required></div>
+            <div class="field"><label for="q-phone">טלפון</label><input id="q-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
+            <div class="field"><label for="q-email">מייל</label><input id="q-email" name="email" type="email" autocomplete="email"></div>
+            <div class="field"><label for="q-city">עיר</label><input id="q-city" name="city" autocomplete="address-level2"></div>
+            <div class="field"><label for="q-kind">אני פונה בתור</label>
+              <select id="q-kind" name="customer_kind"><option value="private">לקוח פרטי</option><option value="architect">אדריכל / מעצב</option><option value="business">חברה / עסק</option></select></div>
+          </div>
+          <label class="check"><input type="checkbox" id="q-consent" name="marketing_consent"> מסכים/ה לקבל מ-IRON BEN עדכונים ופרסומות במייל ובוואטסאפ. אפשר להסיר בכל עת.</label>
+          <p class="err" id="formErr" role="alert"></p>
+          <div class="step-nav"><button type="button" class="btn ghost" data-prev>חזרה</button><button type="submit" class="btn primary" id="sendBtn">שליחת הבקשה</button></div>
+        </fieldset>
+
+        <div class="step done" data-step="5" hidden>
+          <h3>קיבלנו. נחזור אליכם לתיאום מדידה.</h3>
+          <p id="doneRange"></p>
+          <div class="step-nav"><a class="btn primary js-wa" id="doneWa" href="#" target="_blank" rel="noopener">שלחו לי את זה בוואטסאפ</a><button type="button" class="btn ghost" id="restart">בקשה נוספת</button></div>
+        </div>
+      </form>
+
+      <aside class="est-model">
+        <div class="model-tabs" role="tablist"><button type="button" class="on" data-mode="3d" role="tab" aria-selected="true">הדמיה</button><button type="button" data-mode="plan" role="tab" aria-selected="false">תוכנית</button></div>
+        <div class="model" id="est3d"></div>
+        <p class="model-cap" id="modelCap">בחרו מוצר כדי לראות הדמיה</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-brand"><img src="brand/logo-120.png" width="40" height="52" alt="" loading="lazy"><span>IRON BEN · <span id="f-address"></span></span></div>
+    <div id="f-contact" class="foot-links"></div>
+  </div>
+</footer>
+
+<a class="fab js-wa" href="#estimate" aria-label="וואטסאפ" data-msg="היי, אשמח להצעת מחיר.">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.1 1.6 2.5 4 3.5 1.5.6 2.1.7 2.8.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>
+</a>
+
+<dialog class="lb" id="lb">
+  <button type="button" class="lb-close" aria-label="סגירה">✕</button>
+  <button type="button" class="lb-prev" aria-label="הקודם">‹</button>
+  <figure><img id="lbImg" alt=""><figcaption><b id="lbCap"></b><span id="lbCat"></span><span id="lbCount"></span></figcaption></figure>
+  <button type="button" class="lb-next" aria-label="הבא">›</button>
+</dialog>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
+<script src="admin/pricing.js" defer></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
