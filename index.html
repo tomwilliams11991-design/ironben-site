@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>IRON BEN | סדנת ברזל ועץ בהזמנה אישית</title>
 <meta name="description" content="IRON BEN, סדנת ברזל ועץ בוטיקית בבית עובד ליד נס ציונה. מדרגות, שערים, פרגולות, מעקות, ספריות ושולחנות בהזמנה אישית. הצעה ראשונית חינם עם הדמיה תלת-ממדית.">
-<meta name="theme-color" content="#fafaf8">
+<meta name="theme-color" content="#0f0d0b">
 <meta property="og:title" content="IRON BEN | סדנת ברזל ועץ בהזמנה אישית">
 <meta property="og:description" content="מדרגות, שערים, פרגולות ורהיטים מברזל ועץ. מתכננים, מייצרים בסדנה בבית עובד ומתקינים. הצעה ראשונית חינם עם הדמיה.">
 <meta property="og:image" content="og.jpg">
@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preload" href="fonts/rubik-900-hebrew.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/rubik-300-hebrew.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="img/blacksmith-1600.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="img/scene/gate-1600.jpg" fetchpriority="high">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="styles.css">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
@@ -26,107 +26,96 @@
 
 <header class="top" id="top">
   <div class="wrap">
-    <a class="mark" href="#" aria-label="IRON BEN, לראש העמוד"><img src="brand/logo-120.png" srcset="brand/logo-120.png 1x, brand/logo-240.png 2x" width="44" height="58" alt="IRON BEN"><span>IRON BEN</span></a>
+    <a class="mark" href="#top" aria-label="IRON BEN, לראש העמוד"><img src="brand/logo-120.png" srcset="brand/logo-120.png 1x, brand/logo-240.png 2x" width="40" height="52" alt="IRON BEN"><span>IRON BEN</span></a>
     <nav class="nav" aria-label="ראשי">
-      <a href="#doors">העבודות</a>
-      <a href="#forge">הסדנה</a>
-      <a href="#materials">חומרים</a>
-      <a href="#estimate">הצעה ראשונית</a>
-      <a href="#office">לאדריכלים</a>
+      <a href="#inside">הסדנה</a>
+      <a href="#wall">העבודות</a>
+      <a href="#bench">הצעה ראשונית</a>
+      <a href="#exit">יצירת קשר</a>
     </nav>
-    <a class="btn primary small" href="#estimate">הצעה ראשונית חינם</a>
+    <a class="btn primary small" href="#bench">הצעה ראשונית חינם</a>
   </div>
 </header>
 
-<main class="tour">
+<!-- רקע הסדנה (כהה) מאחורי כל מה שאחרי הכניסה -->
+<div class="shop-bg" aria-hidden="true"></div>
 
-<!-- ===== 1. הכניסה ===== -->
-<section class="room entrance" id="entrance">
-  <figure class="room-bg">
-    <picture>
-      <source type="image/avif" srcset="img/blacksmith-960.avif 960w, img/blacksmith-1600.avif 1600w" sizes="100vw">
-      <source type="image/webp" srcset="img/blacksmith-960.webp 960w, img/blacksmith-1600.webp 1600w" sizes="100vw">
-      <img src="img/blacksmith-1600.jpg" alt="" width="1600" height="1843" fetchpriority="high" decoding="async">
-    </picture>
-  </figure>
-  <div class="wrap entrance-copy">
-    <p class="plate"><span>בית עובד · ליד נס ציונה</span></p>
-    <h1><span>ברזל.</span><span>עץ.</span><span>בדיוק לבית שלכם.</span></h1>
-    <p class="lede">סדנה בוטיקית של ברזל ועץ. מתכננים איתכם, מייצרים כאן, ומתקינים אצלכם.</p>
-    <div class="cta">
-      <a class="btn primary" href="#estimate" data-magnet>הצעה ראשונית חינם</a>
-      <a class="btn light" href="#doors" data-magnet>להיכנס לסדנה</a>
+<main>
+
+<!-- ===== 0+1+2. השער שנפתח אל הסדנה (נעוץ בזמן הגלילה) ===== -->
+<section class="gate" id="gate">
+  <div class="stage">
+    <div class="inside">
+      <div class="fit">
+        <picture>
+          <source type="image/avif" srcset="img/scene/shop-960.avif 960w, img/scene/shop-1600.avif 1600w, img/scene/shop-2400.avif 2400w" sizes="100vw">
+          <source type="image/webp" srcset="img/scene/shop-960.webp 960w, img/scene/shop-1600.webp 1600w, img/scene/shop-2400.webp 2400w" sizes="100vw">
+          <img src="img/scene/shop-1600.jpg" srcset="img/scene/shop-960.jpg 960w, img/scene/shop-1600.jpg 1600w, img/scene/shop-2400.jpg 2400w" sizes="100vw" alt="הסדנה: כבשן, סדן, שולחן עבודה מפלדה ואלון ומדפי חומרים" width="3856" height="2160" decoding="async">
+        </picture>
+        <ul class="spots" aria-label="מה עושים בסדנה">
+          <li style="--x:33%;--y:38%"><button type="button" aria-expanded="false"><i></i><span>כבשן. חימום וכיפוף ברזל ביד.</span></button></li>
+          <li style="--x:51.5%;--y:63%"><button type="button" aria-expanded="false"><i></i><span>סדן ופטיש. חישול, לא רק חיתוך לייזר.</span></button></li>
+          <li style="--x:11%;--y:32%"><button type="button" aria-expanded="false"><i></i><span>כלי יד. ריתוך, השחזה וגימור בתנור.</span></button></li>
+          <li style="--x:83%;--y:44%"><button type="button" aria-expanded="false"><i></i><span>אלון, אגוז ואורן. נגרות באותה סדנה.</span></button></li>
+        </ul>
+      </div>
+      <div class="dim"></div>
+      <div class="embers" aria-hidden="true"></div>
+      <div class="wrap hero">
+        <p class="where">בית עובד · ליד נס ציונה</p>
+        <h1><span>ברזל.</span> <span>עץ.</span><span class="line">בדיוק לבית שלכם.</span></h1>
+        <p class="lede">סדנה בוטיקית של ברזל ועץ. מתכננים איתכם, מייצרים כאן, ומתקינים אצלכם.</p>
+        <div class="cta">
+          <a class="btn primary" href="#bench" data-magnet>הצעה ראשונית חינם</a>
+          <a class="btn light" href="#wall" data-magnet>לראות עבודות</a>
+        </div>
+      </div>
     </div>
+    <div class="doors3d">
+      <div class="leaf l">
+        <picture>
+          <source type="image/avif" srcset="img/scene/gate-960.avif 960w, img/scene/gate-1600.avif 1600w, img/scene/gate-2400.avif 2400w" sizes="100vw">
+          <source type="image/webp" srcset="img/scene/gate-960.webp 960w, img/scene/gate-1600.webp 1600w, img/scene/gate-2400.webp 2400w" sizes="100vw">
+          <img src="img/scene/gate-1600.jpg" srcset="img/scene/gate-960.jpg 960w, img/scene/gate-1600.jpg 1600w, img/scene/gate-2400.jpg 2400w" sizes="100vw" alt="שער הסדנה: אגוז מגולף, פלדה שחורה ופליז" width="3856" height="2160" fetchpriority="high" decoding="async">
+        </picture>
+        <img class="seal" src="brand/logo.png" alt="" aria-hidden="true">
+      </div>
+      <div class="leaf r">
+        <picture>
+          <source type="image/avif" srcset="img/scene/gate-960.avif 960w, img/scene/gate-1600.avif 1600w, img/scene/gate-2400.avif 2400w" sizes="100vw">
+          <source type="image/webp" srcset="img/scene/gate-960.webp 960w, img/scene/gate-1600.webp 1600w, img/scene/gate-2400.webp 2400w" sizes="100vw">
+          <img src="img/scene/gate-1600.jpg" srcset="img/scene/gate-960.jpg 960w, img/scene/gate-1600.jpg 1600w, img/scene/gate-2400.jpg 2400w" sizes="100vw" alt="" width="3856" height="2160" decoding="async">
+        </picture>
+        <img class="seal" src="brand/logo.png" alt="" aria-hidden="true">
+      </div>
+    </div>
+    <p class="hint" aria-hidden="true"><span>גללו כדי להיכנס</span><i></i></p>
   </div>
+  <span id="inside" class="anchor"></span>
 </section>
 
-<!-- ===== 2. הדלתות: כל קטגוריה מאחורי דלת ברזל ===== -->
-<section class="room doors" id="doors">
-  <div class="wrap">
-    <p class="plate"><span>המסדרון</span></p>
+<!-- ===== 3. קיר הדלתות ===== -->
+<section class="wall" id="wall">
+  <div class="wrap wall-head">
     <h2>מאחורי כל דלת, עבודה אחרת.</h2>
-    <p class="sub">פותחים דלת ורואים מה יצא מהסדנה. כל עבודה כאן נבנתה לפי מידה, לבית או לעסק מסוים.</p>
+    <p class="sub">כל דלת היא קטגוריה. פתחו אחת ותראו מה יצא מהסדנה.</p>
   </div>
   <div class="door-row" id="doorRow" role="list"></div>
-  <div class="gallery" id="gallery" hidden>
-    <div class="wrap">
-      <div class="gallery-head"><h3 id="galTitle"></h3><p id="galDesc"></p><ul class="affects" id="galAffects"></ul><button type="button" class="btn ghost" id="galClose">סגירת הדלת</button></div>
-      <div class="gallery-grid" id="galGrid"></div>
-    </div>
+  <div class="burst-area" id="burstArea">
+    <p class="burst-hint" id="burstHint">העבירו את העכבר על דלת</p>
+    <div class="burst" id="burst" aria-live="polite"></div>
   </div>
 </section>
 
-<!-- ===== 3. הנפחייה: הסדנה האמיתית, צבעים של פיח וגחלת ===== -->
-<section class="room forge" id="forge">
-  <div class="embers" aria-hidden="true"></div>
-  <div class="wrap forge-grid">
-    <div class="forge-copy">
-      <p class="plate dark"><span>הנפחייה</span></p>
-      <h2>כאן זה קורה.</h2>
-      <p class="sub">תנור, פטיש, סדן ורתכת. ברזל מתחמם, מתכופף ומתחבר לעץ מלא תחת קורת גג אחת. בלי לתאם בין שני בעלי מקצוע, בלי הפתעות בהתקנה.</p>
-      <ul class="tools">
-        <li><b>תנור</b><span>חימום לכיפוף ולנפחות</span></li>
-        <li><b>סדן ופטיש</b><span>עיצוב ביד, לא רק בלייזר</span></li>
-        <li><b>רתכת</b><span>תפרים נקיים, מושחזים</span></li>
-        <li><b>סדנת עץ</b><span>אלון, אגוז, אורן ואיפאה</span></li>
-      </ul>
-      <ol class="steps">
-        <li><b>הצעה ראשונית</b><span>מידות בערך, טווח מחיר והדמיה. דקה.</span></li>
-        <li><b>מדידה</b><span>אצלכם, עם דוגמאות חומר ביד.</span></li>
-        <li><b>שרטוט והצעה</b><span>שרטוט ייצור לאישור לפני שמתחילים.</span></li>
-        <li><b>ייצור</b><span>ריתוך, עיבוד עץ וגימור בסדנה.</span></li>
-        <li><b>התקנה</b><span>מתקינים, בודקים ומשאירים נקי.</span></li>
-      </ol>
-    </div>
-    <div class="forge-pics" id="forgePics"></div>
-  </div>
-</section>
-
-<!-- ===== 4. מדף החומרים ===== -->
-<section class="room materials" id="materials">
-  <div class="wrap mat-grid">
-    <div class="mat-copy">
-      <p class="plate"><span>מדף החומרים</span></p>
-      <h2>איך הברזל מוגמר, ואיזה עץ יושב עליו.</h2>
-      <p class="sub">שתי בחירות שמשנות את כל העבודה. בחרו ותראו.</p>
-      <div class="swatches" id="matSteel" role="group" aria-label="גימור ברזל"></div>
-      <div class="swatches" id="matWood" role="group" aria-label="סוג עץ"></div>
-      <p class="mat-note" id="matNote"></p>
-    </div>
-    <div class="mat-model" id="mat3d" aria-hidden="true"></div>
-  </div>
-</section>
-
-<!-- ===== 5. שולחן השרטוט: הצעה ראשונית ===== -->
-<section class="room estimate" id="estimate">
+<!-- ===== 4. שולחן העבודה: הצעה ראשונית ===== -->
+<section class="bench" id="bench">
   <div class="wrap">
-    <div class="est-head">
-      <p class="plate"><span>שולחן השרטוט</span></p>
-      <h2>הצעה ראשונית חינם, עם הדמיה.</h2>
+    <div class="bench-head">
+      <h2>שולחן העבודה.<br><small>הצעה ראשונית חינם, עם הדמיה.</small></h2>
       <p class="sub">בוחרים מה בונים, מזינים מידות בערך, ורואים הדמיה וטווח מחיר. המחיר הסופי אחרי מדידה.</p>
     </div>
     <div class="est-grid">
-      <form class="est-form" id="estForm" novalidate>
+      <form class="sheet est-form" id="estForm" novalidate>
         <ol class="progress" aria-label="שלבים"><li class="on">מה בונים</li><li>מידות וגימור</li><li>תמונות</li><li>פרטים</li></ol>
 
         <fieldset class="step on" data-step="1">
@@ -150,7 +139,7 @@
 
         <fieldset class="step" data-step="3">
           <legend>תמונות של המקום</legend>
-          <p class="hint">לא חובה, אבל עוזר לנו לדייק. עד 5 תמונות.</p>
+          <p class="hint-txt">לא חובה, אבל עוזר לנו לדייק. עד 5 תמונות.</p>
           <label class="drop" for="q-photos"><input id="q-photos" name="photos" type="file" accept="image/*" multiple><span>לחצו לבחירת תמונות או גררו לכאן</span></label>
           <div class="thumbs" id="thumbs"></div>
           <div class="field"><label for="q-msg">פרטים נוספים</label><textarea id="q-msg" name="message" rows="3" placeholder="למשל: הקיר מול הכניסה, יש חלון באמצע"></textarea></div>
@@ -188,36 +177,27 @@
   </div>
 </section>
 
-<!-- ===== 6. המשרד: לאדריכלים ולעסקים ===== -->
-<section class="room office" id="office">
-  <div class="wrap office-grid">
-    <div class="office-copy">
-      <p class="plate"><span>המשרד</span></p>
-      <h2>לאדריכלים, למעצבים ולעסקים.</h2>
-      <p class="sub">מבצעים לפי התוכניות שלכם, עם שרטוט ייצור לאישור. ברזל ועץ מספק אחד.</p>
-      <ul class="office-list">
-        <li>מחיצות למשרדים עם אדניות ורשתות</li>
-        <li>דלפקים, ברים ושולחנות ישיבות</li>
-        <li>מדפים, ויטרינות וריהוט לחנויות</li>
-        <li>שלטים מקורטן ומברזל</li>
-        <li>מדרגות בין קומות וגרמים מעוצבים</li>
-      </ul>
-      <a class="btn primary js-wa" href="#estimate" data-msg="היי, אני מחברה / משרד אדריכלים ואשמח לדבר על פרויקט.">דברו איתנו בוואטסאפ</a>
+<!-- ===== 5. היציאה לחצר ===== -->
+<section class="exit" id="exit">
+  <div class="wrap exit-grid">
+    <div>
+      <img src="brand/logo-120.png" srcset="brand/logo-120.png 1x, brand/logo-240.png 2x" width="72" height="94" alt="" loading="lazy">
+      <h2>הדלת לחצר.</h2>
+      <p class="sub">בואו לראות את הסדנה, להרגיש את העץ ביד ולדבר על הפרויקט.</p>
     </div>
-    <div class="office-pics" id="officePics"></div>
+    <dl class="exit-info">
+      <div><dt>כתובת</dt><dd id="f-address"></dd></div>
+      <div><dt>שעות</dt><dd><span id="clock"></span>א' עד ה' 8:00 עד 17:00, ו' עד 13:00</dd></div>
+      <div><dt>דברו איתנו</dt><dd id="f-contact" class="foot-links"></dd></div>
+      <div><dt>לאדריכלים ולעסקים</dt><dd>מבצעים לפי התוכניות שלכם, עם שרטוט ייצור לאישור. <a class="js-wa" href="#bench" data-msg="היי, אני מחברה / משרד אדריכלים ואשמח לדבר על פרויקט.">דברו איתנו</a></dd></div>
+    </dl>
   </div>
+  <p class="wrap copy">IRON BEN · ברזל ועץ בהזמנה אישית</p>
 </section>
 
 </main>
 
-<footer class="foot">
-  <div class="wrap">
-    <div class="foot-brand"><img src="brand/logo-120.png" width="40" height="52" alt="" loading="lazy"><span>IRON BEN · <span id="f-address"></span></span></div>
-    <div id="f-contact" class="foot-links"></div>
-  </div>
-</footer>
-
-<a class="fab js-wa" href="#estimate" aria-label="וואטסאפ" data-msg="היי, אשמח להצעת מחיר.">
+<a class="fab js-wa" href="#bench" aria-label="וואטסאפ" data-msg="היי, אשמח להצעת מחיר.">
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.1 1.6 2.5 4 3.5 1.5.6 2.1.7 2.8.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>
 </a>
 

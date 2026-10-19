@@ -1,4 +1,4 @@
-// IRON BEN: סיור בסדנה. דלתות לפי קטגוריה, הנפחייה, חומרים, שולחן השרטוט (קונפיגורטור 3D + הצעה ראשונית), המשרד.
+// IRON BEN v3: נכנסים לסדנה. השער נפתח לפי הגלילה (--p), נקודות על הכלים, קיר דלתות עם תמונות שפורצות, שולחן העבודה (קונפיגורטור 3D + הצעה ראשונית).
 // תלויות: supabase-js (UMD), three (importmap, נטען דינמית), admin/pricing.js.
 const C = window.IRONBEN_CONFIG || {};
 const $ = (s, r = document) => r.querySelector(s);
@@ -12,16 +12,38 @@ function pic(name, alt, sizes = "(max-width:820px) 50vw, 30vw", eager = false) {
   const set = (ext) => `img/${name}-480.${ext} 480w, img/${name}-960.${ext} 960w, img/${name}-1600.${ext} 1600w`;
   return `<picture><source type="image/avif" srcset="${set("avif")}" sizes="${sizes}"><source type="image/webp" srcset="${set("webp")}" sizes="${sizes}"><img src="img/${name}-960.jpg" srcset="${set("jpg")}" sizes="${sizes}" alt="${alt}" width="960" height="1106" loading="${eager ? "eager" : "lazy"}" decoding="async"></picture>`;
 }
-const clipIO = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); clipIO.unobserve(e.target); } }), { rootMargin: "-60px 0px" });
-const observeClip = (el) => clipIO.observe(el);
 
-// ---------- הדלתות: קטגוריה = דלת ----------
+// ---------- מנוע הגלילה: --p = כמה השער פתוח (0..1). כל התנועה עצמה ב-CSS ----------
+const gate = $("#gate"), stage = $(".stage"), hdr = $("#top");
+let ticking = false;
+function tick() {
+  ticking = false;
+  const total = Math.max(1, gate.offsetHeight - innerHeight);
+  const p = Math.min(1, Math.max(0, -gate.getBoundingClientRect().top / total));
+  if (!REDUCED) document.documentElement.style.setProperty("--p", p.toFixed(4));
+  stage.classList.toggle("open", REDUCED || p > 0.88);
+  hdr.classList.toggle("solid", scrollY > 40);
+}
+const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(tick); } };
+addEventListener("scroll", onScroll, { passive: true });
+addEventListener("resize", onScroll);
+tick();
+
+// ---------- נקודות על הכלים (ריחוף במחשב, נגיעה בנייד) ----------
+$$(".spots button").forEach((b) => b.addEventListener("click", () => {
+  const on = b.getAttribute("aria-expanded") === "true";
+  $$(".spots button").forEach((x) => x.setAttribute("aria-expanded", "false"));
+  b.setAttribute("aria-expanded", String(!on));
+}));
+if (!REDUCED) $(".embers").innerHTML = Array.from({ length: 16 }, () => `<i style="--x:${22 + Math.random() * 22}%;--d:${5 + Math.random() * 6}s;--dl:${-Math.random() * 10}s;--dx:${(Math.random() - 0.5) * 80}px"></i>`).join("");
+
+// ---------- קיר הדלתות ----------
 const DOORS = [
-  { key: "stairs", label: "גרמי מדרגות", cover: "stairs-floating-black", desc: "מדרגות מרחפות על קורה מרכזית, ספירלה, או גרם קלאסי עם מדרכי עץ מלא. כולל מעקה לפי התקן.", affects: ["מספר המדרגות ורוחבן", "סוג העץ למדרכים", "מעקה בצד אחד או בשניים"] },
-  { key: "gates", label: "שערים ומעקות", cover: "gate-estate", desc: "שערי כניסה וחניה, שערים בחיתוך לייזר, מעקות למרפסות ולמדרגות, וסורגים שנראים כמו עיצוב.", affects: ["רוחב הפתח וגובה", "מילוי: רפפות ברזל, עץ או לייזר", "גלוון, צביעה בתנור או קורטן"] },
-  { key: "outdoor", label: "פרגולות וחוץ", cover: "pergola-stone", desc: "פרגולות וסככות ברזל ועץ, מטבחי חוץ עם חזיתות עץ, מנגלים ומעשנות שמחזיקים עשרות שנים.", affects: ["שטח במ\"ר וגובה", "רפפות אורן, אלון או איפאה", "מרחק עמודים ועומסי רוח"] },
-  { key: "interior", label: "פנים ורהיטים", cover: "library-ladder", desc: "ספריות עם סולם, קירות טלוויזיה, מדפים ושולחנות מעץ מלא על רגלי ברזל. לפי מידות הקיר והחלל.", affects: ["רוחב, גובה ועומק", "אלון, אגוז או גזע טבעי", "ברזל שחור, לבן או גולמי"] },
-  { key: "business", label: "עסקים ומשרדים", cover: "office-plant-wall", desc: "מחיצות עם אדניות, דלפקים וברים, ריהוט לחנויות, שלטי קורטן ומתקנים לרכב. לפי תוכנית.", affects: ["מידות מהתוכנית", "גימור ועמידות", "לוחות זמנים לפרויקט"] },
+  { key: "stairs", label: "גרמי מדרגות", cover: "stairs-floating-black", desc: "מדרגות מרחפות על קורה מרכזית, ספירלה, או גרם קלאסי עם מדרכי עץ מלא. כולל מעקה לפי התקן." },
+  { key: "gates", label: "שערים ומעקות", cover: "gate-estate", desc: "שערי כניסה וחניה, שערים בחיתוך לייזר, מעקות למרפסות ולמדרגות, וסורגים שנראים כמו עיצוב." },
+  { key: "outdoor", label: "פרגולות וחוץ", cover: "pergola-stone", desc: "פרגולות וסככות ברזל ועץ, מטבחי חוץ עם חזיתות עץ, מנגלים ומעשנות שמחזיקים עשרות שנים." },
+  { key: "interior", label: "פנים ורהיטים", cover: "library-ladder", desc: "ספריות עם סולם, קירות טלוויזיה, מדפים ושולחנות מעץ מלא על רגלי ברזל. לפי מידות הקיר והחלל." },
+  { key: "business", label: "עסקים ומשרדים", cover: "office-plant-wall", desc: "מחיצות עם אדניות, דלפקים וברים, ריהוט לחנויות, שלטי קורטן ומתקנים לרכב. לפי תוכנית." },
 ];
 const WORK = [
   ["stairs-floating-black", "מדרגות מרחפות על קורה מרכזית", "stairs"], ["stairs-spiral-wood", "ספירלה עם מדרכי עץ", "stairs"], ["stairs-wood-rail", "מדרגות עץ ומעקה ברזל", "stairs"], ["stairs-spiral-white", "מדרגות ספירלה לבנות", "stairs"], ["stairs-exterior", "מדרגות חוץ מרחפות", "stairs"],
@@ -30,50 +52,61 @@ const WORK = [
   ["library-ladder", "ספריה עם סולם ברזל", "interior"], ["table-chevron", "שולחן אוכל על רגלי ברזל", "interior"], ["tv-wall", "קיר טלוויזיה ממדפי ברזל", "interior"], ["live-edge-table", "שולחן גזע טבעי", "interior"], ["library-white", "קיר ספריה לבן", "interior"], ["table-industrial", "שולחן בסגנון תעשייתי", "interior"], ["glass-table", "שולחן זכוכית על ברזל", "interior"], ["tv-stand", "שידת טלוויזיה", "interior"], ["tv-white-shelves", "מדפים לבנים לסלון", "interior"],
   ["office-plant-wall", "מחיצת צמחים במשרד", "business"], ["barber-shop", "ריהוט למספרה", "business"], ["sign-netofa", "שלט קורטן ליקב נטופה", "business"], ["deli-shop", "ריהוט לחנות מעדנים", "business"], ["kiosk-bar", "בר עץ לאירועים", "business"], ["truck-rack", "מתקן לטנדר", "business"],
 ];
-const doorRow = $("#doorRow"), gallery = $("#gallery");
-let openKey = null, shown = [];
+const doorRow = $("#doorRow"), burst = $("#burst"), burstArea = $("#burstArea"), wall = $("#wall");
+let openKey = null, shown = [], closeT = 0;
 doorRow.innerHTML = DOORS.map((d) => {
   const n = WORK.filter((w) => w[2] === d.key).length;
-  return `<button type="button" class="door" role="listitem" data-key="${d.key}" aria-expanded="false" aria-controls="gallery">
-    <div class="behind">${pic(d.cover, "", "(max-width:620px) 50vw, 20vw")}</div>
-    <div class="leaf"><span class="tag">${d.label}</span></div>
-    <figcaption>${d.label}<small>${n} עבודות</small></figcaption></button>`;
+  return `<button type="button" class="door" role="listitem" data-key="${d.key}" aria-expanded="false" aria-controls="burst">
+    <div class="jamb">${pic(d.cover, "", "(max-width:980px) 60vw, 20vw")}<div class="count"><b>${d.label}</b>${n} עבודות</div></div>
+    <div class="panel"><span class="plate">${d.label}</span></div></button>`;
 }).join("");
+// התמונות יוצאות מהדלת (FLIP): מודדים את המקום הסופי, מתחילים מהדלת, ומשחררים
 function openDoor(key) {
-  const d = DOORS.find((x) => x.key === key);
-  if (!d || openKey === key) { closeDoor(); return; }
+  clearTimeout(closeT);
+  if (openKey === key) return;
   openKey = key;
-  $$(".door").forEach((b) => b.setAttribute("aria-expanded", b.dataset.key === key));
+  const d = DOORS.find((x) => x.key === key), door = $(`.door[data-key="${key}"]`);
+  $$(".door").forEach((b) => { b.classList.toggle("open", b === door); b.setAttribute("aria-expanded", String(b === door)); });
   shown = WORK.filter((w) => w[2] === key);
-  $("#galTitle").textContent = d.label; $("#galDesc").textContent = d.desc;
-  $("#galAffects").innerHTML = d.affects.map((a) => `<li>${a}</li>`).join("");
-  $("#galGrid").innerHTML = shown.map((w, i) => `<figure style="--i:${i}" data-i="${i}"><div class="ph">${pic(w[0], w[1], "(max-width:820px) 50vw, 25vw")}</div><figcaption>${w[1]}</figcaption></figure>`).join("");
-  gallery.hidden = false;
-  gallery.scrollIntoView({ block: "start", behavior: REDUCED ? "auto" : "smooth" });
+  burst.classList.remove("in");
+  burst.innerHTML = `<div class="burst-head"><h3>${d.label}</h3><p>${d.desc}</p></div>` +
+    shown.map((w, i) => `<figure style="--i:${i}" data-i="${i}"><div class="ph">${pic(w[0], w[1], "(max-width:560px) 50vw, (max-width:980px) 33vw, 160px")}</div><figcaption>${w[1]}</figcaption></figure>`).join("");
+  burstArea.classList.add("has");
+  const dr = door.getBoundingClientRect(), dx0 = dr.left + dr.width / 2, dy0 = dr.top + dr.height / 2;
+  $$("figure", burst).forEach((f) => { const r = f.getBoundingClientRect(); f.style.setProperty("--dx", `${dx0 - (r.left + r.width / 2)}px`); f.style.setProperty("--dy", `${dy0 - (r.top + r.height / 2)}px`); });
+  void burst.offsetWidth;
+  requestAnimationFrame(() => burst.classList.add("in"));
 }
-function closeDoor() { openKey = null; gallery.hidden = true; $$(".door").forEach((b) => b.setAttribute("aria-expanded", "false")); }
-doorRow.addEventListener("click", (e) => { const b = e.target.closest(".door"); if (b) openDoor(b.dataset.key); });
-$("#galClose").addEventListener("click", () => { closeDoor(); $("#doors").scrollIntoView({ block: "start", behavior: REDUCED ? "auto" : "smooth" }); });
+function closeDoor(delay = 0) {
+  clearTimeout(closeT);
+  closeT = setTimeout(() => {
+    openKey = null;
+    $$(".door").forEach((b) => { b.classList.remove("open"); b.setAttribute("aria-expanded", "false"); });
+    burst.classList.remove("in");
+    burstArea.classList.remove("has");
+    setTimeout(() => { if (!openKey) burst.innerHTML = ""; }, 600);
+  }, delay);
+}
+if (FINE) {
+  doorRow.addEventListener("pointerover", (e) => { const b = e.target.closest(".door"); if (b) openDoor(b.dataset.key); });
+  wall.addEventListener("pointerleave", () => closeDoor(250));
+  doorRow.addEventListener("focusin", (e) => { const b = e.target.closest(".door"); if (b) openDoor(b.dataset.key); });
+}
+doorRow.addEventListener("click", (e) => {
+  const b = e.target.closest(".door"); if (!b) return;
+  if (openKey === b.dataset.key) { if (!FINE) closeDoor(); else burstArea.scrollIntoView({ block: "center", behavior: REDUCED ? "auto" : "smooth" }); }
+  else openDoor(b.dataset.key);
+});
+addEventListener("keydown", (e) => { if (e.key === "Escape" && openKey && !lb.open) closeDoor(); });
 // לייטבוקס
 const lb = $("#lb"); let lbI = 0;
 function showLb() { const w = shown[lbI]; if (!w) return; $("#lbImg").src = `img/${w[0]}-1600.jpg`; $("#lbImg").alt = w[1]; $("#lbCap").textContent = w[1]; $("#lbCat").textContent = DOORS.find((d) => d.key === w[2])?.label || ""; $("#lbCount").textContent = `${lbI + 1} / ${shown.length}`; }
-$("#galGrid").addEventListener("click", (e) => { const f = e.target.closest("figure"); if (!f) return; lbI = Number(f.dataset.i); showLb(); lb.showModal(); });
+burst.addEventListener("click", (e) => { const f = e.target.closest("figure"); if (!f) return; clearTimeout(closeT); lbI = Number(f.dataset.i); showLb(); lb.showModal(); });
 $(".lb-close").addEventListener("click", () => lb.close());
 $(".lb-prev").addEventListener("click", () => { lbI = (lbI - 1 + shown.length) % shown.length; showLb(); });
 $(".lb-next").addEventListener("click", () => { lbI = (lbI + 1) % shown.length; showLb(); });
 lb.addEventListener("click", (e) => { if (e.target === lb) lb.close(); });
 addEventListener("keydown", (e) => { if (!lb.open) return; if (e.key === "ArrowRight") $(".lb-prev").click(); if (e.key === "ArrowLeft") $(".lb-next").click(); });
-
-// ---------- הנפחייה: תמונות וניצוצות ----------
-$("#forgePics").innerHTML = [["blacksmith", "נפחות על הסדן"], ["welder", "ריתוך"], ["brand-stamp", "צריבת החותמת בעץ"]]
-  .map(([n, c]) => `<figure><div class="ph" data-clip>${pic(n, c, "(max-width:900px) 100vw, 50vw")}</div><figcaption>${c}</figcaption></figure>`).join("");
-$$("#forgePics .ph").forEach(observeClip);
-if (!REDUCED) $(".embers").innerHTML = Array.from({ length: 18 }, () => `<i style="--x:${55 + Math.random() * 40}%;--d:${5 + Math.random() * 6}s;--dl:${-Math.random() * 10}s;--dx:${(Math.random() - 0.5) * 80}px"></i>`).join("");
-
-// ---------- המשרד ----------
-$("#officePics").innerHTML = [["office-plant-wall", "מחיצת צמחים במשרד"], ["barber-shop", "מספרה"], ["sign-netofa", "שלט קורטן ליקב"], ["deli-shop", "חנות מעדנים"]]
-  .map(([n, c]) => `<figure><div class="ph" data-clip>${pic(n, c, "(max-width:820px) 50vw, 25vw")}</div><figcaption>${c}</figcaption></figure>`).join("");
-$$("#officePics .ph").forEach(observeClip);
 
 // ---------- כפתורים מגנטיים ----------
 if (FINE && !REDUCED) $$("[data-magnet]").forEach((b) => {
@@ -81,7 +114,7 @@ if (FINE && !REDUCED) $$("[data-magnet]").forEach((b) => {
   b.addEventListener("pointerleave", () => { b.style.transform = ""; });
 });
 
-// ---------- וואטסאפ, פוטר ----------
+// ---------- וואטסאפ, יציאה, שעון הסדנה ----------
 const waLink = (msg) => C.WHATSAPP ? `https://wa.me/${C.WHATSAPP}?text=${encodeURIComponent(msg || "")}` : null;
 $$(".js-wa").forEach((a) => { const u = waLink(a.dataset.msg); if (u) { a.href = u; a.target = "_blank"; a.rel = "noopener"; } });
 $("#f-address").textContent = C.ADDRESS || "";
@@ -91,32 +124,20 @@ $("#f-contact").innerHTML = [
   C.INSTAGRAM && `<a href="${C.INSTAGRAM}" target="_blank" rel="noopener">אינסטגרם</a>`,
   C.FACEBOOK && `<a href="${C.FACEBOOK}" target="_blank" rel="noopener">פייסבוק</a>`,
 ].filter(Boolean).join("");
+(function clock() {
+  const parts = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Jerusalem", hour12: false, weekday: "short", hour: "numeric", minute: "numeric" }).formatToParts(new Date()).reduce((o, p) => (o[p.type] = p.value, o), {});
+  const day = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(parts.weekday), mins = Number(parts.hour) % 24 * 60 + Number(parts.minute);
+  const close = day <= 4 ? 17 * 60 : day === 5 ? 13 * 60 : 0, open = day <= 5 ? 8 * 60 : 0;
+  const isOpen = open && mins >= open && mins < close;
+  $("#clock").textContent = isOpen ? "הסדנה פתוחה עכשיו" : day === 5 && mins >= close || day === 6 ? "נפתחת ביום ראשון ב-8:00" : mins < open && open ? "נפתחת היום ב-8:00" : "נפתחת מחר ב-8:00";
+})();
 
 // ---------- 3D ----------
 let IronModel = null;
 async function loadModel() { if (IronModel) return IronModel; try { IronModel = await import("./model3d.js"); } catch (e) { console.warn("3D לא נטען", e); IronModel = null; } return IronModel; }
 const webgl = (() => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch { return false; } })();
 
-// חומרים
-const STEEL_SW = [["black", "צביעה בתנור, שחור", "#1f2124"], ["galv", "גלוון חם", "#9ea4a7"], ["corten", "קורטן", "#8a4a2a"], ["raw", "ברזל גולמי בלכה", "#4b4e51"], ["white", "צביעה בתנור, לבן", "#e6e4df"]];
-const WOOD_SW = [["oak", "אלון", "#c9924f"], ["walnut", "אגוז", "#5c3b25"], ["pine", "אורן", "#d8b57c"], ["ipe", "איפאה", "#6b3f22"]];
-const NOTES = { black: "הכי נפוץ: עמיד בפנים ובחוץ מקורה. לחוץ חשוף נוסיף גלוון מתחת.", galv: "גלוון חם לפרגולות ושערים בחוץ. אפשר לצבוע מעליו.", corten: "פלדת קורטן מחלידה בשכבה מגנה. טוב לשלטים ולחזיתות.", raw: "ברזל גולמי עם לכה שקופה. רואים את סימני הריתוך והחום.", white: "לבן בתנור למעקות ולמדרגות בחללים בהירים.", oak: "אלון: קשה, גרעין עדין, מתיישן יפה.", walnut: "אגוז: כהה ועשיר, לשולחנות ולספריות.", pine: "אורן מחוטא: הכי משתלם לפרגולות.", ipe: "איפאה: עץ טרופי שעומד בגשם ובשמש בלי טיפול." };
-let matM = null, matSteel = "black", matWood = "pine";
-const GATE = { width_m: 3.2, height_m: 1.6, leaves: "slide", infill: "wood" };
-function swatches(el, list, cur, on) {
-  el.innerHTML = list.map(([k, l, c]) => `<button type="button" data-k="${k}" aria-pressed="${k === cur}"><i style="--sw:${c}"></i>${l}</button>`).join("");
-  el.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; $$("button", el).forEach((x) => x.setAttribute("aria-pressed", x === b)); on(b.dataset.k); });
-}
-swatches($("#matSteel"), STEEL_SW, matSteel, (k) => { matSteel = k; $("#matNote").textContent = NOTES[k] || ""; matM?.update("gate", GATE, { finish: k, wood: matWood }); });
-swatches($("#matWood"), WOOD_SW, matWood, (k) => { matWood = k; $("#matNote").textContent = NOTES[k] || ""; matM?.update("gate", GATE, { finish: matSteel, wood: k }); });
-$("#matNote").textContent = NOTES.black;
-if (webgl) new IntersectionObserver(async (es, io) => {
-  if (!es[0].isIntersecting) return; io.disconnect();
-  const M = await loadModel(); if (!M) return;
-  matM = await M.mount($("#mat3d"), {}); matM.update("gate", GATE, { finish: matSteel, wood: matWood });
-}, { threshold: 0.1 }).observe($("#mat3d"));
-
-// ---------- שולחן השרטוט: קונפיגורטור והצעה ראשונית ----------
+// ---------- שולחן העבודה: קונפיגורטור והצעה ראשונית ----------
 let sb = null;
 try { if (C.SUPABASE_URL && C.SUPABASE_ANON_KEY && window.supabase) sb = window.supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY, { db: { schema: C.SCHEMA || "ironben" } }); } catch { sb = null; }
 let PRODUCTS = [], product = null, inputs = {}, estimate = null, estM = null, step = 1, files = [];
