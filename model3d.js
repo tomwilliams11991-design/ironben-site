@@ -16,8 +16,8 @@ const WOOD = {
   oak: 0xc9924f, walnut: 0x5c3b25, pine: 0xd8b57c, ipe: 0x6b3f22, teak: 0xa8753f, ash: 0xd9c7a3,
   liveedge: 0xb07a3e, metal: 0x5a5d60, none: null,
 };
-const ACCENT = 0xc98a2b;
-const THEME = { sky: 0xffffff, ground: 0xd9d4c8, shadow: 0.22, grid1: 0xc5c0b4, grid2: 0xdad5c9, edge: 0x14231d, flat: 0xf5f3ee, label: "#14231d", labelBg: "#ebe8e0" };
+const ACCENT = 0xd9742f;
+const THEME = { sky: 0xffffff, ground: 0xe0ddd6, shadow: 0.2, grid1: 0xc9c7c1, grid2: 0xe0ddd6, edge: 0x1d1d1b, flat: 0xffffff, label: "#1d1d1b", labelBg: "#fafaf8" };
 
 const fmt = (n, u) => `${Number.isInteger(n) ? n : n.toFixed(2).replace(/\.?0+$/, "")}${u ? " " + u : ""}`;
 const num = (v, d) => { const n = Number(v); return Number.isFinite(n) && n > 0 ? n : d; };
@@ -331,7 +331,7 @@ export async function mount(el, opts = {}) {
         const a = new THREE.Vector3(...d.a).sub(new THREE.Vector3(c[0], 0, c[2])), bb = new THREE.Vector3(...d.b).sub(new THREE.Vector3(c[0], 0, c[2]));
         dimLines.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([a, bb]), lineMat));
         const tag = document.createElement("span"); tag.textContent = d.label;
-        tag.style.cssText = "position:absolute;transform:translate(-50%,-50%);background:" + THEME.labelBg + ";padding:2px 6px;border-radius:2px;color:#c98a2b;white-space:nowrap";
+        tag.style.cssText = "position:absolute;transform:translate(-50%,-50%);background:" + THEME.labelBg + ";padding:2px 6px;border-radius:2px;color:#d9742f;white-space:nowrap";
         tag.dataset.mid = JSON.stringify([(a.x + bb.x) / 2, (a.y + bb.y) / 2, (a.z + bb.z) / 2]);
         labels.appendChild(tag);
       });
