@@ -24,7 +24,7 @@ export const SEG = { architect: "אדריכלים", designer: "מעצבים", of
 export const LSTATUS = { new: "חדש", contacted: "דיברנו", measured: "נמדד", quoted: "הצעה נשלחה", won: "נסגר", lost: "לא נסגר" };
 export const QS = { draft: "טיוטה", sent: "נשלחה", viewed: "נצפתה", accepted: "אושרה", rejected: "נדחתה", expired: "פג תוקף" };
 export const OS = { new: "חדש", approved: "מאושר לשליחה", sent: "נשלח", failed: "נכשל", replied: "ענה", opted_in: "אישר עדכונים", opted_out: "הוסר", bounced: "חזר" };
-export const TKEYS = { outreach: "פנייה לחברות", quote: "הצעת מחיר ללקוח", lead_autoreply: "אישור קבלה ללקוח", lead_notify: "התראה על ליד", steel_alert: "התראת ברזל" };
+export const TKEYS = { consent_request: "שלב 1: בקשת הסכמה", stage2: "שלב 2: המייל המלא", reply_notify: "התראה על תשובה", quote: "הצעת מחיר ללקוח", lead_autoreply: "אישור קבלה ללקוח", lead_notify: "התראה על ליד", steel_alert: "התראת ברזל" };
 
 /** <option> לכל ערך במפה, עם בחירה אופציונלית. */
 export const options = (map, selected) => Object.entries(map).map(([k, v]) => `<option value="${k}"${k === selected ? " selected" : ""}>${v}</option>`).join("");

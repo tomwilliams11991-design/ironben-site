@@ -1,7 +1,7 @@
 // מרכז מיילים, לוג: כל מייל שנשלח (או נכשל), עם סינון סוג/מצב וחיפוש לפי כתובת.
 import { $, sb, esc, heTime, SEG } from "../lib.js";
 
-const KIND = { outreach: "פנייה", quote: "הצעה", lead_notify: "התראת ליד", lead_autoreply: "אישור ללקוח", steel_alert: "ברזל", test: "בדיקה" };
+const KIND = { consent_request: "בקשת הסכמה", stage2: "שלב 2", reply_notify: "התראת תשובה", outreach: "פנייה", quote: "הצעה", lead_notify: "התראת ליד", lead_autoreply: "אישור ללקוח", steel_alert: "ברזל", test: "בדיקה" };
 const STATUS = { sent: ["נשלח", "new"], delivered: ["נמסר", "ok"], failed: ["נכשל", "bad"], bounced: ["חזר", "bad"], complained: ["ספאם", "bad"] };
 
 const logRow = (x) => `<tr><td class="n">${heTime(x.created_at)}</td><td>${KIND[x.kind] || esc(x.kind)}${x.segment ? `<small>${SEG[x.segment] || x.segment}</small>` : ""}</td><td>${esc(x.to_email)}</td><td>${esc(x.subject)}</td><td><span class="pill ${STATUS[x.status]?.[1] || ""}">${STATUS[x.status]?.[0] || esc(x.status)}</span></td><td><small>${esc(x.error)}</small></td></tr>`;

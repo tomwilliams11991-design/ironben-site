@@ -60,6 +60,13 @@ tr:hover td{background:color-mix(in srgb,var(--surface) 60%,transparent)}
 .pill.new{border-color:var(--ember);color:var(--ember)}.pill.ok{border-color:var(--ok);color:var(--ok)}.pill.bad{border-color:var(--err);color:var(--err)}.pill.warn{border-color:var(--warn);color:var(--warn)}
 .msg{font-size:14px;min-height:1.5em}.msg.ok{color:var(--ok)}.msg.err{color:var(--err)}
 .warn{color:var(--warn)}
+.chk{display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+.gates{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.gates b{font-weight:600}.gates .off{color:var(--err)}.gates .on{color:var(--ok)}
+.timeline{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:13px;max-height:60vh;overflow:auto}
+.timeline li{border-inline-start:2px solid var(--line);padding-inline-start:10px}
+.timeline time{color:var(--muted);font-variant-numeric:tabular-nums}
+.reply{white-space:pre-wrap;background:var(--surface-2);padding:8px;border-radius:var(--r);font-size:13px;max-width:56ch}
 .subtabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:14px;flex-wrap:wrap}
 .subtabs button{font:600 14px var(--body);padding:10px 14px;border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);cursor:pointer;margin-bottom:-1px}
 .subtabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ember)}

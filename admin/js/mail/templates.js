@@ -8,6 +8,9 @@ function showTemplate() {
   cur = TPLS.find((t) => String(t.id) === $("t-pick").value) || TPLS[0]; if (!cur) return;
   $("t-name").value = cur.name; $("t-subject").value = cur.subject; $("t-html").value = cur.html; $("t-enabled").checked = cur.enabled;
   $("t-frame").srcdoc = ""; $("t-psub").textContent = "";
+  // נוסח משפטי נעול: אפשר לראות ולבדוק, לא לערוך (המסד חוסם בכל מקרה)
+  ["t-name", "t-subject", "t-html", "t-enabled", "t-save"].forEach((id) => { $(id).disabled = !!cur.locked; });
+  say($("t-msg"), cur.locked ? "נוסח נעול. שינוי רק אחרי אישור, דרך מיגרציה במסד." : "");
 }
 
 export async function loadTemplates() {

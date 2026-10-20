@@ -91,7 +91,7 @@
     <section class="panel" id="p-mail">
       <h2>מרכז מיילים</h2>
       <div class="subtabs" role="tablist">
-        <button data-s="queue" aria-selected="true">תור פניות לחברות</button>
+        <button data-s="queue" aria-selected="true">הסכמות (פנייה חד-פעמית)</button>
         <button data-s="templates">תבניות</button>
         <button data-s="log">לוג מיילים</button>
         <button data-s="supp">רשימת הסרה</button>
@@ -99,17 +99,36 @@
       </div>
 
       <div class="sub on" id="m-queue">
-        <div class="kpi" id="o-kpi"></div>
-        <p class="help">כל חברה מקבלת מייל פרסומי אחד. מייבאים CSV עם העמודות company, contact_name, email, segment, personal_line, source_url. מסמנים את מי לשלוח ולוחצים "אישור". רק מאושרים נשלחים, לפי המכסה היומית.</p>
+        <div class="gates" id="c-gates" role="status"></div>
+        <div class="kpi" id="c-kpi"></div>
+        <p class="help">כל עסק מקבל מייל הסכמה ניטרלי אחד בלבד, לעולם. לפני אישור: צילום העמוד שבו הכתובת פורסמה (נעשה אוטומטית). כתובות בדומיין פרטי (gmail וכו') דורשות אישור נפרד. כתובת שלא נמצאה בעמוד דורשת סימון "בדקתי ידנית". שלב 2 (המייל המלא) נשלח רק למי שענה "כן", ורק אחרי אישור שלך לכל כתובת.</p>
         <div class="bar">
-          <label class="btn">ייבוא CSV<input id="o-file" type="file" accept=".csv,text/csv" hidden></label>
-          <button class="btn" id="o-approve">אישור המסומנים</button>
-          <button class="btn" id="o-preview">מי יקבל היום</button>
-          <button class="btn primary" id="o-send">שליחה עכשיו</button>
-          <select id="o-status"><option value="">כל הסטטוסים</option></select>
-          <select id="o-seg"><option value="">כל הסגמנטים</option></select>
-          <input id="o-search" placeholder="חיפוש חברה / מייל">
-          <span class="msg" id="o-msg" role="status"></span>
+          <button class="btn" id="c-approve">אישור המסומנים לשליחה</button>
+          <label class="chk"><input type="checkbox" id="c-unverified"> כולל כתובות שלא נמצאו בעמוד (בדקתי ידנית)</label>
+          <button class="btn" id="c-personal">אישור דומיין פרטי למסומנים</button>
+          <span class="grow"></span>
+          <label class="btn">ייבוא CSV<input id="c-file" type="file" accept=".csv,text/csv" hidden></label>
+          <button class="btn" id="c-export">ייצוא הסכמות + ראיות</button>
+        </div>
+        <div class="bar">
+          <button class="btn" id="c-dry">מי הבאים בתור</button>
+          <button class="btn" id="c-test">שליחת בדיקה אליי (שני הנוסחים)</button>
+          <button class="btn primary" id="c-send">שליחה עכשיו (מייל אחד)</button>
+          <span class="msg" id="c-msg" role="status"></span>
+        </div>
+        <div class="bar">
+          <select id="c-consent" aria-label="מצב הסכמה"><option value="">כל מצבי ההסכמה</option></select>
+          <select id="c-status" aria-label="סטטוס"><option value="">כל הסטטוסים</option></select>
+          <select id="c-seg" aria-label="תחום"><option value="">כל התחומים</option></select>
+          <select id="c-type" aria-label="סוג כתובת"><option value="">כל הכתובות</option><option value="business_domain">דומיין עסקי</option><option value="personal_free_domain">דומיין פרטי</option></select>
+          <select id="c-evid" aria-label="ראיה"><option value="">כל הראיות</option><option value="found">נמצאה בעמוד</option><option value="notfound">לא נמצאה בעמוד</option><option value="none">בלי צילום</option></select>
+          <input id="c-search" placeholder="חיפוש חברה / מייל / עיר">
+          <span class="help" id="c-count"></span>
+        </div>
+        <div id="c-review-w" hidden>
+          <h3>תור לבדיקה ידנית</h3>
+          <p class="help">תשובות שהמערכת לא סיווגה בביטחון גבוה. הסכמה מסמנים רק אחרי קריאה.</p>
+          <div class="tw"><table id="c-review"></table></div>
         </div>
         <div class="tw"><table id="outT"></table></div>
       </div>
@@ -129,7 +148,7 @@
       </div>
 
       <div class="sub" id="m-log">
-        <div class="bar"><select id="l-kind"><option value="">כל הסוגים</option><option value="outreach">פניות</option><option value="quote">הצעות</option><option value="lead_notify">התראות ליד</option><option value="lead_autoreply">אישור ללקוח</option><option value="steel_alert">ברזל</option><option value="test">בדיקות</option></select>
+        <div class="bar"><select id="l-kind"><option value="">כל הסוגים</option><option value="consent_request">בקשות הסכמה</option><option value="stage2">שלב 2</option><option value="reply_notify">התראות תשובה</option><option value="quote">הצעות</option><option value="lead_notify">התראות ליד</option><option value="lead_autoreply">אישור ללקוח</option><option value="steel_alert">ברזל</option><option value="test">בדיקות</option></select>
           <select id="l-status"><option value="">כל המצבים</option><option value="sent">נשלח</option><option value="delivered">נמסר</option><option value="failed">נכשל</option><option value="bounced">חזר</option><option value="complained">דווח כספאם</option></select>
           <input id="l-search" placeholder="חיפוש כתובת"><button class="btn small" id="l-refresh">רענון</button></div>
         <div class="tw"><table id="logT"></table></div>
@@ -142,10 +161,13 @@
       </div>
 
       <div class="sub" id="m-sending">
-        <h3>פניות אוטומטיות</h3>
+        <h3>שליחת מיילי הסכמה</h3>
+        <p class="help">אי אפשר להדליק שליחה אמיתית לפני: שליחת בדיקה לכתובת שלך, כתובת לקליטת תשובות, אתר ב-https וכתובת מלאה של הסדנה (בהגדרות). המסד חוסם את זה גם אם מנסים בדרך אחרת.</p>
         <div class="form">
-          <label class="l">שליחה אוטומטית (א'-ה' בבוקר)<select id="snd-enabled"><option value="false">כבויה</option><option value="true">פועלת</option></select></label>
-          <label class="l">מכסה יומית<input id="snd-limit" type="number" min="1" max="50"></label>
+          <label class="l">שליחה אמיתית (א'-ה', 09:00-17:00, מייל כל 3 דקות)<select id="snd-enabled"><option value="false">כבויה (מצב ניסיון)</option><option value="true">פועלת</option></select></label>
+          <label class="l">מכסה יומית (אחרי שבוע החימום)<input id="snd-limit" type="number" min="1" max="50"></label>
+          <label class="l">מכסה בשבוע הראשון<input id="snd-warmup" type="number" min="1" max="50"></label>
+          <label class="l">כתובת לקליטת תשובות (Resend Inbound)<input id="snd-reply" type="email" placeholder="reply@..."></label>
         </div>
         <div class="bar"><button class="btn primary" id="snd-save">שמירה</button><span class="msg" id="snd-msg"></span></div>
         <h3>חיבור למייל (Resend)</h3>
