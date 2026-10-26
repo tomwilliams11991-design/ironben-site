@@ -190,6 +190,24 @@ export async function mount(el) {
       renderer.setPixelRatio(prevPR); resize(); render();
       return out;
     },
+    /**
+     * המודל הנוכחי כקובץ GLB (מטרים, על הרצפה, ממורכז), להצגה במצלמה של הטלפון (js/estimate/ar.js).
+     * נבנה מחדש בחומרים של ההדמיה, גם אם המסך כרגע במצב תוכנית, ובלי רצפה, רשת וקווי מידה.
+     * @returns {Promise<ArrayBuffer>}
+     */
+    async exportGLB() {
+      const { GLTFExporter } = await import("three/addons/exporters/GLTFExporter.js");
+      const builder = BUILDERS[current.slug] || BUILDERS.table;
+      const g = builder(current.params, materials(current.mats.finish, current.mats.wood));
+      const c = g.userData.center;
+      g.position.set(-c[0], 0, -c[2]);
+      const root = new THREE.Group(); root.name = "IRON BEN"; root.add(g);
+      // הנקודה הנמוכה ביותר על הרצפה (למשל הקורה המשופעת של המדרגות יורדת מעט מתחת ל-0), כדי שבמצלמה לא "ישקע"
+      g.position.y -= new THREE.Box3().setFromObject(root).min.y;
+      const out = await new GLTFExporter().parseAsync(root, { binary: true });
+      root.traverse((o) => o.geometry?.dispose());
+      return out;
+    },
     destroy() { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); controls.dispose(); renderer.dispose(); el.innerHTML = ""; },
     renderer, scene, camera: cam,
   };

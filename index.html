@@ -175,6 +175,8 @@
         <div class="model-tabs" role="tablist"><button type="button" class="on" data-mode="3d" role="tab" aria-selected="true">הדמיה</button><button type="button" data-mode="plan" role="tab" aria-selected="false">תוכנית</button></div>
         <div class="model" id="est3d"></div>
         <p class="model-cap" id="modelCap">בחרו מוצר כדי לראות הדמיה</p>
+        <button type="button" class="btn ar-btn" id="arBtn" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></svg>הציבו אצלכם (מצלמה)</button>
+        <p class="model-cap" id="arMsg" role="status"></p>
       </aside>
     </div>
   </div>
@@ -204,6 +206,12 @@
 <a class="fab js-wa" href="#bench" aria-label="וואטסאפ" data-msg="היי, אשמח להצעת מחיר.">
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.2.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.1 1.6 2.5 4 3.5 1.5.6 2.1.7 2.8.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>
 </a>
+
+<dialog class="ar" id="arDlg" aria-labelledby="arCap">
+  <div class="ar-head"><b id="arCap"></b><button type="button" class="ar-x" id="arClose" aria-label="סגירה">✕</button></div>
+  <div class="ar-host" id="arHost"></div>
+  <p class="ar-note" id="arNote" role="status"></p>
+</dialog>
 
 <dialog class="lb" id="lb" aria-label="תצוגת תמונה">
   <button type="button" class="lb-close" aria-label="סגירה">✕</button>
