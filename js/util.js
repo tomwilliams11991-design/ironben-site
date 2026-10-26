@@ -14,7 +14,7 @@ export const still = () => REDUCED || document.documentElement.classList.contain
 
 /** מחיר בשקלים, מעוגל, עם מפריד אלפים עברי. */
 const nf = new Intl.NumberFormat("he-IL");
-export const ils = (n) => nf.format(Math.round(Number(n) || 0)) + " ₪";
+export const ils = (n) => nf.format(Math.round(Number(n) || 0)) + "\u00a0₪"; // רווח קשיח: ה-₪ לא נשבר לשורה לבד
 
 /** תאריך קצר בשעון ישראל. */
 export const heDate = (d) => (d ? new Date(d).toLocaleDateString("he-IL", { timeZone: "Asia/Jerusalem" }) : "");

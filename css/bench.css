@@ -54,7 +54,7 @@ input[type=range]:focus-visible{outline:2px solid var(--ember);outline-offset:6p
 .result{border-top:1px solid var(--line);padding-top:18px;display:grid;gap:14px}
 .range{display:grid;gap:4px}
 .range-label{font-size:14px;color:var(--muted)}
-.range-num{font-weight:900;font-size:clamp(34px,4.2vw,56px);line-height:1.05;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.range-num{font-weight:900;font-size:clamp(28px,3.4vw,48px);line-height:1.05;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .range-num.live{color:#b85a1c}
 .range-vat{font-size:14px;color:var(--muted)}
 .bars{display:grid;gap:6px;margin:0;padding:0}
