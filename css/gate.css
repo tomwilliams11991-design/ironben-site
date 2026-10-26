@@ -2,20 +2,25 @@
    כל התנועה כאן נגזרת מ---p (0..1) שנכתב ב-js/gate.js. */
 .gate{position:relative;height:200vh}
 .gate .anchor{position:absolute;top:calc(100% - 100dvh);left:0;width:1px;height:1px}
-.stage{position:sticky;top:0;height:100dvh;overflow:hidden;background:#070605;isolation:isolate}
+.stage{position:sticky;top:0;height:100dvh;overflow:hidden;background:#061110;isolation:isolate}
 /* הסדנה מאחורי השער: נכנסים פנימה (זום קטן) והחושך מתבהר */
 .inside{position:absolute;inset:0;overflow:hidden}
 .fit{position:absolute;left:50%;top:50%;width:var(--gw);height:calc(var(--gw) / 1.7852);transform:translate(-50%,-50%) scale(calc(1.16 - var(--p) * .16));transform-origin:center;will-change:transform}
 .fit picture{display:contents}
 .fit img{width:100%;height:100%;object-fit:cover}
-.dim{position:absolute;inset:0;background:#070605;opacity:calc(.9 - var(--p) * .9);pointer-events:none}
-.inside::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgb(7 6 5/.85) 0%,rgb(7 6 5/.25) 40%,transparent 70%);pointer-events:none}
+.dim{position:absolute;inset:0;background:#061110;opacity:calc(.9 - var(--p) * .9);pointer-events:none}
+.inside::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgb(var(--shade)/.9) 0%,rgb(var(--shade)/.3) 40%,transparent 70%);pointer-events:none}
 /* הטקסט והנקודות מופיעים רק כשהשער כמעט פתוח */
 .stage{--h:clamp(0,calc((var(--p) - .6) / .3),1)}
 .hero{position:absolute;inset:auto 0 0 0;z-index:2;padding-bottom:max(56px,env(safe-area-inset-bottom,0px));color:#fff;opacity:var(--h);transform:translateY(calc((1 - var(--h)) * 28px));pointer-events:none}
 .stage.open .hero{pointer-events:auto}
 .where{font-size:14px;font-weight:500;letter-spacing:.02em;color:rgb(255 255 255/.75);margin-bottom:14px}
 .hero h1{font-size:clamp(52px,8.6vw,124px);line-height:.95;text-shadow:0 2px 28px rgb(0 0 0/.5)}
+/* מילה אחת במבטא, והשנייה קלה: ניגוד גם בצבע וגם במשקל */
+.hero h1 span:first-child{color:var(--accent-word)}
+.hero h1 span:nth-child(2){font-weight:300}
+/* נקודה חמה אחת: זוהר בצבע המבטא על הרצפה מתחת לכותרת */
+.inside::before{content:"";position:absolute;inset:auto 0 0 0;height:38%;z-index:1;pointer-events:none;background:radial-gradient(40% 70% at 70% 100%,color-mix(in srgb,var(--ember) 32%,transparent),transparent 70%);opacity:var(--h,1);mix-blend-mode:screen}
 .hero h1 .line{display:block;font-size:.48em;font-weight:700;margin-top:.18em}
 .lede{max-width:36ch;font-size:19px;margin-top:20px;color:rgb(255 255 255/.85);text-shadow:0 1px 12px rgb(0 0 0/.5)}
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
@@ -24,10 +29,10 @@
 .stage.open .spots{pointer-events:auto}
 .spots li{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%)}
 .spots button{position:relative;background:none;border:0;padding:12px;cursor:pointer;color:#fff;font:inherit}
-.spots i{display:block;width:14px;height:14px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 4px rgb(217 116 47/.25),0 0 18px rgb(217 116 47/.8)}
-.spots i::after{content:"";position:absolute;inset:4px;border-radius:50%;border:1.5px solid rgb(255 255 255/.8);animation:pulse 2.4s var(--ease) infinite}
+.spots i{display:block;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgb(255 255 255/.18),0 0 14px rgb(255 255 255/.35)} /* ניטרלי: המבטא שמור */
+.spots i::after{content:"";position:absolute;inset:4px;border-radius:50%;border:1.5px solid rgb(255 255 255/.7);animation:pulse 2.4s var(--ease) infinite}
 @keyframes pulse{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.4);opacity:0}}
-.spots span{position:absolute;bottom:calc(100% + 2px);left:50%;transform:translate(-50%,6px);white-space:nowrap;font-size:15px;font-weight:400;padding:9px 14px;border-radius:999px;background:rgb(15 13 11/.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgb(255 255 255/.15);opacity:0;transition:opacity .2s var(--ease),transform .2s var(--ease);pointer-events:none}
+.spots span{position:absolute;bottom:calc(100% + 2px);left:50%;transform:translate(-50%,6px);white-space:nowrap;font-size:15px;font-weight:400;padding:9px 14px;border-radius:999px;background:rgb(var(--shade)/.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgb(255 255 255/.15);opacity:0;transition:opacity .2s var(--ease),transform .2s var(--ease);pointer-events:none}
 .spots button:focus-visible span,.spots button[aria-expanded="true"] span{opacity:1;transform:translate(-50%,0)}
 @media (hover:hover) and (pointer:fine){.spots button:hover span{opacity:1;transform:translate(-50%,0)}}
 /* גחלים */

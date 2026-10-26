@@ -55,7 +55,7 @@ input[type=range]:focus-visible{outline:2px solid var(--ember);outline-offset:6p
 .range{display:grid;gap:4px}
 .range-label{font-size:14px;color:var(--muted)}
 .range-num{font-weight:900;font-size:clamp(28px,3.4vw,48px);line-height:1.05;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.range-num.live{color:#b85a1c}
+.range-num.live{color:var(--accent-paper)}
 .range-vat{font-size:14px;color:var(--muted)}
 .bars{display:grid;gap:6px;margin:0;padding:0}
 .mix{display:flex;height:4px;border-radius:2px;overflow:hidden;background:var(--surface-2)}
