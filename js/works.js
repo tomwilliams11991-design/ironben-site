@@ -1,6 +1,7 @@
 // בתוך ארון העבודות: לכל קטגוריה חוט פלדה, והעבודות תלויות עליו כהדפסות עם אטב, כמו בסדנה.
-// בטלפון מחליקים לאורך החוט (scroll-snap), במחשב גם גוררים עם העכבר. לחיצה על הדפסה פותחת את הלייטבוקס.
-import { $, $$, FINE, pic, track } from "./util.js";
+// בטלפון מחליקים לאורך החוט (scroll-snap), במחשב גם גוררים עם העכבר; בכל חוט חץ "עוד" ורמז תזוזה קטן בפעם הראשונה.
+// לחיצה על הדפסה פותחת את הלייטבוקס.
+import { $, $$, FINE, pic, track, still } from "./util.js";
 import { DOORS, worksOf } from "./data/work.js";
 
 /** הטיה קטנה וקבועה לכל הדפסה (לא אקראית, כדי שלא תקפוץ בין טעינות). */
@@ -11,6 +12,7 @@ function lineHTML(d) {
   const works = worksOf(d.key);
   return `<section class="line" aria-labelledby="ln-${d.key}">
     <h3 class="line-tag" id="ln-${d.key}">${d.label} <span>${works.length}</span></h3>
+    <button type="button" class="line-more" aria-label="עוד עבודות: ${d.label}"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
     <ul class="prints" data-key="${d.key}">${works.map((w, i) => `<li style="--t:${tilt(i)}deg"><button type="button" class="print" data-i="${i}" aria-label="הגדלה: ${w[1]}">
       <span class="clip" aria-hidden="true"></span>${pic(w[0], w[1], "(max-width:820px) 130px, 190px")}<span class="print-cap">${w[1]}</span></button></li>`).join("")}</ul>
   </section>`;
@@ -30,6 +32,33 @@ function dragToScroll(el) {
   el.addEventListener("click", (e) => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
 }
 
+/** כמה נשאר לגלול לאורך החוט (ב-RTL scrollLeft הולך מ-0 לשלילי). */
+const remaining = (el) => el.scrollWidth - el.clientWidth - Math.abs(el.scrollLeft);
+
+/** החץ "עוד": מזיז את החוט בערך מסך אחד, ונעלם כשמגיעים לסוף. */
+function initMoreArrow(line) {
+  const prints = $(".prints", line), more = $(".line-more", line);
+  const sync = () => line.classList.toggle("at-end", remaining(prints) < 8);
+  more.addEventListener("click", () => prints.scrollBy({ left: -prints.clientWidth * 0.8, behavior: still() ? "auto" : "smooth" })); // RTL: שמאלה = הלאה
+  prints.addEventListener("scroll", sync, { passive: true });
+  addEventListener("resize", sync);
+  sync();
+}
+
+/** רמז חד-פעמי: כשהחוט נכנס למסך הוא זז קצת הלאה וחוזר, כדי שיהיה ברור שאפשר להחליק. */
+function nudgeOnce(lines) {
+  if (still() || !("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (!e.isIntersecting) return;
+    io.unobserve(e.target);
+    const p = $(".prints", e.target);
+    if (remaining(p) < 8 || p.scrollLeft !== 0) return;
+    p.scrollBy({ left: -70, behavior: "smooth" });
+    setTimeout(() => p.scrollBy({ left: 70, behavior: "smooth" }), 650);
+  }), { threshold: 0.6 });
+  lines.forEach((l) => io.observe(l));
+}
+
 /**
  * @param {{open(list, i), isOpen(): boolean}} lightbox
  */
@@ -44,4 +73,6 @@ export function initWorks(lightbox) {
     lightbox.open(worksOf(key), Number(b.dataset.i));
   });
   if (FINE) $$(".prints", host).forEach(dragToScroll);
+  $$(".line", host).forEach(initMoreArrow);
+  nudgeOnce($$(".line", host));
 }

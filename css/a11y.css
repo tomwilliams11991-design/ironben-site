@@ -30,4 +30,3 @@ html.a11y-cursor,html.a11y-cursor *{cursor:url("data:image/svg+xml;utf8,<svg xml
 html.a11y-still *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 html.a11y-still .gate,html.a11y-still .forge{height:auto}html.a11y-still .walk-stage{position:relative;height:80vh}html.a11y-still .walk-cap{display:none}html.a11y-still .stage{position:relative}html.a11y-still .doors3d,html.a11y-still .embers,html.a11y-still .hint{display:none}
 html.a11y-still .stage .hero,html.a11y-still .stage .spots{pointer-events:auto}
-html.a11y-still .walk-light{display:none}

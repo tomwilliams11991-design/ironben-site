@@ -1,8 +1,7 @@
 /* בתוך ארון העבודות: חוט פלדה לכל קטגוריה, והעבודות תלויות עליו כהדפסות עם אטב (js/works.js).
-   הסקשן מתחיל באור החם שבו נגמרת ההליכה בשער (אותו צבע), ונכנס לחושך של עץ אגוז. */
-.works{position:relative;padding:calc(var(--nav) + var(--way) + 40px) 0 64px;
-  background:linear-gradient(#9c561f,#5a2f12 120px,#2a1609 340px,#1a0f08);
-  background-image:linear-gradient(#9c561f,#5a2f12 120px,rgb(42 22 9/.96) 340px,rgb(26 15 8/.98)),repeating-linear-gradient(90deg,#24140a 0 86px,#1e1008 86px 88px)}
+   הרקע: לוחות אגוז כהים של פנים הארון, עם אור חם קטן מלמעלה. */
+.works{position:relative;padding:calc(var(--nav) + var(--way) + 40px) 0 64px;background:#1a0f08;
+  background-image:radial-gradient(70% 260px at 50% 0,rgb(224 140 70/.22),transparent),linear-gradient(rgb(26 15 8/.6),rgb(26 15 8/.92)),repeating-linear-gradient(90deg,#2a170b 0 86px,#1e1008 86px 88px)}
 .works-head{margin-bottom:28px}
 .works-head h2{color:#fff3e2;text-shadow:0 2px 20px rgb(0 0 0/.35)}
 .works-head .sub{color:rgb(255 236 214/.75)}
@@ -23,6 +22,14 @@
 /* האטב: פס פלדה קטן שתופס את ההדפסה מהחוט */
 .clip{position:absolute;top:-16px;left:50%;width:16px;height:26px;margin-left:-8px;border-radius:2px;background:linear-gradient(90deg,#2e3134,#6b7075 45%,#2e3134);box-shadow:0 2px 3px rgb(0 0 0/.5)}
 .print:active{transform:scale(.97)}
+/* החץ "עוד": כפתור פלדה עגול בקצה החוט (שמאל ב-RTL), עם הצללה לתוכן שנמשך מעבר לקצה. נעלם בסוף החוט */
+.line::after{content:"";position:absolute;top:34px;bottom:0;left:0;width:56px;pointer-events:none;background:linear-gradient(90deg,rgb(26 15 8/.85),transparent);transition:opacity .25s var(--ease)}
+.line-more{position:absolute;z-index:3;left:max(8px,env(safe-area-inset-left,0px));top:calc(50% + 14px);transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;display:grid;place-items:center;cursor:pointer;color:#fff;
+  background:radial-gradient(circle at 35% 30%,#7d8287,#3a3d40 60%,#1e2022);box-shadow:0 0 0 1px rgb(0 0 0/.5),0 8px 18px -6px #000;transition:opacity .25s var(--ease),transform .2s var(--ease);animation:more 1.8s var(--ease) infinite}
+@keyframes more{0%,60%,100%{translate:0 0}30%{translate:-5px 0}} /* זז קצת הלאה, כמו "יש עוד" */
+.line-more:active{transform:translateY(-50%) scale(.94)}
+.line-more:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+.line.at-end .line-more,.line.at-end::after{opacity:0;pointer-events:none}
 .print:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
 @media (hover:hover) and (pointer:fine){.print:hover{transform:translateY(-4px) rotate(calc(var(--t) * -1))}}
 @media (max-width:820px){

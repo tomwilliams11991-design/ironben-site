@@ -28,8 +28,6 @@
 .walk-cap b{font-family:var(--display);font-weight:900;font-size:clamp(34px,5vw,64px);line-height:1;letter-spacing:-.02em}
 @media (max-width:820px){.walk-cap{bottom:max(104px,calc(env(safe-area-inset-bottom,0px) + 96px))}}
 .walk-cap span{font-size:15px;padding:6px 14px;border-radius:999px;background:rgb(0 0 0/.55)}
-/* נכנסים לאור החם שבתוך הארון. השוליים בדיוק בצבע שבו מתחיל סקשן העבודות (#9c561f), כך שהמעבר רציף */
-.walk-light{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0;background:#9c561f radial-gradient(60% 55% at 50% 45%,#ffe2b4,#e9a25c 45%,#9c561f 88%)}
 
 /* ===== התנור ===== */
 .forge{position:relative;height:200vh} /* מסך + 100vh של הליכה */

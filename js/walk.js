@@ -1,6 +1,6 @@
 // הכוריאוגרפיה של הכניסה וההליכה בסדנה. כל התנועה מוגדרת כאן כפונקציות של התקדמות הגלילה,
 // ומנוע הגלילה (js/scroll-scene.js) מריץ אותן על כרטיס המסך.
-//   #gate:  השער נפתח → שהייה על הכותרת → פונים ימינה אל ארון העבודות, הדלתות נפתחות ונכנסים לאור → #works (מתחיל באותו אור)
+//   #gate:  השער נפתח → שהייה על הכותרת → פונים ימינה אל ארון העבודות, הדלתות נפתחות וצעד פנימה → #works
 //   #forge: חוזרים ישר לסדנה → פונים שמאלה אל התנור, האש מתחממת, נתלות התגיות של מה אפשר לבדוק → #bench
 import { $, $$, still, track } from "./util.js";
 import { createScene } from "./scroll-scene.js";
@@ -14,8 +14,8 @@ const SPOT = {
   forge: { x: 0.335, y: 0.43, h: 0.54, w: 0.22 },
 };
 
-/** אורכי הגלילה בתוך #gate, ביחידות גובה מסך. הסכום + 1 = הגובה של .gate ב-css/gate.css (310vh). קצר בכוונה: בטלפון כל מסך הוא תנועת אצבע. */
-export const GATE = { open: 0.8, dwell: 0.3, walk: 1.0 };
+/** אורכי הגלילה בתוך #gate, ביחידות גובה מסך. הסכום + 1 = הגובה של .gate ב-css/gate.css (290vh). קצר בכוונה: בטלפון כל מסך הוא תנועת אצבע. */
+export const GATE = { open: 0.8, dwell: 0.3, walk: 0.8 };
 const GATE_LEN = GATE.open + GATE.dwell + GATE.walk;
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
@@ -59,13 +59,13 @@ function gatePhase(k) {
   return { p, w, h: span(p, 0.6, 0.9) * (1 - span(w, 0, 0.16)) };
 }
 
-/** מצלמת השער: זום כניסה (1.16 → 1), ואז ההליכה לארון (w 0..0.42), ואז צעד פנימה (w 0.5..0.85).
+/** מצלמת השער: זום כניסה (1.16 → 1), ואז ההליכה לארון (w 0..0.42), ואז צעד פנימה (w 0.55..1).
  *  הזום הכולל נשאר מתחת ל-~2: זום גדול יותר מחייב את הדפדפן לצייר שכבה ענקית, ובטלפון המסך נהיה שחור. */
 function gateCamera(k, f) {
   const { p, w } = gatePhase(k);
   const sCab = zoomFor(SPOT.cabinet, f);
   let cam = walkBetween(SPOT.entry, SPOT.cabinet, 1, sCab, span(w, 0, 0.42), -5, f);
-  const push = Math.pow(span(w, 0.5, 0.85), 2);
+  const push = Math.pow(span(w, 0.55, 1), 2);
   if (push > 0) cam = aim(SPOT.cabinet.x, SPOT.cabinet.y, sCab * (1 + 0.3 * push), f);
   cam.s *= 1.16 - 0.16 * p;
   return cam;
@@ -89,8 +89,6 @@ function gateTracks(vh) {
     ...T("#gate .cab-leaf .shade", (k) => op(doorOpen(k) * 0.55)),
     ...T("#gate .cab-dark", (k) => op((1 - doorOpen(k)) * 0.5)),
     ...T("#gate .walk-cap", (k) => op(span(ph(k).w, 0.22, 0.34) * (1 - span(ph(k).w, 0.46, 0.54)))),
-    // נכנסים לאור שבתוך הארון; בסוף הבמה נגללת למעלה וסקשן העבודות מתחיל באותו צבע בדיוק
-    ...T("#gate .walk-light", (k) => op(span(ph(k).w, 0.55, 0.85))),
   ];
 }
 
