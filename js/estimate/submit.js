@@ -68,7 +68,8 @@ export function initSubmit() {
       if (error) throw error;
       sent = true;
     } catch (e2) {
-      console.error(e2); err.textContent = "השליחה נכשלה. אפשר לנסות שוב או לשלוח בוואטסאפ.";
+      console.error(e2);
+      err.textContent = /rate_limited/.test(e2?.message || "") ? "כבר קיבלנו ממך כמה פניות בשעה האחרונה. נחזור אליך בקרוב, ואפשר גם לכתוב לנו בוואטסאפ." : "השליחה נכשלה. אפשר לנסות שוב או לשלוח בוואטסאפ.";
     } finally { btn.classList.remove("loading"); btn.disabled = false; }
     // הבקשה נשמרה. מכאן שום תקלה בתצוגה לא תציג "נכשלה" (אחרת הלקוח שולח שוב ונוצרת פנייה כפולה).
     if (!sent) return;
