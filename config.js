@@ -10,7 +10,7 @@ window.IRONBEN_CONFIG = {
   // מספר וואטסאפ בפורמט בינלאומי בלי + ובלי 0 בהתחלה. לדוגמה: 972501234567
   WHATSAPP: "972549788277",
   PHONE_DISPLAY: "054-978-8277",
-  EMAIL: "",                 // לדוגמה: hello@ironben.co.il
+  EMAIL: "ironben.eindor@gmail.com",
 
   INSTAGRAM: "https://www.instagram.com/ironben.eindor",
   FACEBOOK: "",
