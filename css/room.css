@@ -1,0 +1,53 @@
+/* חדר העבודות: תמונת חדר התצוגה עם חמש נישות מוארות, נישה לכל קטגוריה, ופריצת התמונות (FLIP מ-js/room.js).
+   בטלפון החדר רחב מהמסך וגוללים בו לצדדים, כמו להסתכל מסביב. */
+.wall{padding:0 0 72px;position:relative}
+.room{position:relative;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.room::-webkit-scrollbar{display:none}
+/* היחס של התמונה נשמר תמיד (הנישות ממוקמות בשברים ממנה): רוחב מלא, אבל לא גבוה מהמסך */
+.room-in{position:relative;width:min(100%,calc(100vh * 1.7872));aspect-ratio:1344/752;margin-inline:auto}
+.room-in > picture{display:contents}
+.room-in > picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* הכותרת על התקרה, עם הצללה שתהיה קריאה */
+.room-in::before{content:"";position:absolute;inset:0 0 auto 0;height:42%;z-index:1;pointer-events:none;background:linear-gradient(rgb(var(--shade)/.95),rgb(var(--shade)/.55) 45%,transparent)}
+.room-in::after{content:"";position:absolute;inset:auto 0 0 0;height:22%;pointer-events:none;background:linear-gradient(transparent,var(--bg))}
+.wall-head{position:absolute;inset:calc(var(--nav) + 24px) 0 auto 0;z-index:2;max-width:1240px;text-shadow:0 2px 18px rgb(0 0 0/.6)}
+.wall-head .sub{color:rgb(255 255 255/.8)}
+/* הנישה: התמונה בפנים, אור ספוט מלמעלה, והלוחית מתחת */
+.door-row{position:absolute;inset:0;z-index:1}
+.niche{position:absolute;border:0;padding:0;background:none;font:inherit;color:inherit;cursor:pointer;display:block}
+.niche-ph{position:absolute;inset:0;overflow:hidden;background:#2a160a;box-shadow:inset 0 0 0 1px rgb(0 0 0/.4)}
+.niche-ph img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform .9s var(--ease)}
+.niche-ph::after{content:"";position:absolute;inset:0;background:radial-gradient(90% 55% at 50% 0%,rgb(255 214 160/.28),transparent 70%),linear-gradient(transparent 55%,rgb(0 0 0/.45));transition:opacity .4s var(--ease)}
+.niche-label{position:absolute;top:calc(100% + 1.2vw);left:50%;transform:translateX(-50%);white-space:nowrap;text-align:center;padding:6px 12px;border-radius:3px;font-size:clamp(11px,.9vw,14px);font-weight:400;line-height:1.3;color:rgb(255 255 255/.75);
+  background:linear-gradient(180deg,#8a6a3a,#5a4220);box-shadow:inset 0 1px 0 rgb(255 255 255/.25),0 4px 10px rgb(0 0 0/.55);transition:transform .25s var(--ease)}
+.niche-label b{display:block;color:#fff6e6;font-weight:700;font-size:1.15em}
+.niche.open .niche-ph img,.niche:focus-visible .niche-ph img{transform:scale(1)}
+.niche.open .niche-label{transform:translateX(-50%) translateY(-3px);box-shadow:inset 0 1px 0 rgb(255 255 255/.25),0 0 0 2px var(--ember),0 8px 16px rgb(0 0 0/.6)}
+.niche:focus-visible{outline:none}.niche:focus-visible .niche-ph{outline:2px solid var(--ember);outline-offset:3px}
+.niche:active .niche-ph{transform:scale(.98)}
+@media (hover:hover) and (pointer:fine){.niche:hover .niche-ph img{transform:scale(1)}}
+.room-hint{display:none}
+@media (max-width:820px){
+  .room-in{width:auto;height:min(78vh,640px);min-height:0;aspect-ratio:1344/752}
+  .niche-label{font-size:11px;padding:4px 8px;top:calc(100% + 8px)}
+  .wall-head{position:relative;inset:auto;padding-top:calc(var(--nav) + 20px);padding-bottom:8px}
+  .wall-head h2{font-size:clamp(32px,9vw,44px)}
+  .room-hint{display:block;position:absolute;inset:auto 0 18px 0;z-index:2;text-align:center;font-size:13px;color:rgb(255 255 255/.75);pointer-events:none}
+}
+/* התמונות שפורצות מהנישה */
+.burst-area{position:relative;max-width:1240px;margin:44px auto 0;padding-inline:var(--gutter-r) var(--gutter);min-height:min(440px,60vh)}
+.burst-hint{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:15px;transition:opacity .3s var(--ease)}
+.burst-area.has .burst-hint{opacity:0}
+.burst{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.burst-head{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px;margin-bottom:4px;opacity:0;transition:opacity .4s var(--ease) .15s}
+.burst.in .burst-head{opacity:1}
+.burst-head h3{font-size:clamp(20px,2vw,26px)}
+.burst-head p{color:var(--muted);font-size:15px;max-width:60ch}
+.burst figure{margin:0;cursor:zoom-in;transform:translate(var(--dx,0px),var(--dy,0px)) scale(.12);opacity:0;transition:transform .55s var(--ease),opacity .35s var(--ease);transition-delay:calc(var(--i,0) * 28ms);will-change:transform}
+.burst.in figure{transform:none;opacity:1}
+.burst .ph{display:block;width:100%;padding:0;border:0;font:inherit;color:inherit;cursor:zoom-in;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;background:#1a1613;box-shadow:0 24px 34px -20px #000}
+.burst img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.burst figcaption{font-size:13px;color:var(--muted);padding-top:6px;line-height:1.4}
+@media (hover:hover) and (pointer:fine){.burst figure:hover img{transform:scale(1.04)}}
+@media (max-width:980px){.burst{grid-template-columns:repeat(3,1fr);gap:8px}.burst-area{min-height:300px}}
+@media (max-width:560px){.burst{grid-template-columns:1fr 1fr}}

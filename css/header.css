@@ -1,6 +1,6 @@
 /* ניווט עליון ורקע הסדנה הקבוע שמאחורי כל מה שאחרי הכניסה. */
 .top{position:fixed;top:0;left:0;right:0;z-index:20;height:var(--nav);color:#fff;transition:background-color .3s var(--ease),border-color .3s var(--ease)}
-.top.solid{background:rgb(var(--shade)/.8);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top.solid{background:rgb(var(--shade)/.94);border-bottom:1px solid var(--line)} /* בלי backdrop-filter: טשטוש מעל סצנה זזה כבד מאוד בטלפון */
 .top .btn.primary{background:transparent;border-color:rgb(255 255 255/.45);color:#fff} /* בכותרת: קו בלבד, המבטא שמור לכפתור בכניסה */
 @media (hover:hover) and (pointer:fine){.top .btn.primary:hover{background:rgb(255 255 255/.12);border-color:rgb(255 255 255/.45)}}
 .top .wrap{height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}

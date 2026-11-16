@@ -1,6 +1,6 @@
 /* תנועה מופחתת והדפסה. */
 @media (prefers-reduced-motion:reduce){
-  html{--p:1!important;scroll-behavior:auto}
+  html{scroll-behavior:auto}
   .gate{height:auto}.stage{position:relative}.doors3d{display:none}.embers,.hint{display:none}
   .spots i::after{animation:none}
   .forge{height:auto}.walk-stage{position:relative;height:80vh}.walk-fade,.walk-cap{display:none}
