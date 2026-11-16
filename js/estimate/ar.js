@@ -41,26 +41,19 @@ function size() {
   return { w: meters(h) ?? 2, h: meters(v) ?? (state.product.slug === "table" ? 0.76 : null) };
 }
 
-/** מוצרים שבנויים ממקטעים (מעקה, מחיצה): ברוחב גדול המקטע חוזר, במקום להימתח. השאר נמתחים למידה. */
-const TILED = new Set(["railing", "office_partition"]);
-
-/** GLB של לוח עומד על הרצפה עם התמונה הגזורה, בגודל שבחרו (w×h מטר; בלי גובה, לפי יחס התמונה).
- *  מקטעים חוזרים נבנים כלוחות נפרדים זה ליד זה (ולא texture.repeat), כי ההמרה ל-USDZ באייפון לא שומרת חזרה של טקסטורה. */
+/** GLB של לוח אחד עומד על הרצפה עם התמונה הגזורה, בגודל שבחרו (w×h מטר; בלי גובה, לפי יחס התמונה).
+ *  תמיד חתיכה אחת שנמתחת למידה (גם מעקה ומחיצה), כדי שלא ייראה כמו כמה מוצרים נפרדים. */
 async function photoGLB(src) {
   const THREE = await import("three");
   const { GLTFExporter } = await import("three/addons/exporters/GLTFExporter.js");
   const tex = await new THREE.TextureLoader().loadAsync(src);
   tex.colorSpace = THREE.SRGBColorSpace;
   const ratio = tex.image.height / tex.image.width, { w } = size(), h = size().h ?? w * ratio;
-  const n = TILED.has(state.product.slug) ? Math.max(1, Math.round(w / (h / ratio))) : 1;
   const mat = new THREE.MeshStandardMaterial({ map: tex, transparent: true, alphaTest: 0.5, side: THREE.DoubleSide, roughness: 0.9, metalness: 0 });
-  const geo = new THREE.PlaneGeometry(w / n, h);
-  const root = new THREE.Group(); root.name = "IRON BEN";
-  for (let i = 0; i < n; i++) {
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.set(-w / 2 + (i + 0.5) * (w / n), h / 2, 0); mesh.name = `${state.product.name} ${i + 1}`;
-    root.add(mesh);
-  }
+  const geo = new THREE.PlaneGeometry(w, h);
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(0, h / 2, 0); mesh.name = state.product.name;
+  const root = new THREE.Group(); root.name = "IRON BEN"; root.add(mesh);
   const out = await new GLTFExporter().parseAsync(root, { binary: true });
   geo.dispose(); mat.dispose(); tex.dispose();
   return { glb: out, w, h };

@@ -2,6 +2,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;caret-color:var(--ember);accent-color:var(--ember)}
 body{margin:0;background:var(--plaster),var(--bg);color:var(--ink);font-family:var(--body);font-weight:400;font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:clip}
+[hidden]{display:none!important} /* hidden מנצח גם display:grid/flex של רכיבים (למשל שורת "עץ" במוצר בלי עץ) */
 img{max-width:100%;display:block;height:auto}
 a{color:inherit;text-underline-offset:3px}
 ::selection{background:var(--ember);color:var(--brass-ink)}
