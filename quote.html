@@ -7,7 +7,7 @@
 <style>
 .q{max-width:860px;margin:0 auto;padding-block:40px 64px}
 .q header{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px}
-.q header img{width:52px}
+.q header img{width:200px;margin-bottom:8px}
 .q h1{font-size:56px}
 .q .meta{font-size:14px;color:var(--muted);text-align:start}
 .q table{width:100%;border-collapse:collapse;margin-top:24px;font-size:16px}
@@ -49,7 +49,7 @@ function acceptHTML(q) {
 /** כל הדף. */
 function quoteHTML(q, withModel) {
   const b = q.business || {}, vat = q.total - q.subtotal, valid = q.valid_until ? heDate(q.valid_until) : "";
-  return `<header><div><img src="brand/logo-120.png" alt="IRON BEN"><h1>הצעת מחיר</h1><div>${esc(q.title || "")}</div></div><div class="meta">${esc(b.name)}<br>${esc(b.address)}${b.phone ? "<br>" + esc(b.phone) : ""}${b.id ? "<br>ע.מ " + esc(b.id) : ""}<br>מספר ${esc(q.number)} · ${heDate(q.created_at)}</div></header>
+  return `<header><div><img src="brand/logo-corten-400.png" srcset="brand/logo-corten-400.png 1x, brand/logo-corten-800.png 2x" alt="IRON BEN"><h1>הצעת מחיר</h1><div>${esc(q.title || "")}</div></div><div class="meta">${esc(b.name)}<br>${esc(b.address)}${b.phone ? "<br>" + esc(b.phone) : ""}${b.id ? "<br>ע.מ " + esc(b.id) : ""}<br>מספר ${esc(q.number)} · ${heDate(q.created_at)}</div></header>
     <p style="margin-top:20px">לכבוד ${esc(q.customer_name)}</p>
     ${withModel ? `<div class="render"><div><div class="model-tabs" role="tablist"><button type="button" class="on" data-mode="3d">הדמיה</button><button type="button" data-mode="plan">תוכנית</button></div><div class="model" id="m3d"></div></div><div style="display:grid;align-content:center;color:var(--muted);font-size:15px">הדמיה לפי המידות שנמדדו. הגימור, העץ והפרטים הסופיים לפי שרטוט הייצור שיאושר.</div></div>` : ""}
     <div class="tw"><table><thead><tr><th>פריט</th><th>כמות</th><th>מחיר ליחידה</th><th>סה"כ</th></tr></thead><tbody>${rowsHTML(q.items || [])}</tbody>

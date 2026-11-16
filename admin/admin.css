@@ -11,11 +11,11 @@ h1,h2,h3{font-family:var(--display);font-weight:900;line-height:1.05;margin:0;le
 h1{font-size:36px}h2{font-size:30px;margin-bottom:14px}h3{font-size:22px;margin:18px 0 8px}
 p{margin:0}
 .login{max-width:420px;margin:12vh auto;padding:0 20px;display:grid;gap:16px}
-.login img{width:72px}
+.login img{width:220px}
 .app{display:grid;grid-template-columns:220px 1fr;min-height:100dvh}
 .side{border-inline-end:1px solid var(--line);padding:20px 14px;position:sticky;top:0;height:100dvh;display:flex;flex-direction:column;gap:6px}
 .side .brand{display:flex;align-items:center;gap:10px;margin-bottom:18px;font-family:var(--display);font-weight:900;font-size:22px}
-.side .brand img{width:34px}
+.side .brand img{width:150px}
 .side button{font:600 15px var(--body);text-align:start;padding:9px 12px;border-radius:var(--r);border:0;background:transparent;color:var(--muted);cursor:pointer;transition:background-color .15s var(--ease),color .15s var(--ease)}
 .side button[aria-selected="true"]{background:var(--surface);color:var(--ink)}
 .side button:hover{color:var(--ink)}
