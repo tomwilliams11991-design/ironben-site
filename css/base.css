@@ -1,7 +1,7 @@
 /* בסיס: איפוס, טיפוגרפיה, מיכל, קישור דילוג, כפתורים. */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;caret-color:var(--ember);accent-color:var(--ember)}
-body{margin:0;background:var(--bg) var(--plaster);color:var(--ink);font-family:var(--body);font-weight:300;font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:clip}
+body{margin:0;background:var(--plaster),var(--bg);color:var(--ink);font-family:var(--body);font-weight:300;font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:clip}
 img{max-width:100%;display:block;height:auto}
 a{color:inherit;text-underline-offset:3px}
 ::selection{background:var(--ember);color:var(--brass-ink)}

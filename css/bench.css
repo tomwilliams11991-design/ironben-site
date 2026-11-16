@@ -1,7 +1,7 @@
 /* שולחן העבודה: דף השרטוט (הטופס) וכרטיס ההדמיה. הטוקנים מתהפכים לנייר בתוך .sheet. */
 /* שולחן העבודה במבט מלמעלה: צילום של שולחן מייפל בהיר עם כלים בשוליים (img/bench, נוצר ב-Higgsfield), ועליו דף השרטוט.
    בטלפון אותה תמונה מסובבת (לוחות לאורך), כי הסקשן גבוה וצר. שכבת אור עדינה למעלה, כדי שהכותרת הכהה תיקרא */
-.bench{--wash:linear-gradient(rgb(245 244 240/.78),rgb(245 244 240/.35) 420px,rgb(245 244 240/.1));padding:112px 0 120px;background:var(--wash),url("../img/bench/workbench-wide.jpg") center top/cover;background:var(--wash),image-set(url("../img/bench/workbench-wide.webp") type("image/webp"),url("../img/bench/workbench-wide.jpg") type("image/jpeg")) center top/cover}
+.bench{--wash:linear-gradient(rgb(207 198 186/.85),rgb(207 198 186/.45) 420px,rgb(207 198 186/.12));padding:112px 0 120px;background:var(--wash),url("../img/bench/workbench-wide.jpg") center top/cover;background:var(--wash),image-set(url("../img/bench/workbench-wide.webp") type("image/webp"),url("../img/bench/workbench-wide.jpg") type("image/jpeg")) center top/cover}
 @media (max-width:820px){.bench{background:var(--wash),url("../img/bench/workbench-tall.jpg") center top/cover;background:var(--wash),image-set(url("../img/bench/workbench-tall.webp") type("image/webp"),url("../img/bench/workbench-tall.jpg") type("image/jpeg")) center top/cover}}
 .bench-head .sub{color:#3d4542}
 .bench-head{margin-bottom:44px}

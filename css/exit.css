@@ -1,5 +1,5 @@
 /* היציאה לחצר: פרטי קשר, שעון הסדנה, קרדיט. */
-.exit{padding:112px 0 32px;border-top:1px solid var(--line);background:var(--plaster),var(--bg-2)}
+.exit{padding:112px 0 32px;border-top:1px solid var(--line);background:linear-gradient(rgb(70 58 45/.14),rgb(70 58 45/.14)),var(--plaster),var(--bg-2)}
 .exit-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
 .exit-grid > div > img{margin-bottom:24px;width:min(320px,80vw);height:auto}
 .exit-info{margin:0;display:grid;gap:22px}
