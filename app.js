@@ -14,6 +14,7 @@ import { initWorks } from "./js/works.js";
 import { initContact } from "./js/contact.js";
 import { initMagnets } from "./js/magnet.js";
 import { initEstimate } from "./js/estimate/index.js";
+import { initFabDodge } from "./js/fab-dodge.js";
 
 initGate();
 initWalk();
@@ -22,4 +23,5 @@ initWorks(initLightbox());
 initContact();
 initMagnets();
 initEstimate();
+initFabDodge();
 initForgePicks();

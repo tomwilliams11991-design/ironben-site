@@ -75,15 +75,19 @@ export function initSubmit() {
     const problem = validate(name, phone);
     if (problem) { err.textContent = problem; return; }
     err.textContent = ""; btn.classList.add("loading"); btn.disabled = true;
+    let sent = false;
     try {
       const key = crypto.randomUUID();
       const photo_paths = await uploadPhotos(key), render_paths = await uploadRenders(key);
       const { error } = await rpc("create_lead", { p: leadPayload(name, phone, photo_paths, render_paths) });
       if (error) throw error;
-      track("lead_submitted", { product: state.product?.slug || null, measure: state.measure });
-      showDone();
+      sent = true;
     } catch (e2) {
       console.error(e2); err.textContent = "השליחה נכשלה. אפשר לנסות שוב או לשלוח בוואטסאפ.";
     } finally { btn.classList.remove("loading"); btn.disabled = false; }
+    // הבקשה נשמרה. מכאן שום תקלה בתצוגה לא תציג "נכשלה" (אחרת הלקוח שולח שוב ונוצרת פנייה כפולה).
+    if (!sent) return;
+    try { track("lead_submitted", { product: state.product?.slug || null, measure: state.measure }); showDone(); }
+    catch (e3) { console.error(e3); goStep(5); }
   });
 }

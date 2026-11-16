@@ -16,7 +16,9 @@
 .a11y-foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:14px}
 .a11y-foot button{border:0;background:none;color:var(--paper-muted);cursor:pointer;font:inherit;padding:8px 0;text-decoration:underline}
 .a11y-foot a{color:var(--paper-ink)}
-@media (max-width:820px){.a11y{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+@media (max-width:820px){.a11y{bottom:calc(84px + env(safe-area-inset-bottom,0px));transition:bottom .2s var(--ease)}.a11y-btn{transition:width .2s var(--ease),height .2s var(--ease)}
+  /* בטופס המידות (js/fab-dodge.js): הוואטסאפ מוסתר, אז כפתור הנגישות יורד לפינה וקטן, כדי לא להסתיר סליידרים */
+  html.form-on .a11y{bottom:calc(10px + env(safe-area-inset-bottom,0px))}html.form-on .a11y-btn{width:40px;height:40px}}
 /* מצבי הנגישות (מחלקות על html) */
 /* הגדלת טקסט: zoom מגדיל גם את הכותרות, הכפתורים והשדות שמוגדרים ב-px */
 html.a11y-big{zoom:1.15}html.a11y-bigger{zoom:1.35}
