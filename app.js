@@ -5,8 +5,7 @@
 //   estimate/     ההצעה הראשונית (4 שלבים)       contact.js   וואטסאפ, פרטי קשר, שעון
 //   wayfinder.js  המפה: איפה אנחנו בסדנה (מוט ברזל עם תחנות)
 //   magnet.js     כפתורים מגנטיים                util.js / supabase.js / data/work.js  שכבת העזר
-// כל טעינה מתחילה בשער (בלי # בכתובת): ספארי באייפון זוכר את מקום הגלילה ופותח באמצע הסדנה, והשער לא נראה
-if (!location.hash) { history.scrollRestoration = "manual"; scrollTo(0, 0); }
+// (החזרה לשער בכל כניסה נמצאת בראש index.html, כדי שתרוץ לפני שספארי משחזר גלילה)
 import { initGate } from "./js/gate.js";
 import { initWalk } from "./js/walk.js";
 import { initWayfinder } from "./js/wayfinder.js";

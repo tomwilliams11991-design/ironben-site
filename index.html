@@ -3,6 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+/* כל כניסה מתחילה בשער סגור (בלי # בכתובת). ספארי באייפון זוכר את מקום הגלילה, ובחזרה ללשונית (למשל מוואטסאפ)
+   מציג את הדף כמו שהושאר. לכן: בלי שחזור גלילה, חזרה לראש הדף בטעינה ובחזרה מהמטמון, ושוב אחרי load
+   (ספארי לפעמים משחזר מאוחר), רק אם הגולש עוד לא התחיל לגלול בעצמו. */
+(function () {
+  if (location.hash) return;
+  try { history.scrollRestoration = "manual"; } catch (e) {}
+  var touched = false, top = function () { if (!touched) scrollTo(0, 0); };
+  ["touchstart", "wheel", "keydown", "mousedown"].forEach(function (t) { addEventListener(t, function () { touched = true; }, { once: true, passive: true }); });
+  top();
+  addEventListener("load", function () { top(); setTimeout(top, 60); });
+  addEventListener("pageshow", function (e) { if (e.persisted) { touched = false; scrollTo(0, 0); } });
+})();
+</script>
 <title>IRON BEN | סדנת ברזל ועץ בהזמנה אישית</title>
 <meta name="description" content="IRON BEN, סדנת ברזל ועץ בוטיקית בבית עובד ליד נס ציונה. מדרגות, שערים, פרגולות, מעקות, ספריות ושולחנות בהזמנה אישית. הצעה ראשונית חינם ומדידה אצלכם בבית.">
 <meta name="theme-color" content="#0b1b1a">
