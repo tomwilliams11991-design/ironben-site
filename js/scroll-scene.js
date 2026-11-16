@@ -32,7 +32,8 @@ const coverOffset = (k, H, vh) => (vh + k * (H - vh)) / (H + vh);
 /**
  * @param {HTMLElement} section הסקשן הארוך (subject של ה-ViewTimeline)
  * @param {(vh:number) => Array<{el: Element, fn: (k:number) => object}>} makeTracks בונה את הרצועות למידות המסך הנוכחיות
- * @param {(k:number) => void} onProgress נקרא בגלילה (זול: רק scrollY) לעדכון מחלקות כמו .open / .tags-on
+ * @param {(k:number, gone:boolean) => void} onProgress נקרא בגלילה (זול: רק scrollY) לעדכון מחלקות כמו .open / .tags-on;
+ *   gone = הסקשן כולו כבר מעל המסך (אפשר להפסיק לצייר את הבמה)
  */
 export function createScene(section, makeTracks, onProgress = () => {}) {
   let anims = [], tracks = [], top = 0, H = 1, vh = 1, mode = "", size = "";
@@ -75,7 +76,7 @@ export function createScene(section, makeTracks, onProgress = () => {}) {
     ticking = false;
     const k = progress();
     if (mode === "raf") applyAt(k);
-    onProgress(k);
+    onProgress(k, scrollY >= top + H);
   }
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(tick); } };
 

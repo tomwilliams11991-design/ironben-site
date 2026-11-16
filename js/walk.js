@@ -14,8 +14,8 @@ const SPOT = {
   forge: { x: 0.335, y: 0.43, h: 0.54, w: 0.22 },
 };
 
-/** אורכי הגלילה בתוך #gate, ביחידות גובה מסך. הסכום + 1 = הגובה של .gate ב-css/gate.css (345vh). */
-const GATE = { open: 0.8, dwell: 0.35, walk: 1.3 };
+/** אורכי הגלילה בתוך #gate, ביחידות גובה מסך. הסכום + 1 = הגובה של .gate ב-css/gate.css (300vh). קצר בכוונה: בטלפון כל מסך הוא תנועת אצבע. */
+const GATE = { open: 0.8, dwell: 0.3, walk: 0.9 };
 const GATE_LEN = GATE.open + GATE.dwell + GATE.walk;
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
@@ -59,13 +59,13 @@ function gatePhase(k) {
   return { p, w, h: span(p, 0.6, 0.9) * (1 - span(w, 0, 0.16)) };
 }
 
-/** מצלמת השער: זום כניסה (1.16 → 1), ואז ההליכה לארון (w 0..0.55), ואז צעד פנימה (w 0.74..1).
+/** מצלמת השער: זום כניסה (1.16 → 1), ואז ההליכה לארון (w 0..0.5), ואז צעד פנימה (w 0.65..1).
  *  הזום הכולל נשאר מתחת ל-~2: זום גדול יותר מחייב את הדפדפן לצייר שכבה ענקית, ובטלפון המסך נהיה שחור. */
 function gateCamera(k, f) {
   const { p, w } = gatePhase(k);
   const sCab = zoomFor(SPOT.cabinet, f);
-  let cam = walkBetween(SPOT.entry, SPOT.cabinet, 1, sCab, span(w, 0, 0.55), -5, f);
-  const push = Math.pow(span(w, 0.74, 1), 2);
+  let cam = walkBetween(SPOT.entry, SPOT.cabinet, 1, sCab, span(w, 0, 0.5), -5, f);
+  const push = Math.pow(span(w, 0.65, 1), 2);
   if (push > 0) cam = aim(SPOT.cabinet.x, SPOT.cabinet.y, sCab * (1 + 0.3 * push), f);
   cam.s *= 1.16 - 0.16 * p;
   return cam;
@@ -74,7 +74,7 @@ function gateCamera(k, f) {
 function gateTracks(vh) {
   const f = frame(vh), ph = gatePhase;
   const T = (sel, fn) => $$(sel).map((el) => ({ el, fn }));
-  const doorOpen = (k) => easeOut(span(ph(k).w, 0.6, 0.88));
+  const doorOpen = (k) => easeOut(span(ph(k).w, 0.5, 0.8));
   return [
     ...T("#gate .leaf.l", (k) => ({ transform: `rotateY(${r2(ph(k).p * 104)}deg)`, opacity: String(r2(span(0.96 - ph(k).p, 0, 0.18))) })),
     ...T("#gate .leaf.r", (k) => ({ transform: `rotateY(${r2(ph(k).p * -104)}deg)`, opacity: String(r2(span(0.96 - ph(k).p, 0, 0.18))) })),
@@ -88,22 +88,22 @@ function gateTracks(vh) {
     ...T("#gate .cab-leaf.r", (k) => ({ transform: `rotateY(${r2(doorOpen(k) * 112)}deg)` })),
     ...T("#gate .cab-leaf .shade", (k) => op(doorOpen(k) * 0.55)),
     ...T("#gate .cab-dark", (k) => op((1 - doorOpen(k)) * 0.5)),
-    ...T("#gate .walk-cap", (k) => op(span(ph(k).w, 0.4, 0.55) * (1 - span(ph(k).w, 0.76, 0.86)))),
-    ...T("#gate .walk-light", (k) => op(span(ph(k).w, 0.78, 0.9) * (1 - span(ph(k).w, 0.94, 1)))),
-    ...T("#gate .walk-fade", (k) => op(span(ph(k).w, 0.9, 1))),
+    ...T("#gate .walk-cap", (k) => op(span(ph(k).w, 0.3, 0.45) * (1 - span(ph(k).w, 0.62, 0.72)))),
+    // נכנסים לאור: בסוף הבמה נגללת למעלה וחדר העבודות כבר מתחתיה (בלי מסך שחור באמצע)
+    ...T("#gate .walk-light", (k) => op(0.9 * span(ph(k).w, 0.7, 0.95))),
   ];
 }
 
 /* ===== התנור ===== */
 
-/** k (0..1 לאורך #forge): 0..0.1 יוצאים מהחושך · 0.06..0.56 הולכים לתנור · 0.35..0.7 החום עולה · 0.92..1 חושך. */
+/** k (0..1 לאורך #forge): 0..0.5 הולכים מהארון לתנור · 0.3..0.6 החום עולה · 0.35..0.47 הכותרת · 0.45.. התגים. */
 function forgeTracks(vh) {
   const f = frame(vh), sCab = zoomFor(SPOT.cabinet, f), sForge = zoomFor(SPOT.forge, f);
-  const heat = (k) => span(k, 0.35, 0.7), head = (k) => span(k, 0.42, 0.54);
+  const heat = (k) => span(k, 0.3, 0.6), head = (k) => span(k, 0.35, 0.47);
   const camera = (k) => {
-    const lean = span(k, 0.5, 0.95);
+    const lean = span(k, 0.5, 1);
     return lean > 0 ? aim(SPOT.forge.x, SPOT.forge.y, sForge * (1 + 0.1 * lean), f)
-      : walkBetween(SPOT.cabinet, SPOT.forge, sCab, sForge, span(k, 0.06, 0.56), 5, f);
+      : walkBetween(SPOT.cabinet, SPOT.forge, sCab, sForge, span(k, 0, 0.5), 5, f);
   };
   const T = (sel, fn) => $$(sel).map((el) => ({ el, fn }));
   return [
@@ -111,7 +111,6 @@ function forgeTracks(vh) {
     ...T("#forge .heat, #forge .embers", (k) => op(heat(k) * 0.85)),
     ...T("#forge .forge-shade", (k) => op(0.35 + 0.65 * heat(k))),
     ...T("#forge .forge-head", (k) => ({ opacity: String(r2(head(k))), transform: `translateY(${r2((1 - head(k)) * 16)}px)` })),
-    ...T("#forge .walk-fade", (k) => op(Math.max(1 - span(k, 0, 0.1), span(k, 0.92, 1)))),
   ];
 }
 
@@ -120,22 +119,22 @@ function forgeTracks(vh) {
 /** מחלקות שתלויות במצב (לחיצות, אירועי מדידה): מתעדכנות בגלילה, זול. */
 function gateClasses(stage) {
   let opened = false, seen = false;
-  return (k) => {
+  return (k, gone) => {
     const { p, w } = gatePhase(k);
     const open = p > 0.88 && w < 0.04;
     if (open && !opened) { opened = true; track("gate_opened"); }
     if (w > 0.7 && !seen) { seen = true; track("walk_cabinet"); }
     stage.classList.toggle("open", open);
     stage.classList.toggle("walking", w >= 0.04);
-    stage.style.visibility = k >= 1 ? "hidden" : ""; // אחרי היציאה: לא לצייר את הבמה בכלל
+    stage.style.visibility = gone ? "hidden" : ""; // אחרי שהסקשן כולו עבר: לא לצייר את הבמה בכלל
   };
 }
 function forgeClasses(stage) {
   let seen = false;
-  return (k) => {
-    if (k > 0.5 && !seen) { seen = true; track("walk_forge"); }
-    stage.classList.toggle("tags-on", k > 0.5 && k < 0.97);
-    stage.style.visibility = k >= 1 ? "hidden" : "";
+  return (k, gone) => {
+    if (k > 0.45 && !seen) { seen = true; track("walk_forge"); }
+    stage.classList.toggle("tags-on", k > 0.45);
+    stage.style.visibility = gone ? "hidden" : "";
   };
 }
 

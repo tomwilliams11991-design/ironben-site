@@ -3,7 +3,7 @@
   html{scroll-behavior:auto}
   .gate{height:auto}.stage{position:relative}.doors3d{display:none}.embers,.hint{display:none}
   .spots i::after{animation:none}
-  .forge{height:auto}.walk-stage{position:relative;height:80vh}.walk-fade,.walk-cap{display:none}
+  .forge{height:auto}.walk-stage{position:relative;height:80vh}.walk-cap{display:none}
   *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.15s!important}
 }
 @media print{.top,.fab,.est-model,.embers,.doors3d,.shop-bg,.forge{display:none}body{background:#fff;color:#000}}

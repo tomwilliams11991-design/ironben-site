@@ -107,7 +107,6 @@
     <p class="hint" aria-hidden="true"><span>גללו כדי להיכנס</span><i></i></p>
     <p class="walk-cap" aria-hidden="true"><b>ארון העבודות</b><span>גללו כדי להיכנס</span></p>
     <div class="walk-light" aria-hidden="true"></div>
-    <div class="walk-fade" aria-hidden="true"></div>
   </div>
   <span id="inside" class="anchor"></span>
 </section>
@@ -125,14 +124,14 @@
         <source media="(max-width: 820px)" type="image/webp" srcset="img/scene/room-1600.webp">
         <source type="image/avif" srcset="img/scene/room-960.avif 960w, img/scene/room-1600.avif 1600w, img/scene/room-2400.avif 2400w" sizes="100vw">
         <source type="image/webp" srcset="img/scene/room-960.webp 960w, img/scene/room-1600.webp 1600w, img/scene/room-2400.webp 2400w" sizes="100vw">
-        <img src="img/scene/room-1600.jpg" srcset="img/scene/room-960.jpg 960w, img/scene/room-1600.jpg 1600w, img/scene/room-2400.jpg 2400w" sizes="100vw" alt="חדר העבודות: חדר תצוגה מאבן עם חמש נישות מוארות" width="1344" height="752" loading="lazy" decoding="async">
+        <img src="img/scene/room-1600.jpg" srcset="img/scene/room-960.jpg 960w, img/scene/room-1600.jpg 1600w, img/scene/room-2400.jpg 2400w" sizes="100vw" alt="חדר העבודות: חדר תצוגה מאבן עם חמש נישות מוארות" width="1344" height="752" fetchpriority="low" decoding="async">
       </picture>
       <div class="door-row" id="doorRow" role="list" aria-label="קטגוריות העבודות"></div>
       <p class="room-hint" aria-hidden="true">החליקו לצדדים · לחצו על נישה</p>
     </div>
   </div>
   <div class="burst-area" id="burstArea">
-    <p class="burst-hint" id="burstHint">העבירו את העכבר על דלת</p>
+    <p class="burst-hint" id="burstHint">בחרו נישה בחדר ותראו את העבודות כאן</p>
     <div class="burst" id="burst" aria-live="polite"></div>
   </div>
 </section>
@@ -157,7 +156,6 @@
       <p class="sub">כל עבודה נבנית לפי המידות שלכם. לחצו על תג ותראו הדמיה ומחיר לפרויקט שלכם.</p>
     </div>
     <ul class="tags" id="tags" aria-label="מחירים לדוגמה"></ul>
-    <div class="walk-fade" aria-hidden="true"></div>
   </div>
 </section>
 
