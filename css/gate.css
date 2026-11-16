@@ -1,19 +1,21 @@
 /* השער שנפתח אל הסדנה: כנפיים ב-3D, הסדנה מאחור, הכותרת, נקודות על הכלים, גחלים, רמז הגלילה.
    כל התנועה כאן נגזרת מ---p (0..1) שנכתב ב-js/gate.js. */
-.gate{position:relative;height:200vh}
-.gate .anchor{position:absolute;top:calc(100% - 100dvh);left:0;width:1px;height:1px}
+/* גובה: מסך + פתיחה (100vh) + שהייה על הכותרת (50vh) + ההליכה לארון (200vh). חייב להתאים ל-GATE ב-js/walk.js */
+.gate{position:relative;height:450vh}
+.gate .anchor{position:absolute;top:110vh;left:0;width:1px;height:1px}
 .stage{position:sticky;top:0;height:100dvh;overflow:hidden;background:#061110;isolation:isolate}
 /* הסדנה מאחורי השער: נכנסים פנימה (זום קטן) והחושך מתבהר */
 .inside{position:absolute;inset:0;overflow:hidden}
-.fit{position:absolute;left:50%;top:50%;width:var(--gw);height:calc(var(--gw) / 1.7852);transform:translate(-50%,-50%) scale(calc(1.16 - var(--p) * .16));transform-origin:center;will-change:transform}
+/* המצלמה: --cx/--cy/--cs/--cr נכתבים מ-js/walk.js (הליכה בסדנה); --p מוסיף את הזום של הכניסה */
+.fit{position:absolute;left:50%;top:50%;width:var(--gw);height:calc(var(--gw) / 1.7852);transform:translate(-50%,-50%) perspective(1600px) rotateY(var(--cr,0deg)) translate(var(--cx,0px),var(--cy,0px)) scale(calc((1.16 - var(--p) * .16) * var(--cs,1)));transform-origin:center;will-change:transform}
 .fit picture{display:contents}
 .fit img{width:100%;height:100%;object-fit:cover}
 .dim{position:absolute;inset:0;background:#061110;opacity:calc(.9 - var(--p) * .9);pointer-events:none}
 .inside::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgb(var(--shade)/.9) 0%,rgb(var(--shade)/.3) 40%,transparent 70%);pointer-events:none}
 /* הטקסט והנקודות מופיעים רק כשהשער כמעט פתוח */
-.stage{--h:clamp(0,calc((var(--p) - .6) / .3),1)}
+.stage{--h:calc(clamp(0,calc((var(--p) - .6) / .3),1) * (1 - clamp(0,calc(var(--w,0) * 6),1)))} /* ונעלמים כשמתחילים ללכת */
 .hero{position:absolute;inset:auto 0 0 0;z-index:2;padding-bottom:max(56px,env(safe-area-inset-bottom,0px));color:#fff;opacity:var(--h);transform:translateY(calc((1 - var(--h)) * 28px));pointer-events:none}
-.stage.open .hero{pointer-events:auto}
+.stage.open:not(.walking) .hero{pointer-events:auto}
 .where{font-size:14px;font-weight:500;letter-spacing:.02em;color:rgb(255 255 255/.75);margin-bottom:14px}
 .hero h1{font-size:clamp(52px,8.6vw,124px);line-height:.95;text-shadow:0 2px 28px rgb(0 0 0/.5)}
 /* מילה אחת במבטא, והשנייה קלה: ניגוד גם בצבע וגם במשקל */
@@ -26,7 +28,7 @@
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
 /* נקודות על הכלים */
 .spots{list-style:none;margin:0;padding:0;position:absolute;inset:0;opacity:var(--h);pointer-events:none}
-.stage.open .spots{pointer-events:auto}
+.stage.open:not(.walking) .spots{pointer-events:auto}
 .spots li{position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%)}
 .spots button{position:relative;background:none;border:0;padding:12px;cursor:pointer;color:#fff;font:inherit}
 .spots i{display:block;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgb(255 255 255/.18),0 0 14px rgb(255 255 255/.35)} /* ניטרלי: המבטא שמור */

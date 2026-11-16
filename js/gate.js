@@ -1,11 +1,12 @@
-// השער שנפתח אל הסדנה. הגלילה בתוך #gate (גובה 200vh) מחושבת ל---p בין 0 ל-1 על <html>,
+// השער שנפתח אל הסדנה. המסך הראשון של הגלילה בתוך #gate מחושב ל---p בין 0 ל-1 על <html>,
 // וכל התנועה עצמה (סיבוב הכנפיים, זום הסדנה, כניסת הכותרת) נעשית ב-CSS (css/gate.css).
+// ההמשך של #gate (ההליכה אל ארון העבודות) שייך ל-js/walk.js.
 import { $, $$, still, track } from "./util.js";
+import { GATE } from "./walk.js";
 
-/** כמה מהשער נפתח: 0 בראש העמוד, 1 כשהסקשן הנעוץ נגמר. */
+/** כמה מהשער נפתח: 0 בראש העמוד, 1 אחרי GATE.open מסכים של גלילה. */
 function progress(gate) {
-  const total = Math.max(1, gate.offsetHeight - innerHeight);
-  return Math.min(1, Math.max(0, -gate.getBoundingClientRect().top / total));
+  return Math.min(1, Math.max(0, -gate.getBoundingClientRect().top / (innerHeight * GATE.open)));
 }
 
 /** כותב את ההתקדמות ל-CSS, מדליק את הטקסט והנקודות כשהשער כמעט פתוח, ומעביר את הניווט לזכוכית. */
@@ -40,12 +41,14 @@ function initHotspots() {
   }));
 }
 
-/** גחלים שעולות מהכבשן (16 נקודות עם מסלול אקראי). לא נוצרות כשמפחיתים תנועה. */
+/** גחלים שעולות מהכבשן (16 נקודות עם מסלול אקראי), בכניסה וליד התנור. לא נוצרות כשמפחיתים תנועה. */
 function initEmbers() {
-  const el = $(".embers");
-  if (!el || still()) return;
-  el.innerHTML = Array.from({ length: 16 }, () =>
-    `<i style="--x:${22 + Math.random() * 22}%;--d:${5 + Math.random() * 6}s;--dl:${-Math.random() * 10}s;--dx:${(Math.random() - 0.5) * 80}px"></i>`).join("");
+  if (still()) return;
+  $$(".embers").forEach((el) => {
+    const [from, spread] = el.dataset.x ? el.dataset.x.split(",").map(Number) : [22, 22];
+    el.innerHTML = Array.from({ length: 16 }, () =>
+      `<i style="--x:${from + Math.random() * spread}%;--d:${5 + Math.random() * 6}s;--dl:${-Math.random() * 10}s;--dx:${(Math.random() - 0.5) * 80}px"></i>`).join("");
+  });
 }
 
 export function initGate() {

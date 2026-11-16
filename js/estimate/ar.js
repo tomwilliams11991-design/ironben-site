@@ -4,6 +4,7 @@
 // הכפתור מוצג רק במכשירים שתומכים. בדיקה במחשב: ?ar=1 מציג את הכפתור ואת התצוגה (בלי מצלמה).
 import { $, track } from "../util.js";
 import { state } from "./state.js";
+import { specLine } from "./products.js";
 
 const MODEL_VIEWER = "https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js";
 const FORCE = new URLSearchParams(location.search).has("ar");
@@ -31,9 +32,8 @@ function loadModelViewer() {
 
 /** תיאור קצר של מה שמוצג (מוצר + מידות עיקריות), לכותרת החלון. */
 function caption() {
-  const p = state.product;
-  const dims = (p.input_schema.fields || []).filter((f) => f.type !== "choice").map((f) => `${f.label} ${state.inputs[f.key]}${f.unit ? " " + f.unit : ""}`);
-  return `${p.name}${dims.length ? " · " + dims.join(" · ") : ""}`;
+  const dims = specLine(state.product, state.inputs);
+  return `${state.product.name}${dims ? " · " + dims : ""}`;
 }
 
 let url = null;

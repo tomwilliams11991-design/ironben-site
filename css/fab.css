@@ -1,0 +1,10 @@
+/* כפתור הוואטסאפ הצף: דיסקית ברזל עם שפת פליז וסמל באמייל ירוק (site/brand/wa-metal-*.png, נוצר ב-tools/images/wa_badge.py).
+   מוצג תמיד, בכל גודל מסך, ופותח שיחה ישירה ב-054-978-8277. במחשב, ריחוף מציג את המספר. */
+.fab{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));inset-inline-start:18px;z-index:25;display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;-webkit-tap-highlight-color:transparent}
+.fab img{width:64px;height:64px;display:block;transition:transform .2s var(--ease);filter:drop-shadow(0 8px 14px rgb(0 0 0/.45))}
+.fab span{font-size:15px;font-weight:500;white-space:nowrap;padding:8px 14px;border-radius:999px;background:rgb(var(--shade)/.88);border:1px solid rgb(255 255 255/.14);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;transform:translateX(8px);transition:opacity .2s var(--ease),transform .2s var(--ease);pointer-events:none}
+.fab:active img{transform:scale(.94)}
+.fab:focus-visible{outline:none}.fab:focus-visible img{outline:2px solid var(--ember);outline-offset:3px;border-radius:50%}
+.fab:focus-visible span{opacity:1;transform:none}
+@media (hover:hover) and (pointer:fine){.fab:hover img{transform:translateY(-2px) rotate(-8deg)}.fab:hover span{opacity:1;transform:none}}
+@media (max-width:560px){.fab img{width:58px;height:58px}}
