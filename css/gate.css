@@ -50,7 +50,7 @@
 .leaf.r > picture > img{left:calc(var(--gw) / -2)}
 .leaf::after{content:"";position:absolute;inset:0;background:#000;opacity:calc(var(--p) * .6)}
 /* חותמת IRON BEN על המדליון, מתפצלת עם הכנפיים */
-.seal{position:absolute;width:calc(var(--gw) * .2);top:calc(50% + (0.465 - 0.5) * var(--gw) / 1.7852);transform:translate(-50%,-50%);filter:drop-shadow(0 6px 14px rgb(0 0 0/.55))}
+.seal{position:absolute;width:min(calc(var(--gw) * .3),96vw);max-width:none;top:calc(50% + (0.465 - 0.5) * var(--gw) / 1.7852);transform:translate(-50%,-50%)} /* מדליון קורטן עם הלוגו חרוט; הצל כבר בתמונה */
 .leaf.l .seal{left:100%}
 .leaf.r .seal{left:0}
 /* "גללו כדי להיכנס" */
