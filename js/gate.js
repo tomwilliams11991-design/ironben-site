@@ -1,13 +1,21 @@
 // השער: הכותרת העליונה, נקודות על הכלים והגחלים. התנועה בגלילה (פתיחת השער, ההליכה) נמצאת ב-js/walk.js.
 import { $, $$, still } from "./util.js";
 
-/** הכותרת העליונה: רקע מלא אחרי 40px גלילה (קורא רק scrollY, בלי מדידות). */
+/** הכותרת העליונה: רקע מלא אחרי 40px גלילה. אחרי השער (כשארון העבודות מגיע לכותרת) html.lit:
+ *  הכותרת ופס המפה עוברים לבהיר כמו שאר האתר. הסף נמדד בטעינה ובשינוי גודל, לא בזמן הגלילה. */
 function initHeader() {
-  const header = $("#top");
+  const header = $("#top"), works = $("#works");
   if (!header) return;
-  const update = () => header.classList.toggle("solid", scrollY > 40);
+  let litAt = Infinity;
+  const measure = () => { if (works) litAt = works.getBoundingClientRect().top + scrollY - header.offsetHeight; };
+  const update = () => {
+    header.classList.toggle("solid", scrollY > 40);
+    document.documentElement.classList.toggle("lit", scrollY >= litAt);
+  };
   addEventListener("scroll", update, { passive: true });
-  update();
+  addEventListener("resize", () => { measure(); update(); });
+  addEventListener("load", () => { measure(); update(); });
+  measure(); update();
 }
 
 /** נקודות על הכלים: במחשב ריחוף (CSS), בנייד ובמקלדת נגיעה פותחת וסוגרת. */

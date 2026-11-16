@@ -1,4 +1,4 @@
-/* ניווט עליון ורקע הסדנה הקבוע שמאחורי כל מה שאחרי הכניסה. */
+/* ניווט עליון: שקוף ולבן מעל השער, בהיר אחרי השער. */
 .top{position:fixed;top:0;left:0;right:0;z-index:20;height:var(--nav);color:#fff;transition:background-color .3s var(--ease),border-color .3s var(--ease)}
 .top.solid{background:rgb(var(--shade));border-bottom:1px solid var(--line)} /* בלי backdrop-filter: טשטוש מעל סצנה זזה כבד מאוד בטלפון */
 .top .btn.primary{background:transparent;border-color:rgb(255 255 255/.45);color:#fff} /* בכותרת: קו בלבד, המבטא שמור לכפתור בכניסה */
@@ -10,8 +10,10 @@
 .nav a{text-decoration:none;color:rgb(255 255 255/.75);transition:color .2s var(--ease)}
 .nav a:hover{color:#fff}
 @media (max-width:980px){.nav{display:none}.mark span{display:none}}
+/* אחרי השער (html.lit, js/gate.js): כותרת בהירה כמו הקיר, טקסט כהה */
+html.lit .top.solid{background:var(--bg);color:var(--ink);border-bottom-color:var(--line);box-shadow:0 6px 20px -14px rgb(29 36 34/.35)}
+html.lit .top .btn:not(.primary){border-color:rgb(29 36 34/.3);color:var(--ink)}
+html.lit .top .nav a{color:var(--muted)}html.lit .top .nav a:hover{color:var(--ink)}
+html.lit .top .btn.primary{border-color:rgb(29 36 34/.35);color:var(--ink);box-shadow:none;text-shadow:none}
+@media (hover:hover) and (pointer:fine){html.lit .top .btn.primary:hover{background:rgb(29 36 34/.06);border-color:rgb(29 36 34/.35)}}
 
-
-.shop-bg{position:fixed;inset:0;z-index:-1;background:var(--bg) url("../img/scene/shop-1600.jpg") center/cover no-repeat;background-image:image-set(url("../img/scene/shop-1600.avif") type("image/avif"),url("../img/scene/shop-1600.webp") type("image/webp"),url("../img/scene/shop-1600.jpg") type("image/jpeg"));filter:brightness(.22) saturate(.6)}
-.shop-bg::before{content:"";position:absolute;inset:0;background:rgb(var(--shade)/.55)} /* צובע את התמונה בירוק הבסיס */
-.shop-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(90% 80% at 50% 35%,transparent 30%,rgb(0 0 0/.65))}

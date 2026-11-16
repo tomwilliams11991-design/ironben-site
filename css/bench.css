@@ -1,17 +1,16 @@
 /* שולחן העבודה: דף השרטוט (הטופס) וכרטיס ההדמיה. הטוקנים מתהפכים לנייר בתוך .sheet. */
-/* שולחן העבודה במבט מלמעלה: צילום של שולחן עץ עם כלים בשוליים (img/bench, נוצר ב-Higgsfield), ועליו דף השרטוט.
-   בטלפון אותה תמונה מסובבת (לוחות לאורך), כי הסקשן גבוה וצר. הכהיה עדינה למעלה, כדי שהכותרת הלבנה תיקרא */
-.bench{padding:112px 0 120px;background:linear-gradient(rgb(10 6 3/.72),rgb(10 6 3/.5) 420px,rgb(10 6 3/.4)),url("../img/bench/workbench-wide.jpg") center top/cover;background:linear-gradient(rgb(10 6 3/.72),rgb(10 6 3/.5) 420px,rgb(10 6 3/.4)),image-set(url("../img/bench/workbench-wide.webp") type("image/webp"),url("../img/bench/workbench-wide.jpg") type("image/jpeg")) center top/cover}
-@media (max-width:820px){.bench{background:linear-gradient(rgb(10 6 3/.72),rgb(10 6 3/.5) 380px,rgb(10 6 3/.4)),url("../img/bench/workbench-tall.jpg") center top/cover;background:linear-gradient(rgb(10 6 3/.72),rgb(10 6 3/.5) 380px,rgb(10 6 3/.4)),image-set(url("../img/bench/workbench-tall.webp") type("image/webp"),url("../img/bench/workbench-tall.jpg") type("image/jpeg")) center top/cover}}
-.bench-head h2,.bench-head .sub{text-shadow:0 2px 16px rgb(0 0 0/.85)}
-.bench-head .sub{color:#e6ddcf}
+/* שולחן העבודה במבט מלמעלה: צילום של שולחן מייפל בהיר עם כלים בשוליים (img/bench, נוצר ב-Higgsfield), ועליו דף השרטוט.
+   בטלפון אותה תמונה מסובבת (לוחות לאורך), כי הסקשן גבוה וצר. שכבת אור עדינה למעלה, כדי שהכותרת הכהה תיקרא */
+.bench{--wash:linear-gradient(rgb(245 244 240/.78),rgb(245 244 240/.35) 420px,rgb(245 244 240/.1));padding:112px 0 120px;background:var(--wash),url("../img/bench/workbench-wide.jpg") center top/cover;background:var(--wash),image-set(url("../img/bench/workbench-wide.webp") type("image/webp"),url("../img/bench/workbench-wide.jpg") type("image/jpeg")) center top/cover}
+@media (max-width:820px){.bench{background:var(--wash),url("../img/bench/workbench-tall.jpg") center top/cover;background:var(--wash),image-set(url("../img/bench/workbench-tall.webp") type("image/webp"),url("../img/bench/workbench-tall.jpg") type("image/jpeg")) center top/cover}}
+.bench-head .sub{color:#3d4542}
 .bench-head{margin-bottom:44px}
 .est-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start}
 /* דף השרטוט: בהיר, עם קליפס פלדה למעלה. הטוקנים של הטופס מתהפכים לנייר */
 .sheet{--ink:var(--paper-ink);--muted:var(--paper-muted);--surface:var(--paper);--surface-2:var(--paper-2);--line:var(--paper-line);
   position:relative;background:var(--surface);color:var(--ink);padding:40px 32px 32px;border-radius:var(--r);min-width:0;
   background-image:linear-gradient(rgb(29 27 24/.045) 1px,transparent 1px),linear-gradient(90deg,rgb(29 27 24/.045) 1px,transparent 1px);background-size:24px 24px;
-  box-shadow:0 50px 70px -36px rgb(0 0 0/.9),0 0 0 1px rgb(0 0 0/.3)}
+  box-shadow:0 40px 60px -34px rgb(60 45 25/.55),0 0 0 1px rgb(60 45 25/.15)}
 .sheet::before{content:"";position:absolute;top:-9px;left:50%;width:132px;height:22px;transform:translateX(-50%);border-radius:3px;background:linear-gradient(180deg,#6b7074,#2d3134);box-shadow:0 5px 10px rgb(0 0 0/.55),inset 0 1px 0 rgb(255 255 255/.35)}
 .sheet .btn{border-color:var(--ink);color:var(--ink)}
 .sheet .btn.primary{background:var(--ink);border-color:var(--ink);color:#fff}
@@ -83,11 +82,12 @@ input[type=range]:focus-visible{outline:2px solid var(--ember);outline-offset:6p
 /* ההדמיה: כרטיס נייר לבן על השולחן */
 .est-model{position:sticky;top:calc(var(--nav) + 16px);display:grid;gap:10px}
 /* התמונה של המוצר עם קווי מידה (js/estimate/photo.js) */
-.photo{margin:0;position:relative;aspect-ratio:4/3.4;border-radius:var(--r);overflow:hidden;background:var(--paper-2);box-shadow:0 50px 70px -36px rgb(0 0 0/.9),0 0 0 1px rgb(0 0 0/.3)}
+.photo{margin:0;position:relative;aspect-ratio:4/3.4;border-radius:var(--r);overflow:hidden;background:var(--paper-2);box-shadow:0 40px 60px -34px rgb(60 45 25/.55),0 0 0 1px rgb(60 45 25/.15)}
 .photo .ph,.photo picture,.photo img{display:block;width:100%;height:100%}
 .photo img{object-fit:cover}
 .photo .ph:empty::before{content:"התמונה תופיע כאן אחרי שתבחרו מה בונים";position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--paper-muted);font-size:15px}
 .photo::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgb(0 0 0/.45),transparent 38%),linear-gradient(to left,rgb(0 0 0/.3),transparent 26%);pointer-events:none}
+.photo:has(.ph:empty)::after{display:none} /* בלי תמונה: בלי ההכהיה של קווי המידה */
 .dims{position:absolute;inset:0;z-index:1;pointer-events:none}
 /* קו מידה (.mline, לא .dim שתפוס בשער): קו לבן דק עם קצוות, ותווית פלדה באמצע */
 .mline{position:absolute;color:#fff;--c:rgb(255 255 255/.92)}
@@ -103,13 +103,13 @@ input[type=range]:focus-visible{outline:2px solid var(--ember);outline-offset:6p
 @media (prefers-reduced-motion:no-preference){.mline span{transition:transform .2s var(--ease)}}
 .spec{list-style:none;margin:0;padding:8px 12px;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;color:#e6ddcf;background:rgb(10 6 3/.62);border-radius:var(--r)}
 .spec:empty{display:none}
-.model-cap{font-size:14px;color:#e6ddcf;text-shadow:0 1px 8px rgb(0 0 0/.9)}
+.model-cap{font-size:14px;color:#3d4542}
 /* בטלפון התמונה מעל הטופס; כשגוללים אליה (שלב המידות) היא נעצרת מתחת לכותרת ולפס המפה */
 .est-model{scroll-margin-top:calc(var(--nav) + var(--way) + 12px)}
 @media (max-width:980px){.est-grid{grid-template-columns:1fr}.est-model{position:static;order:-1;display:none}.est-model.has{display:grid}.photo{aspect-ratio:4/3}.two{grid-template-columns:1fr}.sheet{padding:36px 20px 24px}}
 
 /* "הציבו אצלכם": כפתור ה-AR מתחת לתמונה, וחלון התצוגה (model-viewer, js/estimate/ar.js) */
-.ar-btn{justify-self:start;border-color:rgb(255 255 255/.35)}
+.ar-btn{justify-self:start;background:rgb(255 255 255/.7)}
 .ar-btn svg{flex:none}
 dialog.ar:not([open]){display:none}
 dialog.ar{border:0;padding:0;margin:auto;width:min(100vw,720px);height:min(100dvh,760px);max-width:none;max-height:none;background:var(--paper);color:var(--paper-ink);border-radius:8px;display:grid;grid-template-rows:auto 1fr auto;overflow:hidden}

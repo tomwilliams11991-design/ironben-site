@@ -27,4 +27,8 @@
   .way a.past{background:rgb(201 164 106/.45)}
   .way a[aria-current]{transform:none;background:var(--ember);box-shadow:0 0 8px rgb(201 164 106/.7)}
   .way-now{display:block;position:absolute;top:5px;left:0;right:0;text-align:center;font-size:12px;font-weight:500;color:rgb(255 255 255/.85);pointer-events:none;letter-spacing:.01em}
+  /* אחרי השער: פס בהיר כמו הכותרת */
+  html.lit .way{background:var(--bg);border-bottom-color:var(--line)}
+  html.lit .way a{background:rgb(29 36 34/.14)}html.lit .way a.past{background:rgb(168 130 63/.5)}html.lit .way a[aria-current]{background:var(--ember);box-shadow:none}
+  html.lit .way-now{color:var(--muted)}
 }

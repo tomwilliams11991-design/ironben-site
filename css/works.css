@@ -2,16 +2,14 @@
    חזית לכל קטגוריה עם מסגרת פליז וכרטיס, וידית פלדה מחושלת;
    מגירה פתוחה נשלפת קצת קדימה ומתחתיה תיבה מעץ אלון בהיר עם התמונות. רק מגירה אחת פתוחה בכל רגע.
    במחשב התמונות בגריד; בטלפון ברצועה שמחליקים, עם חץ "עוד". */
-.works{position:relative;z-index:2;margin-top:-20lvh;padding:calc(var(--nav) + var(--way) + 40px) 0 64px;background:#1a0f08;
-  background-image:radial-gradient(70% 260px at 50% 0,rgb(224 140 70/.22),transparent),linear-gradient(rgb(26 15 8/.6),rgb(26 15 8/.92)),repeating-linear-gradient(90deg,#2a170b 0 86px,#1e1008 86px 88px)}
+/* הרקע: קיר טיח לבן */
+.works{position:relative;z-index:2;margin-top:-20lvh;padding:calc(var(--nav) + var(--way) + 40px) 0 64px;background:var(--plaster),var(--bg)}
 .works-head{margin-bottom:28px}
-.works-head h2{color:#fff3e2;text-shadow:0 2px 20px rgb(0 0 0/.35)}
-.works-head .sub{color:rgb(255 236 214/.75)}
 
 /* גוף השידה: מסגרת אגוז כהה (אותה טקסטורה, מוחשכת) עם צל על הרצפה */
 .chest{max-width:980px;margin-inline:auto;padding:14px;border-radius:4px;display:grid;gap:9px;
   background:linear-gradient(rgb(20 10 4/.62),rgb(20 10 4/.78)),url("../img/chest/walnut.webp") 0 0/700px auto;
-  box-shadow:inset 0 1px 0 rgb(255 220 180/.1),inset 0 0 0 1px rgb(0 0 0/.5),inset 0 0 30px rgb(0 0 0/.5),0 40px 60px -30px #000,0 70px 50px -50px rgb(0 0 0/.9)}
+  box-shadow:inset 0 1px 0 rgb(255 220 180/.1),inset 0 0 0 1px rgb(0 0 0/.5),inset 0 0 30px rgb(0 0 0/.5),0 30px 50px -28px rgb(40 30 20/.55),0 60px 40px -46px rgb(40 30 20/.6)}
 
 /* חזית מגירה: צילום אגוז אמיתי (כל מגירה מקטע אחר של הלוח, --gy), שוליים משופעים ואור רך מלמעלה.
    עליה מסגרת פליז עם כרטיס ושם הקטגוריה, וידית פלדה מחושלת באמצע */
