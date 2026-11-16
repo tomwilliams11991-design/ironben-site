@@ -15,7 +15,7 @@
 .sheet .btn{border-color:var(--ink);color:var(--ink)}
 .sheet .btn.primary{background:var(--ink);border-color:var(--ink);color:#fff}
 .sheet .btn.ghost{border-color:transparent;color:var(--muted)}
-@media (hover:hover) and (pointer:fine){.sheet .btn.primary:hover{background:var(--ember);border-color:var(--ember)}.sheet .btn:not(.primary):hover{background:var(--surface-2);color:var(--ink)}}
+@media (hover:hover) and (pointer:fine){.sheet .btn.primary:hover{background:var(--brass-hi)}.sheet .btn:not(.primary):hover{background:var(--surface-2);color:var(--ink)}}
 .est-form{display:grid}
 .progress{list-style:none;margin:0 0 28px;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;font-size:13px;color:var(--muted);font-weight:400}
 .progress li{padding-top:10px;border-top:2px solid var(--line);transition:border-color .3s var(--ease),color .3s var(--ease)}

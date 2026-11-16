@@ -23,7 +23,7 @@
 .where{font-size:14px;font-weight:500;letter-spacing:.02em;color:rgb(255 255 255/.75);margin-bottom:14px}
 .hero h1{font-size:clamp(52px,8.6vw,124px);line-height:.95;text-shadow:0 2px 28px rgb(0 0 0/.5)}
 /* מילה אחת במבטא, והשנייה קלה: ניגוד גם בצבע וגם במשקל */
-.hero h1 span:first-child{color:var(--accent-word)}
+.hero h1 span:first-child{color:var(--accent-word);background:linear-gradient(170deg,#f3dcaa 10%,#c9a46a 45%,#8d6a36 80%,#b8925a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent} /* "ברזל." בפליז מוברש */
 .hero h1 span:nth-child(2){font-weight:300}
 /* נקודה חמה אחת: זוהר בצבע המבטא על הרצפה מתחת לכותרת */
 .glow{position:absolute;inset:auto 0 0 0;height:38%;z-index:1;pointer-events:none;background:radial-gradient(40% 70% at 70% 100%,rgb(224 122 50/.26),transparent 70%);opacity:0}
@@ -51,7 +51,7 @@
 @media (hover:hover) and (pointer:fine){.spots button:hover span{opacity:1;transform:translate(-50%,0)}}
 /* גחלים */
 .embers{position:absolute;inset:0;pointer-events:none;overflow:hidden;opacity:0}
-.embers i{position:absolute;bottom:30%;width:4px;height:4px;border-radius:50%;background:var(--ember);box-shadow:0 0 8px 2px rgb(217 116 47/.6);opacity:0;animation:ember var(--d,6s) linear infinite;animation-delay:var(--dl,0s);left:var(--x,50%)}
+.embers i{position:absolute;bottom:30%;width:4px;height:4px;border-radius:50%;background:var(--fire);box-shadow:0 0 8px 2px rgb(217 116 47/.6);opacity:0;animation:ember var(--d,6s) linear infinite;animation-delay:var(--dl,0s);left:var(--x,50%)}
 @keyframes ember{0%{transform:translate(0,0) scale(1);opacity:0}10%{opacity:.9}100%{transform:translate(var(--dx,20px),-60vh) scale(.3);opacity:0}}
 /* שתי כנפי השער ב-3D. כל כנף מראה חצי מהתמונה ונפתחת פנימה סביב הציר שלה */
 .doors3d{position:absolute;inset:0;z-index:3;perspective:1100px;perspective-origin:50% 50%;pointer-events:none}
