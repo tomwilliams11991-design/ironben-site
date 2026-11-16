@@ -31,7 +31,7 @@
     <a class="mark" href="#top" aria-label="IRON BEN, לראש העמוד"><img src="brand/logo-corten-400.png" srcset="brand/logo-corten-400.png 1x, brand/logo-corten-800.png 2x" width="98" height="56" alt="IRON BEN"></a>
     <nav class="nav" aria-label="ראשי">
       <a href="#inside">הסדנה</a>
-      <a href="#works">חדר העבודות</a>
+      <a href="#works">ארון העבודות</a>
       <a href="#forge">מחירים</a>
       <a href="#bench">הצעה ראשונית</a>
       <a href="#exit">יצירת קשר</a>
@@ -39,6 +39,19 @@
     <a class="btn primary small" href="#bench">הצעה ראשונית חינם</a>
   </div>
 </header>
+
+<!-- המפה של הסדנה: איפה אנחנו (js/wayfinder.js) -->
+<nav class="way" id="way" aria-label="איפה אנחנו בסדנה">
+  <ol>
+    <li><a href="#top"><span>השער</span></a></li>
+    <li><a href="#inside"><span>הסדנה</span></a></li>
+    <li><a href="#works"><span>ארון העבודות</span></a></li>
+    <li><a href="#forge"><span>התנור</span></a></li>
+    <li><a href="#bench"><span>שולחן העבודה</span></a></li>
+    <li><a href="#exit"><span>החצר</span></a></li>
+  </ol>
+  <b class="way-now" aria-hidden="true"></b>
+</nav>
 
 <!-- רקע הסדנה (כהה) מאחורי כל מה שאחרי הכניסה -->
 <div class="shop-bg" aria-hidden="true"></div>
@@ -107,38 +120,19 @@
     <p class="hint" aria-hidden="true"><span>גללו כדי להיכנס</span><i></i></p>
     <p class="walk-cap" aria-hidden="true"><b>ארון העבודות</b><span>גללו כדי להיכנס</span></p>
     <div class="walk-light" aria-hidden="true"></div>
-    <!-- חדר העבודות: מופיע באותה סצנה אחרי שדלתות הארון נפתחות (js/walk.js). במחשב הנישות על התמונה, בטלפון כרטיסים -->
-    <div class="room-layer" id="room">
-      <div class="room-fit">
-        <picture>
-          <source media="(max-width: 820px)" type="image/avif" srcset="img/scene/room-1600.avif">
-          <source media="(max-width: 820px)" type="image/webp" srcset="img/scene/room-1600.webp">
-          <source type="image/avif" srcset="img/scene/room-960.avif 960w, img/scene/room-1600.avif 1600w, img/scene/room-2400.avif 2400w" sizes="100vw">
-          <source type="image/webp" srcset="img/scene/room-960.webp 960w, img/scene/room-1600.webp 1600w, img/scene/room-2400.webp 2400w" sizes="100vw">
-          <img src="img/scene/room-1600.jpg" srcset="img/scene/room-960.jpg 960w, img/scene/room-1600.jpg 1600w, img/scene/room-2400.jpg 2400w" sizes="100vw" alt="" width="1344" height="752" fetchpriority="low" decoding="async">
-        </picture>
-      </div>
-      <div class="room-shade" aria-hidden="true"></div>
-      <div class="wrap room-head">
-        <h2>חדר העבודות.</h2>
-        <p class="sub">חמישה סוגי עבודות. לחצו על נישה ותראו מה יצא מהסדנה.</p>
-      </div>
-      <div class="door-row" id="doorRow" role="list" aria-label="קטגוריות העבודות"></div>
-    </div>
   </div>
   <span id="inside" class="anchor"></span>
-  <span id="works" class="anchor anchor-room"></span>
 </section>
 
-<!-- ===== 3. התמונות של הנישה שנבחרה בחדר העבודות (החדר עצמו הוא השכבה האחרונה של #gate) ===== -->
-<section class="wall" id="wall" aria-label="העבודות">
-  <div class="burst-area" id="burstArea">
-    <p class="burst-hint" id="burstHint">בחרו נישה בחדר העבודות ותראו כאן את העבודות</p>
-    <div class="burst" id="burst" aria-live="polite"></div>
+<!-- ===== 3. בתוך ארון העבודות: חוטים עם הדפסות (js/works.js). מתחיל באור החם שבו נגמרת ההליכה ===== -->
+<section class="works" id="works" aria-labelledby="worksTitle">
+  <div class="wrap works-head">
+    <h2 id="worksTitle">בתוך ארון העבודות.<small>עבודות לדוגמה מהסדנה. החליקו לאורך החוט, ולחצו על תמונה להגדלה.</small></h2>
   </div>
+  <div id="lines"></div>
 </section>
 
-<!-- ===== 3ב. ההליכה אל התנור: תגי מחיר (js/walk.js, js/price-tags.js) ===== -->
+<!-- ===== 3ב. ההליכה אל התנור: מה אפשר לבדוק עכשיו (js/walk.js, js/forge-picks.js) ===== -->
 <section class="forge" id="forge" aria-labelledby="forgeTitle">
   <div class="walk-stage">
     <div class="fit">
@@ -154,10 +148,9 @@
     <div class="embers" data-x="38,24" aria-hidden="true"></div>
     <div class="forge-shade" aria-hidden="true"></div>
     <div class="wrap forge-head">
-      <h2 id="forgeTitle">ליד התנור.<small>מחירים לדוגמה לעבודות נפוצות.</small></h2>
-      <p class="sub">כל עבודה נבנית לפי המידות שלכם. לחצו על תג ותראו הדמיה ומחיר לפרויקט שלכם.</p>
+      <h2 id="forgeTitle">ליד התנור.<small>מה אפשר לבדוק עכשיו, עם הדמיה וטווח מחיר תוך דקה:</small></h2>
     </div>
-    <ul class="tags" id="tags" aria-label="מחירים לדוגמה"></ul>
+    <ul class="tags" id="tags" aria-label="מה אפשר לבדוק עכשיו"></ul>
   </div>
 </section>
 

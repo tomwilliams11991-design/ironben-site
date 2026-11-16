@@ -1,7 +1,7 @@
 // הכוריאוגרפיה של הכניסה וההליכה בסדנה. כל התנועה מוגדרת כאן כפונקציות של התקדמות הגלילה,
 // ומנוע הגלילה (js/scroll-scene.js) מריץ אותן על כרטיס המסך.
-//   #gate:  השער נפתח → שהייה על הכותרת → פונים ימינה אל ארון העבודות, הדלתות נפתחות, אור, ועומדים בחדר העבודות (#room)
-//   #forge: יוצאים מהחושך → פונים שמאלה אל התנור, האש מתחממת, תגי המחיר נתלים → #bench
+//   #gate:  השער נפתח → שהייה על הכותרת → פונים ימינה אל ארון העבודות, הדלתות נפתחות ונכנסים לאור → #works (מתחיל באותו אור)
+//   #forge: חוזרים ישר לסדנה → פונים שמאלה אל התנור, האש מתחממת, נתלות התגיות של מה אפשר לבדוק → #bench
 import { $, $$, still, track } from "./util.js";
 import { createScene } from "./scroll-scene.js";
 
@@ -15,7 +15,7 @@ const SPOT = {
 };
 
 /** אורכי הגלילה בתוך #gate, ביחידות גובה מסך. הסכום + 1 = הגובה של .gate ב-css/gate.css (310vh). קצר בכוונה: בטלפון כל מסך הוא תנועת אצבע. */
-const GATE = { open: 0.8, dwell: 0.3, walk: 1.0 };
+export const GATE = { open: 0.8, dwell: 0.3, walk: 1.0 };
 const GATE_LEN = GATE.open + GATE.dwell + GATE.walk;
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
@@ -89,22 +89,21 @@ function gateTracks(vh) {
     ...T("#gate .cab-leaf .shade", (k) => op(doorOpen(k) * 0.55)),
     ...T("#gate .cab-dark", (k) => op((1 - doorOpen(k)) * 0.5)),
     ...T("#gate .walk-cap", (k) => op(span(ph(k).w, 0.22, 0.34) * (1 - span(ph(k).w, 0.46, 0.54)))),
-    // נכנסים לאור, ובתוכו מופיע חדר העבודות: אותה סצנה, בלי גלילה נוספת ובלי מסך ריק
-    ...T("#gate .walk-light", (k) => op(0.92 * span(ph(k).w, 0.55, 0.74) * (1 - span(ph(k).w, 0.8, 0.94)))),
-    ...T("#room", (k) => op(span(ph(k).w, 0.74, 0.88))),
+    // נכנסים לאור שבתוך הארון; בסוף הבמה נגללת למעלה וסקשן העבודות מתחיל באותו צבע בדיוק
+    ...T("#gate .walk-light", (k) => op(span(ph(k).w, 0.55, 0.85))),
   ];
 }
 
 /* ===== התנור ===== */
 
-/** k (0..1 לאורך #forge): 0..0.5 הולכים מהארון לתנור · 0.3..0.6 החום עולה · 0.35..0.47 הכותרת · 0.45.. התגים. */
+/** k (0..1 לאורך #forge): 0..0.5 מהמבט הכללי על הסדנה אל התנור · 0.3..0.6 החום עולה · 0.35..0.47 הכותרת · 0.45.. התגיות. */
 function forgeTracks(vh) {
-  const f = frame(vh), sCab = zoomFor(SPOT.cabinet, f), sForge = zoomFor(SPOT.forge, f);
+  const f = frame(vh), sForge = zoomFor(SPOT.forge, f);
   const heat = (k) => span(k, 0.3, 0.6), head = (k) => span(k, 0.35, 0.47);
   const camera = (k) => {
     const lean = span(k, 0.5, 1);
     return lean > 0 ? aim(SPOT.forge.x, SPOT.forge.y, sForge * (1 + 0.1 * lean), f)
-      : walkBetween(SPOT.cabinet, SPOT.forge, sCab, sForge, span(k, 0, 0.5), 5, f);
+      : walkBetween(SPOT.entry, SPOT.forge, 1, sForge, span(k, 0, 0.5), 4, f);
   };
   const T = (sel, fn) => $$(sel).map((el) => ({ el, fn }));
   return [
@@ -127,7 +126,6 @@ function gateClasses(stage) {
     if (w > 0.7 && !seen) { seen = true; track("walk_cabinet"); }
     stage.classList.toggle("open", open);
     stage.classList.toggle("walking", w >= 0.04);
-    stage.classList.toggle("in-room", w >= 0.86);
     stage.style.visibility = gone ? "hidden" : ""; // אחרי שהסקשן כולו עבר: לא לצייר את הבמה בכלל
   };
 }

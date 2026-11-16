@@ -2,7 +2,6 @@
    כאן רק המצב ההתחלתי (שער סגור). כל התנועה בגלילה היא אנימציות מ-js/walk.js (דרך js/scroll-scene.js). */
 /* גובה: מסך + פתיחה (80vh) + שהייה על הכותרת (30vh) + ההליכה לארון ולתוך חדר העבודות (100vh). חייב להתאים ל-GATE ב-js/walk.js */
 .gate{position:relative;height:310vh}
-.gate .anchor.anchor-room{top:210vh} /* סוף הסצנה: עומדים בחדר העבודות */
 .gate .anchor{position:absolute;top:85vh;left:0;width:1px;height:1px}
 .stage{position:sticky;top:0;height:100vh;height:100lvh;overflow:hidden;background:#061110;isolation:isolate}
 /* הסדנה מאחורי השער: נכנסים פנימה (זום קטן) והחושך מתבהר */
