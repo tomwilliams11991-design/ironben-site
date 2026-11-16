@@ -14,7 +14,7 @@
   }
   apply();
   var wrap = document.createElement("div"); wrap.className = "a11y";
-  wrap.innerHTML = '<button type="button" class="a11y-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="a11yPanel" aria-label="תפריט נגישות"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><circle cx="12" cy="4.5" r="2"/><path d="M4 8.2a1 1 0 0 1 1.2-.8l6.8 1.4 6.8-1.4a1 1 0 1 1 .4 2l-5.2 1.1V14l2.6 6.4a1 1 0 1 1-1.9.8L12 15.6 9.3 21.2a1 1 0 1 1-1.9-.8L10 14v-3.5L4.8 9.4A1 1 0 0 1 4 8.2Z"/></svg></button>' +
+  wrap.innerHTML = '<button type="button" class="a11y-btn" aria-haspopup="dialog" aria-expanded="false" aria-controls="a11yPanel" aria-label="תפריט נגישות"><img src="brand/a11y-metal-64.png" srcset="brand/a11y-metal-64.png 1x, brand/a11y-metal-128.png 2x, brand/a11y-metal-192.png 3x" width="56" height="56" alt=""></button>' +
     '<div class="a11y-panel" id="a11yPanel" role="dialog" aria-label="הגדרות נגישות" hidden><div class="a11y-head"><b>נגישות</b><button type="button" class="a11y-close" aria-label="סגירה">✕</button></div><div class="a11y-opts">' +
     OPTS.map(function (o) { return '<button type="button" data-k="' + o[0] + '" aria-pressed="' + (!!state[o[0]]) + '">' + o[1] + "</button>"; }).join("") +
     '</div><div class="a11y-foot"><button type="button" class="a11y-reset">איפוס</button><a href="accessibility.html">הצהרת נגישות</a></div></div>';

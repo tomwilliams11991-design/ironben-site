@@ -1,7 +1,12 @@
 /* תפריט הנגישות (js/../a11y.js) ומצבי הנגישות כמחלקות על html. */
 .a11y{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));inset-inline-end:16px;z-index:26}
-.a11y-btn{width:52px;height:52px;border-radius:50%;border:1px solid rgb(255 255 255/.2);background:rgb(var(--shade)/.94);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 24px -8px rgb(0 0 0/.6)}
-.a11y-panel{position:absolute;bottom:64px;inset-inline-end:0;width:min(300px,calc(100vw - 32px));background:var(--paper);color:var(--paper-ink);border-radius:8px;padding:14px;box-shadow:0 30px 60px -20px rgb(0 0 0/.8);font-size:15px}
+/* הכפתור: דיסקית ברזל עם שפת פליז וסמל באמייל כחול, כמו כפתור הוואטסאפ (site/brand/a11y-metal-*.png, tools/images/badge.py) */
+.a11y-btn{width:56px;height:56px;padding:0;border:0;border-radius:50%;background:none;display:block;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.a11y-btn img{width:100%;height:100%;display:block;transition:transform .2s var(--ease);filter:drop-shadow(0 8px 14px rgb(0 0 0/.45))}
+.a11y-btn:active img{transform:scale(.94)}
+.a11y-btn:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
+@media (hover:hover) and (pointer:fine){.a11y-btn:hover img{transform:translateY(-2px) rotate(8deg)}}
+.a11y-panel{position:absolute;bottom:68px;inset-inline-end:0;width:min(300px,calc(100vw - 32px));background:var(--paper);color:var(--paper-ink);border-radius:8px;padding:14px;box-shadow:0 30px 60px -20px rgb(0 0 0/.8);font-size:15px}
 .a11y-panel[hidden]{display:none}
 .a11y-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:17px}
 .a11y-close{border:0;background:none;font-size:18px;cursor:pointer;color:var(--paper-ink);width:36px;height:36px;border-radius:50%}
