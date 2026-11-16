@@ -2,7 +2,7 @@
    חזית לכל קטגוריה עם מסגרת פליז וכרטיס, וידית פלדה מחושלת;
    מגירה פתוחה נשלפת קצת קדימה ומתחתיה תיבה מעץ אלון בהיר עם התמונות. רק מגירה אחת פתוחה בכל רגע.
    במחשב התמונות בגריד; בטלפון ברצועה שמחליקים, עם חץ "עוד". */
-.works{position:relative;z-index:2;margin-top:-40lvh;padding:calc(var(--nav) + var(--way) + 40px) 0 64px;background:#1a0f08;
+.works{position:relative;z-index:2;margin-top:-20lvh;padding:calc(var(--nav) + var(--way) + 40px) 0 64px;background:#1a0f08;
   background-image:radial-gradient(70% 260px at 50% 0,rgb(224 140 70/.22),transparent),linear-gradient(rgb(26 15 8/.6),rgb(26 15 8/.92)),repeating-linear-gradient(90deg,#2a170b 0 86px,#1e1008 86px 88px)}
 .works-head{margin-bottom:28px}
 .works-head h2{color:#fff3e2;text-shadow:0 2px 20px rgb(0 0 0/.35)}

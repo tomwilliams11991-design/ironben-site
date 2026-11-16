@@ -13,8 +13,10 @@ const SPOT = {
   cabinet: { x: 0.809, y: 0.44, h: 0.58, w: 0.09 },
 };
 
-/** אורכי הגלילה בתוך #gate, ביחידות גובה מסך. הסכום + 1 = הגובה של .gate ב-css/gate.css (265vh). קצר בכוונה: בטלפון כל מסך הוא תנועת אצבע. */
-export const GATE = { open: 0.8, dwell: 0.3, walk: 0.55 };
+/** אורכי הגלילה בתוך #gate, ביחידות גובה מסך. הסכום + 1 = הגובה של .gate ב-css/gate.css (265vh, בטלפון 330vh). קצר בכוונה: בטלפון כל מסך הוא תנועת אצבע. */
+export const GATE = matchMedia("(max-width:820px)").matches
+  ? { open: 1.3, dwell: 0.45, walk: 0.55 }  // טלפון: 330vh. החלקה אחת עוברת יותר ממסך, אז הפתיחה ארוכה יותר
+  : { open: 0.8, dwell: 0.3, walk: 0.55 };  // מחשב: 265vh
 const GATE_LEN = GATE.open + GATE.dwell + GATE.walk;
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
