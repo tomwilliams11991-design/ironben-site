@@ -30,7 +30,7 @@
 .walk-cap span{font-size:15px;padding:6px 14px;border-radius:999px;background:rgb(0 0 0/.55)}
 
 /* ===== התנור ===== */
-.forge{position:relative;height:200vh} /* מסך + 100vh של הליכה */
+.forge{position:relative;height:125vh} /* מסך + 25vh של הליכה אל התנור (קוצר ב-75% מ-100vh: פחות גלילה בין הארון לתנור) */
 .walk-stage{position:sticky;top:0;height:100vh;height:100lvh;overflow:hidden;background:#061110;isolation:isolate}
 /* החום: זוהר כתום שיושב על האש בתמונה (זז עם המצלמה), ובתוכו הבהוב (רק opacity, זול) */
 .heat{position:absolute;left:34.5%;top:41%;width:34%;aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none;opacity:0}
