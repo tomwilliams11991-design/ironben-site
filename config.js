@@ -13,7 +13,7 @@ window.IRONBEN_CONFIG = {
   EMAIL: "ironben.eindor@gmail.com",
 
   INSTAGRAM: "https://www.instagram.com/ironben.eindor",
-  FACEBOOK: "",
+  FACEBOOK: "https://www.facebook.com/IRONBENeindor",
   ADDRESS: "בית עובד, ליד נס ציונה",
 
   // מדידה. ריק = לא נטען כלום. GA4: מזהה שמתחיל ב-G-. Meta Pixel: מספר מהמנהל העסקי.
