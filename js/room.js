@@ -1,7 +1,7 @@
-// חדר העבודות: נכנסים מארון העבודות לחדר תצוגה עם חמש נישות מוארות, נישה לכל קטגוריה (תמונת הכיסוי שלה בפנים).
-// ריחוף (במחשב) או נגיעה (בטלפון) על נישה, וכל תמונות הקטגוריה "פורצות" ממנה לקיר שמתחת
+// חדר העבודות: השכבה האחרונה של סצנת השער (index.html, #room). חמש נישות מוארות, נישה לכל קטגוריה (תמונת הכיסוי שלה בפנים).
+// לחיצה על נישה: כל תמונות הקטגוריה "פורצות" ממנה לקיר שמתחת לחדר, והעמוד גולל אליהן
 // (FLIP: מודדים את המקום הסופי, מתחילים ממרכז הנישה, משחררים).
-import { $, $$, FINE, pic, track, scrollTo } from "./util.js";
+import { $, $$, pic, track, scrollTo } from "./util.js";
 import { DOORS, worksOf } from "./data/work.js";
 
 /**
@@ -42,22 +42,14 @@ function aimFrom(burst, from) {
   });
 }
 
-/** בטלפון החדר רחב מהמסך וגוללים בו לצדדים: מתחילים מהמרכז. */
-function centerRoom() {
-  const room = $("#room");
-  if (room && room.scrollWidth > room.clientWidth) room.scrollLeft = -(room.scrollWidth - room.clientWidth) / 2; // RTL: scrollLeft שלילי
-}
-
 /**
  * @param {{open(list, i), isOpen(): boolean}} lightbox
  */
 export function initRoom(lightbox) {
-  const row = $("#doorRow"), burst = $("#burst"), area = $("#burstArea"), wall = $("#wall");
+  const row = $("#doorRow"), burst = $("#burst"), area = $("#burstArea");
   if (!row) return;
   let openKey = null, shown = [], closeT = 0;
   row.innerHTML = DOORS.map(nicheHTML).join("");
-  centerRoom();
-  addEventListener("resize", centerRoom);
 
   function openNiche(key) {
     clearTimeout(closeT);
@@ -86,18 +78,11 @@ export function initRoom(lightbox) {
     }, delay);
   }
 
-  // במחשב: ריחוף ופוקוס פותחים; יציאה מהחדר סוגרת (אלא אם הלייטבוקס פתוח מעליו)
-  if (FINE) {
-    row.addEventListener("pointerover", (e) => { const b = e.target.closest(".niche"); if (b) openNiche(b.dataset.key); });
-    row.addEventListener("focusin", (e) => { const b = e.target.closest(".niche"); if (b) openNiche(b.dataset.key); });
-    wall.addEventListener("pointerleave", () => { if (!lightbox.isOpen()) close(250); });
-  }
-  // לחיצה: פותחת (בטלפון גם גוללת אל התמונות), לחיצה שנייה גוללת אליהן
+  // לחיצה (או Enter): פותחת את הנישה וגוללת אל התמונות שלה, ישר מתחת לחדר
   row.addEventListener("click", (e) => {
     const b = e.target.closest(".niche"); if (!b) return;
-    const again = openKey === b.dataset.key;
     openNiche(b.dataset.key);
-    if (again || !FINE) setTimeout(() => scrollTo(area, "start"), FINE ? 0 : 350);
+    setTimeout(() => scrollTo(area, "start"), 60);
   });
   burst.addEventListener("click", (e) => {
     const f = e.target.closest("figure"); if (!f) return;

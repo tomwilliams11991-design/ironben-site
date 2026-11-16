@@ -1,6 +1,6 @@
 // הכוריאוגרפיה של הכניסה וההליכה בסדנה. כל התנועה מוגדרת כאן כפונקציות של התקדמות הגלילה,
 // ומנוע הגלילה (js/scroll-scene.js) מריץ אותן על כרטיס המסך.
-//   #gate:  השער נפתח → שהייה על הכותרת → פונים ימינה אל ארון העבודות, הדלתות נפתחות ונכנסים פנימה → #wall
+//   #gate:  השער נפתח → שהייה על הכותרת → פונים ימינה אל ארון העבודות, הדלתות נפתחות, אור, ועומדים בחדר העבודות (#room)
 //   #forge: יוצאים מהחושך → פונים שמאלה אל התנור, האש מתחממת, תגי המחיר נתלים → #bench
 import { $, $$, still, track } from "./util.js";
 import { createScene } from "./scroll-scene.js";
@@ -14,8 +14,8 @@ const SPOT = {
   forge: { x: 0.335, y: 0.43, h: 0.54, w: 0.22 },
 };
 
-/** אורכי הגלילה בתוך #gate, ביחידות גובה מסך. הסכום + 1 = הגובה של .gate ב-css/gate.css (300vh). קצר בכוונה: בטלפון כל מסך הוא תנועת אצבע. */
-const GATE = { open: 0.8, dwell: 0.3, walk: 0.9 };
+/** אורכי הגלילה בתוך #gate, ביחידות גובה מסך. הסכום + 1 = הגובה של .gate ב-css/gate.css (310vh). קצר בכוונה: בטלפון כל מסך הוא תנועת אצבע. */
+const GATE = { open: 0.8, dwell: 0.3, walk: 1.0 };
 const GATE_LEN = GATE.open + GATE.dwell + GATE.walk;
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
@@ -59,13 +59,13 @@ function gatePhase(k) {
   return { p, w, h: span(p, 0.6, 0.9) * (1 - span(w, 0, 0.16)) };
 }
 
-/** מצלמת השער: זום כניסה (1.16 → 1), ואז ההליכה לארון (w 0..0.5), ואז צעד פנימה (w 0.65..1).
+/** מצלמת השער: זום כניסה (1.16 → 1), ואז ההליכה לארון (w 0..0.42), ואז צעד פנימה (w 0.5..0.85).
  *  הזום הכולל נשאר מתחת ל-~2: זום גדול יותר מחייב את הדפדפן לצייר שכבה ענקית, ובטלפון המסך נהיה שחור. */
 function gateCamera(k, f) {
   const { p, w } = gatePhase(k);
   const sCab = zoomFor(SPOT.cabinet, f);
-  let cam = walkBetween(SPOT.entry, SPOT.cabinet, 1, sCab, span(w, 0, 0.5), -5, f);
-  const push = Math.pow(span(w, 0.65, 1), 2);
+  let cam = walkBetween(SPOT.entry, SPOT.cabinet, 1, sCab, span(w, 0, 0.42), -5, f);
+  const push = Math.pow(span(w, 0.5, 0.85), 2);
   if (push > 0) cam = aim(SPOT.cabinet.x, SPOT.cabinet.y, sCab * (1 + 0.3 * push), f);
   cam.s *= 1.16 - 0.16 * p;
   return cam;
@@ -74,7 +74,7 @@ function gateCamera(k, f) {
 function gateTracks(vh) {
   const f = frame(vh), ph = gatePhase;
   const T = (sel, fn) => $$(sel).map((el) => ({ el, fn }));
-  const doorOpen = (k) => easeOut(span(ph(k).w, 0.5, 0.8));
+  const doorOpen = (k) => easeOut(span(ph(k).w, 0.38, 0.62));
   return [
     ...T("#gate .leaf.l", (k) => ({ transform: `rotateY(${r2(ph(k).p * 104)}deg)`, opacity: String(r2(span(0.96 - ph(k).p, 0, 0.18))) })),
     ...T("#gate .leaf.r", (k) => ({ transform: `rotateY(${r2(ph(k).p * -104)}deg)`, opacity: String(r2(span(0.96 - ph(k).p, 0, 0.18))) })),
@@ -88,9 +88,10 @@ function gateTracks(vh) {
     ...T("#gate .cab-leaf.r", (k) => ({ transform: `rotateY(${r2(doorOpen(k) * 112)}deg)` })),
     ...T("#gate .cab-leaf .shade", (k) => op(doorOpen(k) * 0.55)),
     ...T("#gate .cab-dark", (k) => op((1 - doorOpen(k)) * 0.5)),
-    ...T("#gate .walk-cap", (k) => op(span(ph(k).w, 0.3, 0.45) * (1 - span(ph(k).w, 0.62, 0.72)))),
-    // נכנסים לאור: בסוף הבמה נגללת למעלה וחדר העבודות כבר מתחתיה (בלי מסך שחור באמצע)
-    ...T("#gate .walk-light", (k) => op(0.9 * span(ph(k).w, 0.7, 0.95))),
+    ...T("#gate .walk-cap", (k) => op(span(ph(k).w, 0.22, 0.34) * (1 - span(ph(k).w, 0.46, 0.54)))),
+    // נכנסים לאור, ובתוכו מופיע חדר העבודות: אותה סצנה, בלי גלילה נוספת ובלי מסך ריק
+    ...T("#gate .walk-light", (k) => op(0.92 * span(ph(k).w, 0.55, 0.74) * (1 - span(ph(k).w, 0.8, 0.94)))),
+    ...T("#room", (k) => op(span(ph(k).w, 0.74, 0.88))),
   ];
 }
 
@@ -126,6 +127,7 @@ function gateClasses(stage) {
     if (w > 0.7 && !seen) { seen = true; track("walk_cabinet"); }
     stage.classList.toggle("open", open);
     stage.classList.toggle("walking", w >= 0.04);
+    stage.classList.toggle("in-room", w >= 0.86);
     stage.style.visibility = gone ? "hidden" : ""; // אחרי שהסקשן כולו עבר: לא לצייר את הבמה בכלל
   };
 }

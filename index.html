@@ -31,7 +31,7 @@
     <a class="mark" href="#top" aria-label="IRON BEN, לראש העמוד"><img src="brand/logo-corten-400.png" srcset="brand/logo-corten-400.png 1x, brand/logo-corten-800.png 2x" width="98" height="56" alt="IRON BEN"></a>
     <nav class="nav" aria-label="ראשי">
       <a href="#inside">הסדנה</a>
-      <a href="#wall">ארון העבודות</a>
+      <a href="#works">חדר העבודות</a>
       <a href="#forge">מחירים</a>
       <a href="#bench">הצעה ראשונית</a>
       <a href="#exit">יצירת קשר</a>
@@ -63,7 +63,7 @@
           <li style="--x:11%;--y:32%"><button type="button" aria-expanded="false"><i></i><span>כלי יד. ריתוך, השחזה וגימור בתנור.</span></button></li>
         </ul>
         <!-- ארון העבודות: שתי דלתות מעל אותה תמונה (js/walk.js פותח אותן בגלילה), השלט "ארון עבודות" מתפצל איתן; מאחוריהן אור חם של חדר העבודות -->
-        <a class="cab" href="#wall" aria-label="ארון העבודות: לתיק העבודות" style="--cl:77.22;--ct:17.86;--cw:7.34;--ch:52.71">
+        <a class="cab" href="#works" aria-label="ארון העבודות: לתיק העבודות" style="--cl:77.22;--ct:17.86;--cw:7.34;--ch:52.71">
           <span class="cab-in" aria-hidden="true"><span class="cab-dark"></span></span>
           <span class="cab-leaf l" aria-hidden="true"><i></i><b class="cab-plate">ארון<br>עבודות</b><span class="shade"></span></span>
           <span class="cab-leaf r" aria-hidden="true"><i></i><b class="cab-plate">ארון<br>עבודות</b><span class="shade"></span></span>
@@ -78,7 +78,7 @@
         <p class="lede">סדנה בוטיקית של ברזל ועץ. מתכננים איתכם, מייצרים כאן, ומתקינים אצלכם.</p>
         <div class="cta">
           <a class="btn primary" href="#bench" data-magnet>הצעה ראשונית חינם</a>
-          <a class="btn light" href="#wall" data-magnet>לראות עבודות</a>
+          <a class="btn light" href="#works" data-magnet>לראות עבודות</a>
         </div>
       </div>
     </div>
@@ -107,31 +107,33 @@
     <p class="hint" aria-hidden="true"><span>גללו כדי להיכנס</span><i></i></p>
     <p class="walk-cap" aria-hidden="true"><b>ארון העבודות</b><span>גללו כדי להיכנס</span></p>
     <div class="walk-light" aria-hidden="true"></div>
-  </div>
-  <span id="inside" class="anchor"></span>
-</section>
-
-<!-- ===== 3. חדר העבודות (נכנסים אליו מארון העבודות) ===== -->
-<section class="wall" id="wall">
-  <div class="wrap wall-head">
-    <h2>חדר העבודות.</h2>
-    <p class="sub">חמש נישות, חמישה סוגי עבודות. בחרו נישה ותראו מה יצא מהסדנה.</p>
-  </div>
-  <div class="room" id="room">
-    <div class="room-in">
-      <picture>
-        <source media="(max-width: 820px)" type="image/avif" srcset="img/scene/room-1600.avif">
-        <source media="(max-width: 820px)" type="image/webp" srcset="img/scene/room-1600.webp">
-        <source type="image/avif" srcset="img/scene/room-960.avif 960w, img/scene/room-1600.avif 1600w, img/scene/room-2400.avif 2400w" sizes="100vw">
-        <source type="image/webp" srcset="img/scene/room-960.webp 960w, img/scene/room-1600.webp 1600w, img/scene/room-2400.webp 2400w" sizes="100vw">
-        <img src="img/scene/room-1600.jpg" srcset="img/scene/room-960.jpg 960w, img/scene/room-1600.jpg 1600w, img/scene/room-2400.jpg 2400w" sizes="100vw" alt="חדר העבודות: חדר תצוגה מאבן עם חמש נישות מוארות" width="1344" height="752" fetchpriority="low" decoding="async">
-      </picture>
+    <!-- חדר העבודות: מופיע באותה סצנה אחרי שדלתות הארון נפתחות (js/walk.js). במחשב הנישות על התמונה, בטלפון כרטיסים -->
+    <div class="room-layer" id="room">
+      <div class="room-fit">
+        <picture>
+          <source media="(max-width: 820px)" type="image/avif" srcset="img/scene/room-1600.avif">
+          <source media="(max-width: 820px)" type="image/webp" srcset="img/scene/room-1600.webp">
+          <source type="image/avif" srcset="img/scene/room-960.avif 960w, img/scene/room-1600.avif 1600w, img/scene/room-2400.avif 2400w" sizes="100vw">
+          <source type="image/webp" srcset="img/scene/room-960.webp 960w, img/scene/room-1600.webp 1600w, img/scene/room-2400.webp 2400w" sizes="100vw">
+          <img src="img/scene/room-1600.jpg" srcset="img/scene/room-960.jpg 960w, img/scene/room-1600.jpg 1600w, img/scene/room-2400.jpg 2400w" sizes="100vw" alt="" width="1344" height="752" fetchpriority="low" decoding="async">
+        </picture>
+      </div>
+      <div class="room-shade" aria-hidden="true"></div>
+      <div class="wrap room-head">
+        <h2>חדר העבודות.</h2>
+        <p class="sub">חמישה סוגי עבודות. לחצו על נישה ותראו מה יצא מהסדנה.</p>
+      </div>
       <div class="door-row" id="doorRow" role="list" aria-label="קטגוריות העבודות"></div>
-      <p class="room-hint" aria-hidden="true">החליקו לצדדים · לחצו על נישה</p>
     </div>
   </div>
+  <span id="inside" class="anchor"></span>
+  <span id="works" class="anchor anchor-room"></span>
+</section>
+
+<!-- ===== 3. התמונות של הנישה שנבחרה בחדר העבודות (החדר עצמו הוא השכבה האחרונה של #gate) ===== -->
+<section class="wall" id="wall" aria-label="העבודות">
   <div class="burst-area" id="burstArea">
-    <p class="burst-hint" id="burstHint">בחרו נישה בחדר ותראו את העבודות כאן</p>
+    <p class="burst-hint" id="burstHint">בחרו נישה בחדר העבודות ותראו כאן את העבודות</p>
     <div class="burst" id="burst" aria-live="polite"></div>
   </div>
 </section>
