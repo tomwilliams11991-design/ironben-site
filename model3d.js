@@ -4,14 +4,16 @@
 // בהטלה אורתוגרפית עם קווי מתאר ומידות, כלומר השרטוט נובע מהמודל ולא מקוד ציור נפרד.
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { contactShadow } from "./3d/textures.js";
 import BUILDERS from "./3d/builders.js";
 import { materials, ACCENT, THEME } from "./3d/materials.js";
 
 export const PRODUCT_MODELS = Object.keys(BUILDERS);
 
-/** מכין renderer עם צללים רכים, DPR מוגבל ל-1.5 ובלי antialias בנייד (ביצועים). */
+/** מכין renderer עם צללים רכים ו-DPR מוגבל ל-1.5 (ביצועים). antialias תמיד: בלי זה הקצוות "מדרגות". */
 function createRenderer(el) {
-  const renderer = new THREE.WebGLRenderer({ antialias: innerWidth > 768, alpha: true, powerPreference: "high-performance" });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
   renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -21,17 +23,30 @@ function createRenderer(el) {
   return renderer;
 }
 
-/** סצנה עם אור שמיים, שמש עם צל, אור מילוי בצבע המבטא, רצפת צל ורשת (לתוכנית). */
-function createScene() {
+/**
+ * סצנה ריאליסטית: סביבת תאורה של חדר (RoomEnvironment, בשביל השתקפויות על פלדה ועץ), שמש חמה עם צל רך,
+ * אור קצה קר מאחור, רצפת צל, צל מגע רך מתחת למודל, ורשת (לתוכנית).
+ */
+function createScene(renderer) {
   const scene = new THREE.Scene();
-  scene.add(new THREE.HemisphereLight(THEME.sky, THEME.ground, 0.85));
-  const sun = new THREE.DirectionalLight(0xfff1e0, 1.6);
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environmentIntensity = 0.6;
+  pmrem.dispose();
+  scene.add(new THREE.HemisphereLight(THEME.sky, THEME.ground, 0.35));
+  const sun = new THREE.DirectionalLight(0xfff0dc, 2.2);
   sun.position.set(4, 7, 5); sun.castShadow = true;
-  sun.shadow.mapSize.set(1024, 1024); sun.shadow.bias = -0.0005; sun.shadow.radius = 4;
+  const big = innerWidth > 768;
+  sun.shadow.mapSize.set(big ? 2048 : 1024, big ? 2048 : 1024); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.02; sun.shadow.radius = 5;
+  Object.assign(sun.shadow.camera, { left: -6, right: 6, top: 6, bottom: -6, near: 0.5, far: 25 }); // מכסה גם פרגולה ומעקה ארוכים
   scene.add(sun);
-  const fill = new THREE.DirectionalLight(ACCENT, 0.35); fill.position.set(-5, 2, -4); scene.add(fill);
+  const rim = new THREE.DirectionalLight(0xcfe0ff, 0.6); rim.position.set(-4, 3, -5); scene.add(rim); // אור קצה: מפריד את הברזל מהרקע
+  const fill = new THREE.DirectionalLight(ACCENT, 0.18); fill.position.set(-5, 2, 4); scene.add(fill);
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), new THREE.ShadowMaterial({ opacity: THEME.shadow }));
   ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+  const contact = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({ map: contactShadow(), transparent: true, depthWrite: false }));
+  contact.rotation.x = -Math.PI / 2; contact.position.y = 0.002; contact.renderOrder = -1; scene.add(contact);
+  ground.userData.contact = contact;
   const grid = new THREE.GridHelper(20, 40, THEME.grid1, THEME.grid2);
   grid.material.transparent = true; grid.material.opacity = 0.5; grid.visible = false; scene.add(grid);
   return { scene, ground, grid };
@@ -65,7 +80,7 @@ function createLabelLayer(el) {
 export async function mount(el) {
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const renderer = createRenderer(el);
-  const { scene, ground, grid } = createScene();
+  const { scene, ground, grid } = createScene(renderer);
   const cam = new THREE.PerspectiveCamera(32, 1, 0.05, 100);
   const ortho = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.01, 100);
   const controls = createControls(cam, renderer.domElement, reduced);
@@ -86,7 +101,7 @@ export async function mount(el) {
 
   /** במצב תוכנית: משטחים לבנים + קווי מתאר, וקווי מידה עם תוויות. */
   function decoratePlan(c) {
-    model.traverse((o) => { if (o.isMesh) { o.material = flatMat; o.add(new THREE.LineSegments(new THREE.EdgesGeometry(o.geometry, 20), edgeMat)); } });
+    model.traverse((o) => { if (o.isMesh) { o.material = flatMat; o.add(new THREE.LineSegments(new THREE.EdgesGeometry(o.userData.planGeo ? o.userData.planGeo() : o.geometry, 20), edgeMat)); } });
     (model.userData.dims || []).forEach((d) => {
       const off = new THREE.Vector3(c[0], 0, c[2]);
       const a = new THREE.Vector3(...d.a).sub(off), b = new THREE.Vector3(...d.b).sub(off);
@@ -107,6 +122,10 @@ export async function mount(el) {
     model.position.set(-c[0], 0, -c[2]);
     scene.add(model);
     model.traverse((o) => { if (o.userData.float) { o.userData.y0 = o.position.y; floaters.push(o); } });
+    // צל המגע בגודל טביעת הרגל של המודל
+    const bb = new THREE.Box3().setFromObject(model), sz = bb.getSize(new THREE.Vector3());
+    const contact = ground.userData.contact;
+    contact.scale.set(sz.x * 1.25 + 0.3, sz.z * 1.25 + 0.3, 1); contact.position.x = (bb.min.x + bb.max.x) / 2; contact.position.z = (bb.min.z + bb.max.z) / 2;
     if (mode === "plan") decoratePlan(c);
     frame();
   }
@@ -167,7 +186,7 @@ export async function mount(el) {
   /** מחליף בין הדמיה לתוכנית (בלי לגעת ב-current). */
   function applyMode(m) {
     mode = m === "plan" ? "plan" : "3d";
-    grid.visible = mode === "plan"; ground.visible = mode !== "plan";
+    grid.visible = mode === "plan"; ground.visible = mode !== "plan"; ground.userData.contact.visible = mode !== "plan";
     controls.enabled = mode !== "plan"; controls.autoRotate = mode !== "plan" && !reduced;
   }
 

@@ -82,6 +82,8 @@ input[type=range]:focus-visible{outline:2px solid var(--ember);outline-offset:6p
 .model{aspect-ratio:1/.95;border-radius:var(--r);background:radial-gradient(70% 60% at 50% 70%,var(--paper-2),var(--paper));position:relative;overflow:hidden;min-height:260px;box-shadow:0 50px 70px -36px rgb(0 0 0/.9),0 0 0 1px rgb(0 0 0/.3)}
 .model:empty::before{content:"ההדמיה תופיע כאן אחרי שתבחרו מה בונים";position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--paper-muted);font-size:15px}
 .model-cap{font-size:14px;color:var(--muted)}
+/* בטלפון ההדמיה מעל הטופס; כשגוללים אליה (שלב המידות) היא נעצרת מתחת לכותרת ולפס המפה */
+.est-model{scroll-margin-top:calc(var(--nav) + var(--way) + 12px)}
 @media (max-width:980px){.est-grid{grid-template-columns:1fr}.est-model{position:static;order:-1;display:none}.est-model.has{display:grid}.model{aspect-ratio:4/3}.two{grid-template-columns:1fr}.sheet{padding:36px 20px 24px}}
 
 /* "הציבו אצלכם": כפתור ה-AR מתחת להדמיה, וחלון התצוגה (model-viewer) */

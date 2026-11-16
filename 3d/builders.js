@@ -2,6 +2,7 @@
 // עם userData: dims (קווי מידה למצב תוכנית), center, size (למסגור המצלמה) ו-plan (מבט התוכנית: front/side/top).
 // להוספת מוצר: להוסיף בונה כאן, ולהגדיר במוצר input_schema.model עם אותו שם.
 import * as THREE from "three";
+import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { STEEL } from "./materials.js";
 
 /** מספר עם יחידה לתווית מידה. */
@@ -11,13 +12,17 @@ const num = (v, d) => { const n = Number(v); return Number.isFinite(n) && n > 0 
 
 
 // ---------- בוני גיאומטריה. כל בונה מקבל params + materials ומחזיר Group בסנטימטרים→מטרים, עם dims להצגה ----------
+/** קופסה עם פינות מעוגלות מעט (עד 6 מ"מ), כדי שהקצוות יתפסו אור כמו פלדה ועץ אמיתיים.
+ *  לשרטוט (מצב תוכנית) נשמרת גם קופסה חדה ב-userData.planGeo, כדי שקווי המתאר יהיו נקיים. */
 function box(w, h, d, mat, x = 0, y = 0, z = 0) {
-  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+  const r = Math.min(0.006, Math.min(w, h, d) * 0.22);
+  const m = new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 2, r), mat);
+  m.userData.planGeo = () => new THREE.BoxGeometry(w, h, d);
   m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; return m;
 }
 function cyl(r, h, mat, x = 0, y = 0, z = 0) {
-  const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, 14), mat);
-  m.position.set(x, y, z); m.castShadow = true; return m;
+  const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, 20), mat);
+  m.position.set(x, y, z); m.castShadow = true; m.receiveShadow = true; return m;
 }
 
 const BUILDERS = {

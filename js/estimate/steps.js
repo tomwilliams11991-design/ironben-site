@@ -11,7 +11,14 @@ export function goStep(n) {
   $$(".step").forEach((s) => s.classList.toggle("on", Number(s.dataset.step) === n));
   $(".step.done").hidden = n !== 5;
   $$(".progress li").forEach((li, i) => { li.classList.toggle("on", i + 1 === n); li.classList.toggle("past", i + 1 < n); });
-  if (n < 5) scrollTo($(`.step[data-step='${n}']`));
+  if (n < 5) scrollTo(scrollTarget(n));
+}
+
+/** לאן לגלול בשלב n. בטלפון ההדמיה מעל הטופס, אז בשלב המידות מתחילים ממנה (והמידות מתחתיה). */
+function scrollTarget(n) {
+  const model = $(".est-model.has");
+  if (n === 2 && model && matchMedia("(max-width: 980px)").matches) return model;
+  return $(`.step[data-step='${n}']`);
 }
 
 /** כפתורי המשך / חזרה. */
