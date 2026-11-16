@@ -1,5 +1,5 @@
 // IRON BEN: מציג ההדמיה התלת-ממדית. Three.js דרך importmap (ראו index.html / quote.html / admin).
-// שימוש:  const m = await mount(el); m.update("stairs", {steps: 14}, {finish: "black", wood: "oak"}); m.setMode("plan"); m.snapshot()
+// שימוש:  const m = await mount(el); m.update("stairs", {steps: 14}, {finish: "black", wood: "oak"}); m.setMode("plan");
 // הגיאומטריה של כל מוצר ב-3d/builders.js, החומרים ב-3d/materials.js. מצב "תוכנית" מציג את אותה גיאומטריה
 // בהטלה אורתוגרפית עם קווי מתאר ומידות, כלומר השרטוט נובע מהמודל ולא מקוד ציור נפרד.
 import * as THREE from "three";
@@ -74,7 +74,7 @@ function createLabelLayer(el) {
 }
 
 /**
- * מרכיב מציג בתוך אלמנט. מחזיר API: update, setMode, getMode, snapshot, destroy.
+ * מרכיב מציג בתוך אלמנט. מחזיר API: update, setMode, getMode, destroy. (משמש היום את דף ההצעה, quote.html)
  * @param {HTMLElement} el מיכל עם גובה (ה-canvas ממלא אותו)
  */
 export async function mount(el) {
@@ -198,35 +198,6 @@ export async function mount(el) {
     },
     setMode(m) { applyMode(m); build(); resize(); loop(); },
     getMode() { return mode; },
-    /** PNG של ההדמיה ושל התוכנית ברוחב נתון. לא דורש preserveDrawingBuffer כי מצלמים מיד אחרי render. */
-    snapshot(width = 1200) {
-      const prevPR = renderer.getPixelRatio(), savedMode = mode, out = {};
-      const aspect = (el.clientWidth || 4) / (el.clientHeight || 3);
-      renderer.setPixelRatio(1); renderer.setSize(width, Math.round(width / aspect), false);
-      cam.aspect = aspect; cam.updateProjectionMatrix();
-      for (const m of ["3d", "plan"]) { applyMode(m); build(); renderer.render(scene, m === "plan" ? ortho : cam); out[m] = renderer.domElement.toDataURL("image/png"); }
-      applyMode(savedMode); build();
-      renderer.setPixelRatio(prevPR); resize(); render();
-      return out;
-    },
-    /**
-     * המודל הנוכחי כקובץ GLB (מטרים, על הרצפה, ממורכז), להצגה במצלמה של הטלפון (js/estimate/ar.js).
-     * נבנה מחדש בחומרים של ההדמיה, גם אם המסך כרגע במצב תוכנית, ובלי רצפה, רשת וקווי מידה.
-     * @returns {Promise<ArrayBuffer>}
-     */
-    async exportGLB() {
-      const { GLTFExporter } = await import("three/addons/exporters/GLTFExporter.js");
-      const builder = BUILDERS[current.slug] || BUILDERS.table;
-      const g = builder(current.params, materials(current.mats.finish, current.mats.wood));
-      const c = g.userData.center;
-      g.position.set(-c[0], 0, -c[2]);
-      const root = new THREE.Group(); root.name = "IRON BEN"; root.add(g);
-      // הנקודה הנמוכה ביותר על הרצפה (למשל הקורה המשופעת של המדרגות יורדת מעט מתחת ל-0), כדי שבמצלמה לא "ישקע"
-      g.position.y -= new THREE.Box3().setFromObject(root).min.y;
-      const out = await new GLTFExporter().parseAsync(root, { binary: true });
-      root.traverse((o) => o.geometry?.dispose());
-      return out;
-    },
     destroy() { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); controls.dispose(); renderer.dispose(); el.innerHTML = ""; },
     renderer, scene, camera: cam,
   };

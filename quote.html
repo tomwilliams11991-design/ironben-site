@@ -18,6 +18,11 @@
 .tw{overflow-x:auto}
 .render{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .render .model{min-height:280px}
+/* מציג ההדמיה והלשוניות שלו (היו ב-css/bench.css עד שהאתר עבר לתמונות) */
+.model{aspect-ratio:4/3;border-radius:6px;background:radial-gradient(70% 60% at 50% 70%,var(--paper-2),var(--paper));position:relative;overflow:hidden;box-shadow:0 0 0 1px var(--paper-line)}
+.model-tabs{display:flex;gap:4px;background:rgb(0 0 0/.06);padding:4px;border-radius:999px;width:max-content;margin-bottom:8px}
+.model-tabs button{font:500 14px var(--body);padding:7px 16px;border-radius:999px;border:0;background:transparent;color:var(--paper-muted);cursor:pointer}
+.model-tabs button.on{background:var(--paper-ink);color:#fff}
 .terms{margin:28px 0 0;padding:0 18px 0 0;font-size:15px;color:var(--muted)}
 .terms li{margin-bottom:6px}
 .accept{margin-top:28px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);display:flex;gap:12px;flex-wrap:wrap;align-items:end}
@@ -28,7 +33,7 @@
 </style></head>
 <body><main class="wrap"><div class="q" id="q"><p id="msg" role="status">טוען את ההצעה...</p></div></main>
 <script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" integrity="sha384-0w2KAL2YHP6wKOkUDzkCDGgVvfmHnj02DHeQ6XcHOgTfFsGyonKOpShMH1x6nk9o" crossorigin="anonymous"></script>
 <script type="module">
 // דף ההצעה ללקוח: טוען הצעה לפי טוקן (get_quote), מציג פירוט, הדמיה מהפרמטרים ששמרנו, ואישור בשם מלא.
 import { $, ils, esc, heDate } from "./js/util.js";

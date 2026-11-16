@@ -4,10 +4,10 @@
 // במחשב הכפתור מוסתר ומופיעה שורה שאפשר לעשות את זה בטלפון. בדיקה במחשב: ?ar=1.
 import { $, track } from "../util.js";
 import { state } from "./state.js";
+import { dimFields } from "./photo.js";
 
 const MODEL_VIEWER = "https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js";
 const FORCE = new URLSearchParams(location.search).has("ar");
-const H_KEYS = /^(length|width)/;
 
 /** האם המכשיר יכול להציג AR: אייפון/אייפד (Quick Look) או אנדרואיד עם WebXR. */
 async function arSupported() {
@@ -29,36 +29,40 @@ function loadModelViewer() {
 }
 
 /** ערך של שדה במטרים (ס"מ מומרים), או null אם אין שדה כזה. */
-function meters(re) {
-  const f = (state.product.input_schema.fields || []).find((x) => x.type !== "choice" && re.test(x.key));
+function meters(f) {
   if (!f) return null;
   const v = Number(state.inputs[f.key]) || 0;
   return /ס"מ|cm/.test(f.unit || "") || /_cm$/.test(f.key) ? v / 100 : v;
 }
 
-/** המידות בחדר: הרוחב/אורך והגובה שבחרו. שולחן בלי שדה גובה: 76 ס"מ. בלי רוחב: 2 מ'. */
-const size = () => ({ w: meters(H_KEYS) ?? 2, h: meters(/^height/) ?? (state.product.slug === "table" ? 0.76 : null) });
+/** המידות בחדר: הרוחב/אורך והגובה שבחרו (שדות מ-dimFields). שולחן בלי שדה גובה: 76 ס"מ. בלי רוחב: 2 מ'. */
+function size() {
+  const { h, v } = dimFields(state.product);
+  return { w: meters(h) ?? 2, h: meters(v) ?? (state.product.slug === "table" ? 0.76 : null) };
+}
 
-/** מוצרים שבנויים ממקטעים (מעקה, מחיצה): בתמונה רחבה יותר המקטע חוזר, במקום להימתח. השאר נמתחים למידה. */
+/** מוצרים שבנויים ממקטעים (מעקה, מחיצה): ברוחב גדול המקטע חוזר, במקום להימתח. השאר נמתחים למידה. */
 const TILED = new Set(["railing", "office_partition"]);
 
-/** GLB של לוח עומד על הרצפה עם התמונה הגזורה, בגודל שבחרו (w×h מטר; בלי גובה, לפי יחס התמונה). */
+/** GLB של לוח עומד על הרצפה עם התמונה הגזורה, בגודל שבחרו (w×h מטר; בלי גובה, לפי יחס התמונה).
+ *  מקטעים חוזרים נבנים כלוחות נפרדים זה ליד זה (ולא texture.repeat), כי ההמרה ל-USDZ באייפון לא שומרת חזרה של טקסטורה. */
 async function photoGLB(src) {
   const THREE = await import("three");
   const { GLTFExporter } = await import("three/addons/exporters/GLTFExporter.js");
   const tex = await new THREE.TextureLoader().loadAsync(src);
   tex.colorSpace = THREE.SRGBColorSpace;
   const ratio = tex.image.height / tex.image.width, { w } = size(), h = size().h ?? w * ratio;
-  if (TILED.has(state.product.slug)) {
-    tex.wrapS = THREE.RepeatWrapping;
-    tex.repeat.x = Math.max(1, Math.round(w / (h / ratio)));
-  }
+  const n = TILED.has(state.product.slug) ? Math.max(1, Math.round(w / (h / ratio))) : 1;
   const mat = new THREE.MeshStandardMaterial({ map: tex, transparent: true, alphaTest: 0.5, side: THREE.DoubleSide, roughness: 0.9, metalness: 0 });
-  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
-  mesh.position.y = h / 2; mesh.name = state.product.name;
-  const root = new THREE.Group(); root.name = "IRON BEN"; root.add(mesh);
+  const geo = new THREE.PlaneGeometry(w / n, h);
+  const root = new THREE.Group(); root.name = "IRON BEN";
+  for (let i = 0; i < n; i++) {
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(-w / 2 + (i + 0.5) * (w / n), h / 2, 0); mesh.name = `${state.product.name} ${i + 1}`;
+    root.add(mesh);
+  }
   const out = await new GLTFExporter().parseAsync(root, { binary: true });
-  mesh.geometry.dispose(); mat.dispose(); tex.dispose();
+  geo.dispose(); mat.dispose(); tex.dispose();
   return { glb: out, w, h };
 }
 

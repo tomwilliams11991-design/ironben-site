@@ -6,7 +6,7 @@ function showLogin() {
   $("login").hidden = false;
   $("loginForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const r = await sb.auth.signInWithOtp({ email: $("lemail").value.trim().toLowerCase(), options: { emailRedirectTo: location.href.split("#")[0], shouldCreateUser: true } });
+    const r = await sb.auth.signInWithOtp({ email: $("lemail").value.trim().toLowerCase(), options: { emailRedirectTo: location.href.split("#")[0], shouldCreateUser: false } });
     say($("lmsg"), r.error ? "שליחת הקישור נכשלה: " + r.error.message : "נשלח קישור כניסה למייל. פתחו אותו באותו דפדפן.", !r.error);
   });
 }

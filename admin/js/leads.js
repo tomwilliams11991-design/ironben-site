@@ -8,7 +8,8 @@ let LEADS = [];
 
 /** שורת ליד אחת. */
 function leadRow(L) {
-  const dims = L.inputs ? Object.entries(L.inputs).filter(([k]) => !["finish", "wood"].includes(k)).map(([k, v]) => `${k}: ${v}`).join(" · ") : esc(L.dimensions);
+  // inputs מגיעים מהגולש (create_lead): כל מפתח וערך עוברים escape, אחרת HTML זדוני ירוץ בניהול
+  const dims = L.inputs ? Object.entries(L.inputs).filter(([k]) => !["finish", "wood"].includes(k)).map(([k, v]) => `${esc(k)}: ${esc(v)}`).join(" · ") : esc(L.dimensions);
   const est = L.estimate_low
     ? `<b class="n">${ils(L.estimate_low)} עד ${ils(L.estimate_high)}</b><small>${esc(L.qty)} ${esc(L.estimate?.unit || "")}${L.inputs?.finish ? " · " + esc(L.inputs.finish) : ""}${L.inputs?.wood ? " / " + esc(L.inputs.wood) : ""}</small>`
     : "<small>בלי הערכה</small>";

@@ -3,7 +3,7 @@ import { $, $$, pic } from "../util.js";
 import { rpc } from "../supabase.js";
 import { state } from "./state.js";
 
-/** המוצרים הגלויים: מהשרת (public_products), ואם אין חיבור, מ-products.json. נטען פעם אחת ומשותף (טופס, תגי המחיר). */
+/** המוצרים הגלויים: מהשרת (public_products), ואם אין חיבור, מ-products.json. נטען פעם אחת. */
 let productsOnce = null;
 export function loadProducts() {
   productsOnce ||= (async () => {
@@ -24,21 +24,10 @@ export function defaultInputs(p) {
   return inputs;
 }
 
-/** המידות העיקריות במשפט אחד ("מספר מדרגות 14 · רוחב מדרגה 90 ס\"מ"), בלי שדות בחירה. */
-export const specLine = (p, inputs) => (p.input_schema.fields || []).filter((f) => f.type !== "choice")
-  .map((f) => `${f.label} ${inputs[f.key]}${f.unit ? " " + f.unit : ""}`).join(" · ");
-
 /** בוחר מוצר: מאפס את הקלטים לברירות המחדל של הסכמה. */
 function selectProduct(p) {
   state.product = p;
   state.inputs = defaultInputs(p);
-}
-
-/** בחירת מוצר מבחוץ (למשל תג מחיר ליד התנור): כמו לחיצה על הכרטיס. מחזיר false אם הכרטיס עוד לא קיים. */
-export function pickProduct(slug) {
-  const b = $(`.pick[data-slug="${slug}"]`);
-  b?.click();
-  return !!b;
 }
 
 /**

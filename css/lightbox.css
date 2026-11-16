@@ -13,4 +13,4 @@
 .lb-prev{inset-inline-start:14px;top:50%;transform:translateY(-50%)}
 .lb-next{inset-inline-end:14px;top:50%;transform:translateY(-50%)}
 
-@media (max-width:820px){.wall,.bench{padding-top:72px}}
+@media (max-width:820px){.bench{padding-top:72px}}

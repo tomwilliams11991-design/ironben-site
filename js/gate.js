@@ -19,11 +19,11 @@ function initHotspots() {
   }));
 }
 
-/** גחלים שעולות מהכבשן (16 נקודות, 10 בטלפון, עם מסלול אקראי), בכניסה וליד התנור. לא נוצרות כשמפחיתים תנועה. */
+/** גחלים שעולות מהכבשן בכניסה (16 נקודות, 10 בטלפון, עם מסלול אקראי). לא נוצרות כשמפחיתים תנועה. */
 function initEmbers() {
   if (still()) return;
   $$(".embers").forEach((el) => {
-    const [from, spread] = el.dataset.x ? el.dataset.x.split(",").map(Number) : [22, 22];
+    const from = 22, spread = 22; // אחוז מרוחב התמונה: מעל הכבשן
     el.innerHTML = Array.from({ length: innerWidth < 820 ? 10 : 16 }, () =>
       `<i style="--x:${from + Math.random() * spread}%;--d:${5 + Math.random() * 6}s;--dl:${-Math.random() * 10}s;--dx:${(Math.random() - 0.5) * 80}px"></i>`).join("");
   });

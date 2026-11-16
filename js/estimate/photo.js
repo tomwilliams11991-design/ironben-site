@@ -6,6 +6,12 @@ import { state } from "./state.js";
 
 const H_KEYS = /^(length|width)/, V_KEYS = /^height/;
 
+/** שדות המידה של המוצר: הראשון של רוחב/אורך (h) והראשון של גובה (v), בלי שדות בחירה. משותף לקווי המידה ול-AR. */
+export function dimFields(p) {
+  const fields = (p.input_schema.fields || []).filter((f) => f.type !== "choice");
+  return { h: fields.find((f) => H_KEYS.test(f.key)), v: fields.find((f) => V_KEYS.test(f.key)) };
+}
+
 /** הערך של שדה עם היחידה שלו ("120 ס"מ"), או התווית של אפשרות בבחירה. */
 function value(f) {
   const v = state.inputs[f.key];
@@ -24,8 +30,7 @@ export function showProduct(p) {
 export function updateDims() {
   const p = state.product; if (!p) return;
   const fields = p.input_schema.fields || [];
-  const h = fields.find((f) => f.type !== "choice" && H_KEYS.test(f.key));
-  const v = fields.find((f) => f.type !== "choice" && V_KEYS.test(f.key));
+  const { h, v } = dimFields(p);
   $("#dims").innerHTML =
     (h ? `<div class="mline mline-w"><span>${esc(h.label)} ${esc(value(h))}</span></div>` : "") +
     (v ? `<div class="mline mline-h"><span>${esc(v.label)} ${esc(value(v))}</span></div>` : "");
