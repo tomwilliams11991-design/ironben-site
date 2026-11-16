@@ -1,5 +1,5 @@
 // ליד התנור: מה אפשר לבדוק עכשיו. תגית פלדה לכל מוצר (בלי מחירים), ולחיצה בוחרת אותו בשולחן העבודה
-// וקופצת ישר לשלב המידות, שם רואים הדמיה וטווח מחיר.
+// וקופצת ישר לשלב המידות, שם רואים הדמיה ובוחרים איך מודדים.
 import { $, esc, track } from "./util.js";
 import { loadProducts, pickProduct } from "./estimate/products.js";
 import { goStep } from "./estimate/steps.js";

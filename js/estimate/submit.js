@@ -1,9 +1,10 @@
-// שלב 4: שליחת הבקשה. מעלה תמונות והדמיות ל-Storage ויוצר ליד דרך create_lead (ההערכה מחושבת שוב בשרת).
-import { $, ils, track } from "../util.js";
+// שלב 4: שליחת הבקשה. מעלה תמונות והדמיות ל-Storage ויוצר ליד דרך create_lead (הערכה פנימית מחושבת בשרת, ללקוח לא מוצג מחיר).
+import { $, track } from "../util.js";
 import { C, sb, rpc, upload } from "../supabase.js";
 import { waLink } from "../contact.js";
 import { state } from "./state.js";
 import { goStep } from "./steps.js";
+import { measureLine } from "./measure.js";
 
 /** בדיקת שם וטלפון. מחזיר הודעת שגיאה או null. */
 function validate(name, phone) {
@@ -42,23 +43,25 @@ async function uploadRenders(key) {
 
 /** הרשומה שנשלחת ל-create_lead. */
 function leadPayload(name, phone, photo_paths, render_paths) {
-  const { product, inputs, estimate } = state;
-  const dims = product ? Object.entries(estimate?.values || inputs).filter(([k]) => !["finish", "wood"].includes(k)).map(([k, v]) => `${k}: ${v}`).join(", ") : null;
+  const { product, inputs } = state;
+  const dims = product ? Object.entries(inputs).filter(([k]) => !["finish", "wood"].includes(k)).map(([k, v]) => `${k}: ${v}`).join(", ") : null;
   return {
     name, phone, email: $("#q-email").value.trim() || null, city: $("#q-city").value.trim() || null,
     product_type: product?.name || null, customer_kind: $("#q-kind").value, dimensions: dims,
-    message: $("#q-msg").value.trim() || null, photo_paths, render_paths,
+    message: [measureLine(), $("#q-msg").value.trim()].filter(Boolean).join("\n"), photo_paths, render_paths,
     product_slug: product?.slug || null, inputs: product ? inputs : null,
     sketch_params: product ? { model: product.input_schema.model || product.slug, ...inputs } : null,
     marketing_consent: $("#q-consent").checked, utm: location.search.slice(0, 300) || null,
   };
 }
 
-/** מסך הסיום: הטווח שהתקבל וכפתור וואטסאפ עם ההודעה המוכנה. */
+/** מסך הסיום: מה קורה עכשיו (מדידה בבית או הצעה לפי המידות), וכפתור וואטסאפ עם ההודעה המוכנה. */
 function showDone() {
-  const { product, estimate } = state;
-  $("#doneRange").textContent = estimate ? `ההערכה הראשונית ל${product.name}: ${ils(estimate.low)} עד ${ils(estimate.high)} לפני מע"מ.` : "נחזור אליכם עם טווח מחיר אחרי שנראה את התמונות.";
-  const msg = estimate ? `היי, שלחתי בקשה באתר ל${product.name}. ההערכה שקיבלתי: ${ils(estimate.low)} עד ${ils(estimate.high)}.` : "היי, שלחתי בקשה באתר להצעת מחיר.";
+  const { product, measure, when } = state, home = measure === "home";
+  const what = product ? ` ל${product.name}` : "";
+  $("#doneTitle").textContent = home ? "קיבלנו. נחזור אליכם לתיאום מדידה." : "קיבלנו. נחזור אליכם עם הצעה.";
+  $("#doneText").textContent = home ? `נתאם איתכם מדידה בבית${what}${when !== "גמיש" ? `, ב${when}` : ""}.` : `נעבור על המידות והתמונות ששלחתם${what} ונחזור אליכם.`;
+  const msg = `היי, שלחתי בקשה באתר${what}. ` + (home ? "אשמח לתאם מדידה בבית." : "מדדתי בעצמי, אשמח להצעה.");
   const u = waLink(msg);
   if (u) $("#doneWa").href = u; else $("#doneWa").hidden = true;
   goStep(5);
@@ -77,7 +80,7 @@ export function initSubmit() {
       const photo_paths = await uploadPhotos(key), render_paths = await uploadRenders(key);
       const { error } = await rpc("create_lead", { p: leadPayload(name, phone, photo_paths, render_paths) });
       if (error) throw error;
-      track("lead_submitted", { product: state.product?.slug || null, value: state.estimate?.low || 0, currency: "ILS" });
+      track("lead_submitted", { product: state.product?.slug || null, measure: state.measure });
       showDone();
     } catch (e2) {
       console.error(e2); err.textContent = "השליחה נכשלה. אפשר לנסות שוב או לשלוח בוואטסאפ.";

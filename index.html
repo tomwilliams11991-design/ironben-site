@@ -32,7 +32,7 @@
     <nav class="nav" aria-label="ראשי">
       <a href="#inside">הסדנה</a>
       <a href="#works">ארון העבודות</a>
-      <a href="#forge">מחירים</a>
+      <a href="#forge">מה בונים</a>
       <a href="#bench">הצעה ראשונית</a>
       <a href="#exit">יצירת קשר</a>
     </nav>
@@ -147,7 +147,7 @@
     <div class="embers" data-x="38,24" aria-hidden="true"></div>
     <div class="forge-shade" aria-hidden="true"></div>
     <div class="wrap forge-head">
-      <h2 id="forgeTitle">ליד התנור.<small>מה אפשר לבדוק עכשיו, עם הדמיה וטווח מחיר תוך דקה:</small></h2>
+      <h2 id="forgeTitle">ליד התנור.<small>מה אפשר לבדוק עכשיו, עם הדמיה תוך דקה:</small></h2>
     </div>
     <ul class="tags" id="tags" aria-label="מה אפשר לבדוק עכשיו"></ul>
   </div>
@@ -158,7 +158,7 @@
   <div class="wrap">
     <div class="bench-head">
       <h2>שולחן העבודה.<br><small>הצעה ראשונית חינם, עם הדמיה.</small></h2>
-      <p class="sub">בוחרים מה בונים, מזינים מידות בערך, ורואים הדמיה וטווח מחיר. המחיר הסופי אחרי מדידה.</p>
+      <p class="sub">בוחרים מה בונים, מזינים מידות בערך ורואים הדמיה. את המדידה המדויקת עושים אצלכם בבית, או שאתם מודדים ושולחים.</p>
     </div>
     <div class="est-grid">
       <form class="sheet est-form" id="estForm" novalidate>
@@ -175,11 +175,19 @@
           <div class="fields" id="fields"></div>
           <div class="chips-row"><span class="chips-label">גימור ברזל</span><div class="chips" id="finishChips"></div></div>
           <div class="chips-row" id="woodRow"><span class="chips-label">עץ</span><div class="chips" id="woodChips"></div></div>
-          <div class="result" id="result" aria-live="polite">
-            <div class="range"><span class="range-label">הערכה ראשונית לפני מדידה</span><b class="range-num" id="rangeNum">בחרו מידות</b><span class="range-vat" id="rangeVat"></span></div>
-            <div class="bars" id="bars"></div>
-            <p class="result-note" id="resultNote"></p>
-            <p class="fine">תכנון אדריכלי או תכנון מיוחד מבוצע על ידי המעצבים ואנשי המקצוע שלנו בשטח, אחרי מדידה. ההערכה כאן היא נקודת פתיחה בלבד.</p>
+          <div class="result measure" id="measure">
+            <span class="chips-label">איך מודדים?</span>
+            <div class="mways" role="radiogroup" aria-label="איך מודדים">
+              <label class="mway"><input type="radio" name="measure" value="home" checked><b>מדידה אצלכם בבית</b><span>מגיעים אליכם, מודדים ומתכננים איתכם במקום.</span></label>
+              <label class="mway"><input type="radio" name="measure" value="self"><b>אמדוד בעצמי</b><span>שולחים מידות ותמונות, ואנחנו חוזרים עם הצעה.</span></label>
+            </div>
+            <ul class="tips" id="measureTips" hidden>
+              <li>מודדים בסנטימטרים, עם מטר מתכת.</li>
+              <li>רוחב וגובה מודדים בשלוש נקודות, ורושמים את הקטן.</li>
+              <li>מצלמים את המקום עם המטר פתוח בתמונה.</li>
+              <li>מציינים שקעים, צנרת, חלונות ומדרגה ברצפה.</li>
+            </ul>
+            <p class="fine">המידות כאן בערך, בשביל ההדמיה. ההצעה נקבעת אחרי מדידה מדויקת. תכנון אדריכלי או תכנון מיוחד מבוצע על ידי המעצבים ואנשי המקצוע שלנו בשטח.</p>
           </div>
           <div class="step-nav"><button type="button" class="btn ghost" data-prev>חזרה</button><button type="button" class="btn primary" data-next>המשך</button></div>
         </fieldset>
@@ -203,14 +211,15 @@
             <div class="field"><label for="q-kind">אני פונה בתור</label>
               <select id="q-kind" name="customer_kind"><option value="private">לקוח פרטי</option><option value="architect">אדריכל / מעצב</option><option value="business">חברה / עסק</option></select></div>
           </div>
+          <div class="chips-row" id="whenRow"><span class="chips-label">מתי נוח שנגיע למדידה?</span><div class="chips" id="whenChips"><button type="button" data-when="בוקר" aria-pressed="false">בוקר</button><button type="button" data-when="צהריים" aria-pressed="false">צהריים</button><button type="button" data-when="אחר הצהריים" aria-pressed="false">אחר הצהריים</button><button type="button" data-when="גמיש" aria-pressed="true">גמיש</button></div></div>
           <label class="check"><input type="checkbox" id="q-consent" name="marketing_consent"> מסכים/ה לקבל מ-IRON BEN עדכונים ופרסומות במייל ובוואטסאפ. אפשר להסיר בכל עת.</label>
           <p class="err" id="formErr" role="alert"></p>
           <div class="step-nav"><button type="button" class="btn ghost" data-prev>חזרה</button><button type="submit" class="btn primary" id="sendBtn">שליחת הבקשה</button></div>
         </fieldset>
 
         <div class="step done" data-step="5" hidden>
-          <h3>קיבלנו. נחזור אליכם לתיאום מדידה.</h3>
-          <p id="doneRange"></p>
+          <h3 id="doneTitle">קיבלנו. נחזור אליכם לתיאום מדידה.</h3>
+          <p id="doneText"></p>
           <p class="fine">תכנון אדריכלי או תכנון מיוחד מבוצע על ידי המעצבים ואנשי המקצוע שלנו בשטח.</p>
           <div class="step-nav"><a class="btn primary js-wa" id="doneWa" href="#" target="_blank" rel="noopener">שלחו לי את זה בוואטסאפ</a><button type="button" class="btn ghost" id="restart">בקשה נוספת</button></div>
         </div>

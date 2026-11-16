@@ -25,7 +25,7 @@ export function renderFields() {
 
 /**
  * מאזין פעם אחת לשינויים בסליידרים ובצ'יפים ומעדכן את state.inputs.
- * @param {() => void} onChange נקרא אחרי כל שינוי (מעדכן הדמיה ומחיר)
+ * @param {() => void} onChange נקרא אחרי כל שינוי (מעדכן את ההדמיה)
  */
 export function bindFields(onChange) {
   $("#fields").addEventListener("input", (e) => {
