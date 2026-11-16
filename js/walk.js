@@ -1,7 +1,7 @@
 // הכוריאוגרפיה של הכניסה וההליכה בסדנה. כל התנועה מוגדרת כאן כפונקציות של התקדמות הגלילה,
 // ומנוע הגלילה (js/scroll-scene.js) מריץ אותן על כרטיס המסך.
 //   #gate:  השער נפתח → שהייה על הכותרת → פונים ימינה אל ארון העבודות, הדלתות נפתחות וצעד פנימה → #works
-//   #forge: חוזרים ישר לסדנה → פונים שמאלה אל התנור, האש מתחממת, נתלות התגיות של מה אפשר לבדוק → #bench
+//   אחרי הארון: שולחן העבודה (#bench) עולה ישר, בלי עוד הליכה בסדנה.
 import { $, $$, still, track } from "./util.js";
 import { createScene } from "./scroll-scene.js";
 
@@ -11,11 +11,10 @@ const RATIO = 3856 / 2160; // תמונות השער והסדנה
 const SPOT = {
   entry: { x: 0.5, y: 0.5 },
   cabinet: { x: 0.809, y: 0.44, h: 0.58, w: 0.09 },
-  forge: { x: 0.335, y: 0.43, h: 0.54, w: 0.22 },
 };
 
-/** אורכי הגלילה בתוך #gate, ביחידות גובה מסך. הסכום + 1 = הגובה של .gate ב-css/gate.css (290vh). קצר בכוונה: בטלפון כל מסך הוא תנועת אצבע. */
-export const GATE = { open: 0.8, dwell: 0.3, walk: 0.8 };
+/** אורכי הגלילה בתוך #gate, ביחידות גובה מסך. הסכום + 1 = הגובה של .gate ב-css/gate.css (265vh). קצר בכוונה: בטלפון כל מסך הוא תנועת אצבע. */
+export const GATE = { open: 0.8, dwell: 0.3, walk: 0.55 };
 const GATE_LEN = GATE.open + GATE.dwell + GATE.walk;
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
@@ -59,13 +58,13 @@ function gatePhase(k) {
   return { p, w, h: span(p, 0.6, 0.9) * (1 - span(w, 0, 0.16)) };
 }
 
-/** מצלמת השער: זום כניסה (1.16 → 1), ואז ההליכה לארון (w 0..0.42), ואז צעד פנימה (w 0.55..1).
+/** מצלמת השער: זום כניסה (1.16 → 1), ואז ההליכה לארון (w 0..0.4), ואז צעד פנימה (w 0.45..1) בזמן שהשידה עולה מלמטה.
  *  הזום הכולל נשאר מתחת ל-~2: זום גדול יותר מחייב את הדפדפן לצייר שכבה ענקית, ובטלפון המסך נהיה שחור. */
 function gateCamera(k, f) {
   const { p, w } = gatePhase(k);
   const sCab = zoomFor(SPOT.cabinet, f);
-  let cam = walkBetween(SPOT.entry, SPOT.cabinet, 1, sCab, span(w, 0, 0.42), -5, f);
-  const push = Math.pow(span(w, 0.55, 1), 2);
+  let cam = walkBetween(SPOT.entry, SPOT.cabinet, 1, sCab, span(w, 0, 0.4), -5, f);
+  const push = Math.pow(span(w, 0.45, 1), 2);
   if (push > 0) cam = aim(SPOT.cabinet.x, SPOT.cabinet.y, sCab * (1 + 0.3 * push), f);
   cam.s *= 1.16 - 0.16 * p;
   return cam;
@@ -74,7 +73,7 @@ function gateCamera(k, f) {
 function gateTracks(vh) {
   const f = frame(vh), ph = gatePhase;
   const T = (sel, fn) => $$(sel).map((el) => ({ el, fn }));
-  const doorOpen = (k) => easeOut(span(ph(k).w, 0.38, 0.62));
+  const doorOpen = (k) => easeOut(span(ph(k).w, 0.3, 0.52));
   return [
     ...T("#gate .leaf.l", (k) => ({ transform: `rotateY(${r2(ph(k).p * 104)}deg)`, opacity: String(r2(span(0.96 - ph(k).p, 0, 0.18))) })),
     ...T("#gate .leaf.r", (k) => ({ transform: `rotateY(${r2(ph(k).p * -104)}deg)`, opacity: String(r2(span(0.96 - ph(k).p, 0, 0.18))) })),
@@ -88,27 +87,7 @@ function gateTracks(vh) {
     ...T("#gate .cab-leaf.r", (k) => ({ transform: `rotateY(${r2(doorOpen(k) * 112)}deg)` })),
     ...T("#gate .cab-leaf .shade", (k) => op(doorOpen(k) * 0.55)),
     ...T("#gate .cab-dark", (k) => op((1 - doorOpen(k)) * 0.5)),
-    ...T("#gate .walk-cap", (k) => op(span(ph(k).w, 0.22, 0.34) * (1 - span(ph(k).w, 0.46, 0.54)))),
-  ];
-}
-
-/* ===== התנור ===== */
-
-/** k (0..1 לאורך #forge): 0..0.5 מהמבט הכללי על הסדנה אל התנור · 0.3..0.6 החום עולה · 0.35..0.47 הכותרת · 0.45.. התגיות. */
-function forgeTracks(vh) {
-  const f = frame(vh), sForge = zoomFor(SPOT.forge, f);
-  const heat = (k) => span(k, 0.3, 0.6), head = (k) => span(k, 0.35, 0.47);
-  const camera = (k) => {
-    const lean = span(k, 0.5, 1);
-    return lean > 0 ? aim(SPOT.forge.x, SPOT.forge.y, sForge * (1 + 0.1 * lean), f)
-      : walkBetween(SPOT.entry, SPOT.forge, 1, sForge, span(k, 0, 0.5), 4, f);
-  };
-  const T = (sel, fn) => $$(sel).map((el) => ({ el, fn }));
-  return [
-    ...T("#forge .fit", (k) => ({ transform: fitTransform(camera(k)) })),
-    ...T("#forge .heat, #forge .embers", (k) => op(heat(k) * 0.85)),
-    ...T("#forge .forge-shade", (k) => op(0.35 + 0.65 * heat(k))),
-    ...T("#forge .forge-head", (k) => ({ opacity: String(r2(head(k))), transform: `translateY(${r2((1 - head(k)) * 16)}px)` })),
+    ...T("#gate .walk-cap", (k) => op(span(ph(k).w, 0.16, 0.26) * (1 - span(ph(k).w, 0.36, 0.44)))),
   ];
 }
 
@@ -127,23 +106,13 @@ function gateClasses(stage) {
     stage.style.visibility = gone ? "hidden" : ""; // אחרי שהסקשן כולו עבר: לא לצייר את הבמה בכלל
   };
 }
-function forgeClasses(stage) {
-  let seen = false;
-  return (k, gone) => {
-    if (k > 0.45 && !seen) { seen = true; track("walk_forge"); }
-    stage.classList.toggle("tags-on", k > 0.45);
-    stage.style.visibility = gone ? "hidden" : "";
-  };
-}
-
-/** עצירת תנועה: השער פתוח על הכותרת, התנור ממוסגר עם התגים. */
-const STATIC = { gate: GATE.open / GATE_LEN, forge: 0.75 };
+/** עצירת תנועה: השער פתוח על הכותרת. */
+const STATIC = { gate: GATE.open / GATE_LEN };
 
 export function initWalk() {
-  const gate = $("#gate"), forge = $("#forge");
+  const gate = $("#gate");
   const scenes = [];
   if (gate) scenes.push([createScene(gate, gateTracks, gateClasses($("#gate .stage"))), STATIC.gate]);
-  if (forge) scenes.push([createScene(forge, forgeTracks, forgeClasses($("#forge .walk-stage"))), STATIC.forge]);
   scenes.forEach(([s, k]) => s.start(still() ? k : null));
   document.documentElement.addEventListener("a11ychange", () => scenes.forEach(([s, k]) => s.restart(still() ? k : null)));
 }

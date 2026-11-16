@@ -4,11 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>IRON BEN | סדנת ברזל ועץ בהזמנה אישית</title>
-<meta name="description" content="IRON BEN, סדנת ברזל ועץ בוטיקית בבית עובד ליד נס ציונה. מדרגות, שערים, פרגולות, מעקות, ספריות ושולחנות בהזמנה אישית. הצעה ראשונית חינם עם הדמיה תלת-ממדית.">
+<meta name="description" content="IRON BEN, סדנת ברזל ועץ בוטיקית בבית עובד ליד נס ציונה. מדרגות, שערים, פרגולות, מעקות, ספריות ושולחנות בהזמנה אישית. הצעה ראשונית חינם ומדידה אצלכם בבית.">
 <meta name="theme-color" content="#0b1b1a">
 <meta property="og:title" content="IRON BEN | סדנת ברזל ועץ בהזמנה אישית">
-<meta property="og:description" content="מדרגות, שערים, פרגולות ורהיטים מברזל ועץ. מתכננים, מייצרים בסדנה בבית עובד ומתקינים. הצעה ראשונית חינם עם הדמיה.">
-<meta property="og:image" content="og.jpg">
+<meta property="og:description" content="מדרגות, שערים, פרגולות ורהיטים מברזל ועץ. מתכננים, מייצרים בסדנה בבית עובד ומתקינים. הצעה ראשונית חינם ומדידה אצלכם בבית.">
+<meta property="og:image" content="https://ironben.art/og.jpg">
+<meta property="og:url" content="https://ironben.art/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:site_name" content="IRON BEN">
+<link rel="canonical" href="https://ironben.art/">
 <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -32,7 +37,7 @@
     <nav class="nav" aria-label="ראשי">
       <a href="#inside">הסדנה</a>
       <a href="#works">ארון העבודות</a>
-      <a href="#forge">מה בונים</a>
+      <a href="#bench">מה בונים</a>
       <a href="#bench">הצעה ראשונית</a>
       <a href="#exit">יצירת קשר</a>
     </nav>
@@ -46,7 +51,6 @@
     <li><a href="#top"><span>השער</span></a></li>
     <li><a href="#inside"><span>הסדנה</span></a></li>
     <li><a href="#works"><span>ארון העבודות</span></a></li>
-    <li><a href="#forge"><span>התנור</span></a></li>
     <li><a href="#bench"><span>שולחן העבודה</span></a></li>
     <li><a href="#exit"><span>החצר</span></a></li>
   </ol>
@@ -74,6 +78,8 @@
           <li style="--x:33%;--y:38%"><button type="button" aria-expanded="false"><i></i><span>כבשן. חימום וכיפוף ברזל ביד.</span></button></li>
           <li style="--x:51.5%;--y:63%"><button type="button" aria-expanded="false"><i></i><span>סדן ופטיש. חישול, לא רק חיתוך לייזר.</span></button></li>
           <li style="--x:11%;--y:32%"><button type="button" aria-expanded="false"><i></i><span>כלי יד. ריתוך, השחזה וגימור בתנור.</span></button></li>
+          <!-- השולחן שמתחת לחלון: קישור ישיר לשולחן העבודה (ההצעה הראשונית). התווית גלויה תמיד -->
+          <li class="go" style="--x:63%;--y:49%"><a href="#bench"><i></i><span>שולחן העבודה ←</span></a></li>
         </ul>
         <!-- ארון העבודות: שתי דלתות מעל אותה תמונה (js/walk.js פותח אותן בגלילה), השלט "ארון עבודות" מתפצל איתן; מאחוריהן אור חם של חדר העבודות -->
         <a class="cab" href="#works" aria-label="ארון העבודות: לתיק העבודות" style="--cl:77.22;--ct:17.86;--cw:7.34;--ch:52.71">
@@ -131,28 +137,6 @@
   <div class="wrap"><div class="chest" id="chest"></div></div>
 </section>
 
-<!-- ===== 3ב. ההליכה אל התנור: מה אפשר לבדוק עכשיו (js/walk.js, js/forge-picks.js) ===== -->
-<section class="forge" id="forge" aria-labelledby="forgeTitle">
-  <div class="walk-stage">
-    <div class="fit">
-      <picture>
-          <source media="(max-width: 820px)" type="image/avif" srcset="img/scene/shop-1600.avif">
-          <source media="(max-width: 820px)" type="image/webp" srcset="img/scene/shop-1600.webp">
-          <source type="image/avif" srcset="img/scene/shop-960.avif 960w, img/scene/shop-1600.avif 1600w, img/scene/shop-2400.avif 2400w" sizes="100vw">
-          <source type="image/webp" srcset="img/scene/shop-960.webp 960w, img/scene/shop-1600.webp 1600w, img/scene/shop-2400.webp 2400w" sizes="100vw">
-        <img src="img/scene/shop-1600.jpg" srcset="img/scene/shop-960.jpg 960w, img/scene/shop-1600.jpg 1600w, img/scene/shop-2400.jpg 2400w" sizes="100vw" alt="" width="3856" height="2160" loading="lazy" decoding="async">
-      </picture>
-      <div class="heat" aria-hidden="true"><i></i></div>
-    </div>
-    <div class="embers" data-x="38,24" aria-hidden="true"></div>
-    <div class="forge-shade" aria-hidden="true"></div>
-    <div class="wrap forge-head">
-      <h2 id="forgeTitle">ליד התנור.<small>מה אפשר לבדוק עכשיו, תוך דקה:</small></h2>
-    </div>
-    <ul class="tags" id="tags" aria-label="מה אפשר לבדוק עכשיו"></ul>
-  </div>
-</section>
-
 <!-- ===== 4. שולחן העבודה: הצעה ראשונית ===== -->
 <section class="bench" id="bench">
   <div class="wrap">
@@ -197,6 +181,9 @@
           <p class="hint-txt">לא חובה, אבל עוזר לנו לדייק. עד 5 תמונות.</p>
           <label class="drop" for="q-photos"><input id="q-photos" name="photos" type="file" accept="image/*" multiple><span>לחצו לבחירת תמונות או גררו לכאן</span></label>
           <div class="thumbs" id="thumbs"></div>
+          <p class="hint-txt inspo-hint">ויש לכם תמונה של משהו בסגנון שאתם מחפשים? מכל מקום, גם מהאינטרנט. זה עוזר לנו לדייק את התכנון.</p>
+          <label class="drop drop-sm" for="q-inspo"><input id="q-inspo" name="inspo" type="file" accept="image/*" multiple><span>+ תמונות השראה (עד 5)</span></label>
+          <div class="thumbs" id="inspoThumbs"></div>
           <div class="field"><label for="q-msg">פרטים נוספים</label><textarea id="q-msg" name="message" rows="3" placeholder="למשל: הקיר מול הכניסה, יש חלון באמצע"></textarea></div>
           <div class="step-nav"><button type="button" class="btn ghost" data-prev>חזרה</button><button type="button" class="btn primary" data-next>המשך</button></div>
         </fieldset>
@@ -229,6 +216,8 @@
         <figure class="photo"><div class="ph" id="prodPic"></div><div class="dims" id="dims" aria-hidden="true"></div></figure>
         <p class="model-cap" id="modelCap">בחרו מה בונים כדי לראות אותו כאן</p>
         <ul class="spec" id="specList" aria-label="המידות שבחרתם"></ul>
+        <button type="button" class="btn ar-btn" id="arBtn" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></svg>הציבו אצלכם בחדר (AR)</button>
+        <p class="model-cap" id="arMsg" role="status"></p>
       </aside>
     </div>
   </div>
@@ -256,6 +245,12 @@
 </main>
 
 <!-- וואטסאפ צף: עובד גם בלי JS (קישור ישיר), contact.js רק מוסיף את ההודעה המוכנה ואת המדידה -->
+<dialog class="ar" id="arDlg" aria-labelledby="arCap">
+  <div class="ar-head"><b id="arCap"></b><button type="button" class="ar-x" id="arClose" aria-label="סגירה">✕</button></div>
+  <div class="ar-host" id="arHost"></div>
+  <p class="ar-note" id="arNote" role="status"></p>
+</dialog>
+
 <a class="fab js-wa" href="https://wa.me/972549788277" target="_blank" rel="noopener" data-msg="היי, אשמח לשמוע פרטים על עבודה." aria-label="וואטסאפ: 054-978-8277">
   <img src="brand/wa-metal-64.png" srcset="brand/wa-metal-64.png 1x, brand/wa-metal-128.png 2x, brand/wa-metal-192.png 3x" width="64" height="64" alt="">
   <span>וואטסאפ 054-978-8277</span>

@@ -28,6 +28,7 @@ async function fillThumbs(L) {
   const signed = async (bucket, paths) => (await sb.storage.from(bucket).createSignedUrls(paths, 3600)).data || [];
   if (L.render_paths?.length) (await signed(C.BUCKET_RENDERS || "ironben-renders", L.render_paths)).forEach((u) => { if (u.signedUrl) html += `<a href="${u.signedUrl}" target="_blank" rel="noopener"><img class="render" src="${u.signedUrl}" alt="הדמיה"></a>`; });
   if (L.photo_paths?.length) (await signed(C.BUCKET_PHOTOS || "ironben-lead-photos", L.photo_paths)).forEach((u) => { if (u.signedUrl) html += `<a href="${u.signedUrl}" target="_blank" rel="noopener"><img src="${u.signedUrl}" alt=""></a>`; });
+  if (L.inspo_paths?.length) (await signed(C.BUCKET_PHOTOS || "ironben-lead-photos", L.inspo_paths)).forEach((u) => { if (u.signedUrl) html += `<a href="${u.signedUrl}" target="_blank" rel="noopener" title="תמונת השראה"><img class="inspo" src="${u.signedUrl}" alt="השראה"></a>`; });
   cell.innerHTML = html;
 }
 

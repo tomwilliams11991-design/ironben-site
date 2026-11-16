@@ -5,11 +5,12 @@ export const state = {
   inputs: {},     // ערכי השדות: מידות, finish, wood
   measure: "home", // איך מודדים: home = מגיעים לבית, self = הלקוח מודד
   when: "גמיש",    // מתי נוח למדידה בבית
-  files: [],      // תמונות שהלקוח העלה (עד 5)
+  files: [],      // תמונות של המקום שהלקוח העלה (עד 5)
+  inspo: [],      // תמונות השראה לסגנון (עד 5)
   step: 1,        // השלב הנוכחי 1..5 (5 = סיום)
 };
 
 /** איפוס לפני בקשה נוספת. */
 export function resetState() {
-  state.product = null; state.inputs = {}; state.measure = "home"; state.when = "גמיש"; state.files = []; state.step = 1;
+  state.product = null; state.inputs = {}; state.measure = "home"; state.when = "גמיש"; state.files = []; state.inspo = []; state.step = 1;
 }

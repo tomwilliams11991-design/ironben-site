@@ -1,4 +1,4 @@
-// ארון העבודות: שידת מגירות מעץ אגוז בתוך החדר. כל קטגוריה היא מגירה סגורה עם לוחית פליז (שם + כמה עבודות)
+// ארון העבודות: שידת מגירות מעץ אגוז בתוך החדר. כל קטגוריה היא מגירה סגורה עם לוחית פליז (שם + "לחצו לפתיחה")
 // וידית פלדה מחושלת. החומרים הם צילומים (site/img/chest, tools/images/chest.py), לא ציור ב-CSS.
 // לחיצה פותחת את המגירה (ורק אותה) ובתוכה התמונות: במחשב בגריד, בטלפון ברצועה שמחליקים עם חץ "עוד".
 // לחיצה על תמונה פותחת את הלייטבוקס. כשהשידה נכנסת למסך בפעם הראשונה, המגירה הראשונה "נפתחת קצת" וחוזרת, כרמז.
@@ -14,7 +14,7 @@ function drawerHTML(d) {
   const works = worksOf(d.key);
   return `<section class="drawer" data-key="${d.key}">
     <h3 class="drawer-h"><button type="button" class="drawer-front" aria-expanded="false" aria-controls="dw-${d.key}">
-      <span class="plate"><b>${d.label}</b><small>${works.length} עבודות</small></span><img class="pull" src="img/chest/pull-240.png" srcset="img/chest/pull-240.png 1x, img/chest/pull-480.png 2x" width="240" height="39" alt="" loading="lazy" decoding="async">
+      <span class="plate"><b>${d.label}</b><small class="push">לחצו לפתיחה</small><small class="pushed">לחצו לסגירה</small></span><img class="pull" src="img/chest/pull-240.png" srcset="img/chest/pull-240.png 1x, img/chest/pull-480.png 2x" width="240" height="39" alt="" loading="lazy" decoding="async">
     </button></h3>
     <div class="drawer-box" id="dw-${d.key}" inert><div class="tray-wrap"><div class="tray">
       <ul class="shots">${works.map((w, i) => `<li style="--t:${tilt(i)}deg"><button type="button" class="shot" data-i="${i}" aria-label="הגדלה: ${w[1]}">${pic(w[0], w[1], "(max-width:820px) 62vw, 220px")}<span class="shot-cap">${w[1]}</span></button></li>`).join("")}</ul>

@@ -1,0 +1,7 @@
+# IRON BEN: מנועי חיפוש מוזמנים לכל האתר, חוץ מממשק הניהול, דפי ההצעה האישיים ודף ההסרה מרשימת התפוצה.
+User-agent: *
+Disallow: /admin/
+Disallow: /quote.html
+Disallow: /unsubscribe.html
+
+Sitemap: https://ironben.art/sitemap.xml

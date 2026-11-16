@@ -14,26 +14,26 @@ function validate(name, phone) {
   return null;
 }
 
-/** מעלה את תמונות הלקוח לתיקייה של הבקשה. */
-async function uploadPhotos(key) {
+/** מעלה תמונות מסוג אחד לתיקייה של הבקשה: של המקום כ-0.jpg, 1.jpg..., והשראה כ-i0.jpg, i1.jpg... */
+async function uploadPhotos(key, files, prefix = "") {
   const paths = [];
-  for (let i = 0; i < state.files.length; i++) {
-    const f = state.files[i];
+  for (let i = 0; i < files.length; i++) {
+    const f = files[i];
     const ext = (f.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 5) || "jpg";
-    const p = await upload(C.BUCKET_PHOTOS || "ironben-lead-photos", `${key}/${i}.${ext}`, f, f.type);
+    const p = await upload(C.BUCKET_PHOTOS || "ironben-lead-photos", `${key}/${prefix}${i}.${ext}`, f, f.type);
     if (p) paths.push(p);
   }
   return paths;
 }
 
 /** הרשומה שנשלחת ל-create_lead. */
-function leadPayload(name, phone, photo_paths) {
+function leadPayload(name, phone, photo_paths, inspo_paths) {
   const { product, inputs } = state;
   const dims = product ? Object.entries(inputs).filter(([k]) => !["finish", "wood"].includes(k)).map(([k, v]) => `${k}: ${v}`).join(", ") : null;
   return {
     name, phone, email: $("#q-email").value.trim() || null, city: $("#q-city").value.trim() || null,
     product_type: product?.name || null, customer_kind: $("#q-kind").value, dimensions: dims,
-    message: [measureLine(), $("#q-msg").value.trim()].filter(Boolean).join("\n"), photo_paths, render_paths: [],
+    message: [measureLine(), $("#q-msg").value.trim()].filter(Boolean).join("\n"), photo_paths, inspo_paths, render_paths: [],
     product_slug: product?.slug || null, inputs: product ? inputs : null,
     sketch_params: product ? { model: product.input_schema.model || product.slug, ...inputs } : null,
     marketing_consent: $("#q-consent").checked, utm: location.search.slice(0, 300) || null,
@@ -63,8 +63,8 @@ export function initSubmit() {
     let sent = false;
     try {
       const key = crypto.randomUUID();
-      const photo_paths = await uploadPhotos(key);
-      const { error } = await rpc("create_lead", { p: leadPayload(name, phone, photo_paths) });
+      const photo_paths = await uploadPhotos(key, state.files), inspo_paths = await uploadPhotos(key, state.inspo, "i");
+      const { error } = await rpc("create_lead", { p: leadPayload(name, phone, photo_paths, inspo_paths) });
       if (error) throw error;
       sent = true;
     } catch (e2) {
