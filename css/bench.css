@@ -74,26 +74,29 @@ input[type=range]:focus-visible{outline:2px solid var(--ember);outline-offset:6p
 .err{color:#b9402e;font-size:15px;min-height:1.6em}
 /* ההדמיה: כרטיס נייר לבן על השולחן */
 .est-model{position:sticky;top:calc(var(--nav) + 16px);display:grid;gap:10px}
-.model-tabs{display:flex;gap:4px;background:rgb(255 255 255/.08);padding:4px;border-radius:999px;width:max-content}
-.model-tabs button{font:500 14px var(--body);padding:7px 16px;border-radius:999px;border:0;background:transparent;color:var(--muted);cursor:pointer;transition:background-color .2s var(--ease),color .2s var(--ease)}
-.model-tabs button.on{background:var(--paper);color:var(--paper-ink)}
-.model{aspect-ratio:1/.95;border-radius:var(--r);background:radial-gradient(70% 60% at 50% 70%,var(--paper-2),var(--paper));position:relative;overflow:hidden;min-height:260px;box-shadow:0 50px 70px -36px rgb(0 0 0/.9),0 0 0 1px rgb(0 0 0/.3)}
-.model:empty::before{content:"ההדמיה תופיע כאן אחרי שתבחרו מה בונים";position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--paper-muted);font-size:15px}
+/* התמונה של המוצר עם קווי מידה (js/estimate/photo.js) */
+.photo{margin:0;position:relative;aspect-ratio:4/3.4;border-radius:var(--r);overflow:hidden;background:var(--paper-2);box-shadow:0 50px 70px -36px rgb(0 0 0/.9),0 0 0 1px rgb(0 0 0/.3)}
+.photo .ph,.photo picture,.photo img{display:block;width:100%;height:100%}
+.photo img{object-fit:cover}
+.photo .ph:empty::before{content:"התמונה תופיע כאן אחרי שתבחרו מה בונים";position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--paper-muted);font-size:15px}
+.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgb(0 0 0/.45),transparent 38%),linear-gradient(to left,rgb(0 0 0/.3),transparent 26%);pointer-events:none}
+.dims{position:absolute;inset:0;z-index:1;pointer-events:none}
+/* קו מידה (.mline, לא .dim שתפוס בשער): קו לבן דק עם קצוות, ותווית פלדה באמצע */
+.mline{position:absolute;color:#fff;--c:rgb(255 255 255/.92)}
+.mline-w{left:8%;right:14%;bottom:14px;height:12px;border-bottom:1.5px solid var(--c)}
+.mline-w::before,.mline-w::after{content:"";position:absolute;bottom:-6px;width:1.5px;height:12px;background:var(--c)}
+.mline-w::before{left:0}.mline-w::after{right:0}
+.mline-h{top:10%;bottom:58px;right:14px;width:12px;border-right:1.5px solid var(--c)}
+.mline-h::before,.mline-h::after{content:"";position:absolute;right:-6px;height:1.5px;width:12px;background:var(--c)}
+.mline-h::before{top:0}.mline-h::after{bottom:0}
+.mline span{position:absolute;font:600 14px var(--body);white-space:nowrap;padding:4px 10px;border-radius:4px;background:linear-gradient(#3a3d40,#232527);border:1px solid rgb(255 255 255/.18);box-shadow:0 4px 10px rgb(0 0 0/.4);font-variant-numeric:tabular-nums}
+.mline-w span{left:50%;bottom:-2px;transform:translate(-50%,50%)}
+.mline-h span{top:50%;right:-2px;transform:translate(50%,-50%) rotate(-90deg)}
+@media (prefers-reduced-motion:no-preference){.mline span{transition:transform .2s var(--ease)}}
+.spec{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px;color:var(--muted)}
+.spec:empty{display:none}
 .model-cap{font-size:14px;color:var(--muted)}
-/* בטלפון ההדמיה מעל הטופס; כשגוללים אליה (שלב המידות) היא נעצרת מתחת לכותרת ולפס המפה */
+/* בטלפון התמונה מעל הטופס; כשגוללים אליה (שלב המידות) היא נעצרת מתחת לכותרת ולפס המפה */
 .est-model{scroll-margin-top:calc(var(--nav) + var(--way) + 12px)}
-@media (max-width:980px){.est-grid{grid-template-columns:1fr}.est-model{position:static;order:-1;display:none}.est-model.has{display:grid}.model{aspect-ratio:4/3}.two{grid-template-columns:1fr}.sheet{padding:36px 20px 24px}}
+@media (max-width:980px){.est-grid{grid-template-columns:1fr}.est-model{position:static;order:-1;display:none}.est-model.has{display:grid}.photo{aspect-ratio:4/3}.two{grid-template-columns:1fr}.sheet{padding:36px 20px 24px}}
 
-/* "הציבו אצלכם": כפתור ה-AR מתחת להדמיה, וחלון התצוגה (model-viewer) */
-.ar-btn{justify-self:start;border-color:rgb(255 255 255/.35)}
-.ar-btn svg{flex:none}
-dialog.ar:not([open]){display:none}
-dialog.ar{border:0;padding:0;margin:auto;width:min(100vw,720px);height:min(100dvh,760px);max-width:none;max-height:none;background:var(--paper);color:var(--paper-ink);border-radius:8px;display:grid;grid-template-rows:auto 1fr auto;overflow:hidden}
-dialog.ar::backdrop{background:rgb(var(--shade)/.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.ar-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--paper-line);font-size:15px}
-.ar-x{border:0;background:none;font-size:18px;width:44px;height:44px;border-radius:50%;cursor:pointer;color:var(--paper-ink)}
-.ar-host{position:relative;min-height:0}
-.ar-host model-viewer{width:100%;height:100%;background:radial-gradient(70% 60% at 50% 70%,var(--paper-2),var(--paper));--poster-color:transparent}
-.ar-go{position:absolute;inset:auto 16px 16px auto;border:0}
-.ar-note{padding:12px 16px 16px;font-size:14px;color:var(--paper-muted);margin:0}
-@media (max-width:600px){dialog.ar{width:100vw;height:100dvh;border-radius:0}}

@@ -1,4 +1,4 @@
-// שלב 4: שליחת הבקשה. מעלה תמונות והדמיות ל-Storage ויוצר ליד דרך create_lead (הערכה פנימית מחושבת בשרת, ללקוח לא מוצג מחיר).
+// שלב 4: שליחת הבקשה. מעלה את תמונות הלקוח ל-Storage ויוצר ליד דרך create_lead (הערכה פנימית מחושבת בשרת, ללקוח לא מוצג מחיר).
 import { $, track } from "../util.js";
 import { C, sb, rpc, upload } from "../supabase.js";
 import { waLink } from "../contact.js";
@@ -26,29 +26,14 @@ async function uploadPhotos(key) {
   return paths;
 }
 
-/** מצלם את ההדמיה (הדמיה + תוכנית) ומעלה כ-PNG. */
-async function uploadRenders(key) {
-  const paths = [];
-  if (!state.model || !state.product) return paths;
-  try {
-    const shots = state.model.snapshot(1200);
-    for (const [mode, url] of Object.entries(shots)) {
-      const blob = await (await fetch(url)).blob();
-      const p = await upload(C.BUCKET_RENDERS || "ironben-renders", `${key}/${mode === "3d" ? "view" : "plan"}.png`, blob, "image/png");
-      if (p) paths.push(p);
-    }
-  } catch (e) { console.warn("snapshot", e); }
-  return paths;
-}
-
 /** הרשומה שנשלחת ל-create_lead. */
-function leadPayload(name, phone, photo_paths, render_paths) {
+function leadPayload(name, phone, photo_paths) {
   const { product, inputs } = state;
   const dims = product ? Object.entries(inputs).filter(([k]) => !["finish", "wood"].includes(k)).map(([k, v]) => `${k}: ${v}`).join(", ") : null;
   return {
     name, phone, email: $("#q-email").value.trim() || null, city: $("#q-city").value.trim() || null,
     product_type: product?.name || null, customer_kind: $("#q-kind").value, dimensions: dims,
-    message: [measureLine(), $("#q-msg").value.trim()].filter(Boolean).join("\n"), photo_paths, render_paths,
+    message: [measureLine(), $("#q-msg").value.trim()].filter(Boolean).join("\n"), photo_paths, render_paths: [],
     product_slug: product?.slug || null, inputs: product ? inputs : null,
     sketch_params: product ? { model: product.input_schema.model || product.slug, ...inputs } : null,
     marketing_consent: $("#q-consent").checked, utm: location.search.slice(0, 300) || null,
@@ -78,8 +63,8 @@ export function initSubmit() {
     let sent = false;
     try {
       const key = crypto.randomUUID();
-      const photo_paths = await uploadPhotos(key), render_paths = await uploadRenders(key);
-      const { error } = await rpc("create_lead", { p: leadPayload(name, phone, photo_paths, render_paths) });
+      const photo_paths = await uploadPhotos(key);
+      const { error } = await rpc("create_lead", { p: leadPayload(name, phone, photo_paths) });
       if (error) throw error;
       sent = true;
     } catch (e2) {

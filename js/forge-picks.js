@@ -4,8 +4,8 @@ import { $, esc, track } from "./util.js";
 import { loadProducts, pickProduct } from "./estimate/products.js";
 import { goStep } from "./estimate/steps.js";
 
-/** שם קצר לתגית ("מדרגות ברזל עם מדרכי עץ" → "מדרגות"), כדי שתיכנס בשורה אחת בטלפון. */
-const shortName = (name) => name.replace(/ עם .*$/, "").replace(/ מגולוון$/, "").replace(/^מדרגות ברזל$/, "מדרגות");
+/** שם קצר לתגית (בלי " עם ..."), כדי שתיכנס בשורה אחת בטלפון. */
+const shortName = (name) => name.replace(/ עם .*$/, "");
 
 function tagHTML(p, i) {
   return `<li style="--i:${i}"><button type="button" class="tag" data-slug="${esc(p.slug)}">

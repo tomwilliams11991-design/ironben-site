@@ -48,7 +48,7 @@ export function pickProduct(slug) {
 export function renderPicks(onPick) {
   const picks = $("#picks");
   picks.innerHTML = state.products.map((p) =>
-    `<button type="button" class="pick" role="radio" aria-checked="false" data-slug="${p.slug}"><div class="ph">${pic(p.image || "stairs-floating-black", p.name, "(max-width:820px) 50vw, 15vw")}</div><span>${p.name}</span></button>`).join("");
+    `<button type="button" class="pick" role="radio" aria-checked="false" data-slug="${p.slug}"><div class="ph">${pic(p.image || "railing-white", p.name, "(max-width:820px) 50vw, 15vw")}</div><span>${p.name}</span></button>`).join("");
   picks.addEventListener("click", (e) => {
     const b = e.target.closest(".pick"); if (!b) return;
     $$(".pick").forEach((x) => x.setAttribute("aria-checked", x === b));

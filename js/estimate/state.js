@@ -5,7 +5,6 @@ export const state = {
   inputs: {},     // ערכי השדות: מידות, finish, wood
   measure: "home", // איך מודדים: home = מגיעים לבית, self = הלקוח מודד
   when: "גמיש",    // מתי נוח למדידה בבית
-  model: null,    // ה-API של ההדמיה (model3d.mount), נטען בעצלתיים
   files: [],      // תמונות שהלקוח העלה (עד 5)
   step: 1,        // השלב הנוכחי 1..5 (5 = סיום)
 };

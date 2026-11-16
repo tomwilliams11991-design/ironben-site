@@ -147,7 +147,7 @@
     <div class="embers" data-x="38,24" aria-hidden="true"></div>
     <div class="forge-shade" aria-hidden="true"></div>
     <div class="wrap forge-head">
-      <h2 id="forgeTitle">ליד התנור.<small>מה אפשר לבדוק עכשיו, עם הדמיה תוך דקה:</small></h2>
+      <h2 id="forgeTitle">ליד התנור.<small>מה אפשר לבדוק עכשיו, תוך דקה:</small></h2>
     </div>
     <ul class="tags" id="tags" aria-label="מה אפשר לבדוק עכשיו"></ul>
   </div>
@@ -157,8 +157,8 @@
 <section class="bench" id="bench">
   <div class="wrap">
     <div class="bench-head">
-      <h2>שולחן העבודה.<br><small>הצעה ראשונית חינם, עם הדמיה.</small></h2>
-      <p class="sub">בוחרים מה בונים, מזינים מידות בערך ורואים הדמיה. את המדידה המדויקת עושים אצלכם בבית, או שאתם מודדים ושולחים.</p>
+      <h2>שולחן העבודה.<br><small>הצעה ראשונית חינם, לפי המידות שלכם.</small></h2>
+      <p class="sub">בוחרים מה בונים ומזינים מידות בערך. את המדידה המדויקת עושים אצלכם בבית, או שאתם מודדים ושולחים. מדרגות, פרגולות ומטבחי חוץ מתכננים איתכם אישית: <a class="js-wa" href="#" data-msg="היי, אשמח להצעה למדרגות / פרגולה / מטבח חוץ.">דברו איתנו</a>.</p>
     </div>
     <div class="est-grid">
       <form class="sheet est-form" id="estForm" novalidate>
@@ -187,7 +187,7 @@
               <li>מצלמים את המקום עם המטר פתוח בתמונה.</li>
               <li>מציינים שקעים, צנרת, חלונות ומדרגה ברצפה.</li>
             </ul>
-            <p class="fine">המידות כאן בערך, בשביל ההדמיה. ההצעה נקבעת אחרי מדידה מדויקת. תכנון אדריכלי או תכנון מיוחד מבוצע על ידי המעצבים ואנשי המקצוע שלנו בשטח.</p>
+            <p class="fine">המידות כאן בערך. ההצעה נקבעת אחרי מדידה מדויקת. תכנון אדריכלי או תכנון מיוחד מבוצע על ידי המעצבים ואנשי המקצוע שלנו בשטח.</p>
           </div>
           <div class="step-nav"><button type="button" class="btn ghost" data-prev>חזרה</button><button type="button" class="btn primary" data-next>המשך</button></div>
         </fieldset>
@@ -226,11 +226,9 @@
       </form>
 
       <aside class="est-model">
-        <div class="model-tabs" role="tablist"><button type="button" class="on" data-mode="3d" role="tab" aria-selected="true">הדמיה</button><button type="button" data-mode="plan" role="tab" aria-selected="false">תוכנית</button></div>
-        <div class="model" id="est3d"></div>
-        <p class="model-cap" id="modelCap">בחרו מוצר כדי לראות הדמיה</p>
-        <button type="button" class="btn ar-btn" id="arBtn" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></svg>הציבו אצלכם (מצלמה)</button>
-        <p class="model-cap" id="arMsg" role="status"></p>
+        <figure class="photo"><div class="ph" id="prodPic"></div><div class="dims" id="dims" aria-hidden="true"></div></figure>
+        <p class="model-cap" id="modelCap">בחרו מה בונים כדי לראות אותו כאן</p>
+        <ul class="spec" id="specList" aria-label="המידות שבחרתם"></ul>
       </aside>
     </div>
   </div>
@@ -262,13 +260,6 @@
   <img src="brand/wa-metal-64.png" srcset="brand/wa-metal-64.png 1x, brand/wa-metal-128.png 2x, brand/wa-metal-192.png 3x" width="64" height="64" alt="">
   <span>וואטסאפ 054-978-8277</span>
 </a>
-
-<dialog class="ar" id="arDlg" aria-labelledby="arCap">
-  <div class="ar-head"><b id="arCap"></b><button type="button" class="ar-x" id="arClose" aria-label="סגירה">✕</button></div>
-  <div class="ar-host" id="arHost"></div>
-  <p class="ar-note" id="arNote" role="status"></p>
-</dialog>
-
 <dialog class="lb" id="lb" aria-label="תצוגת תמונה">
   <button type="button" class="lb-close" aria-label="סגירה">✕</button>
   <button type="button" class="lb-prev" aria-label="הקודם">‹</button>
