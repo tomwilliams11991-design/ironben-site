@@ -2,7 +2,7 @@
 // ומנוע הגלילה (js/scroll-scene.js) מריץ אותן על כרטיס המסך.
 //   #gate:  השער נפתח → שהייה על הכותרת → פונים ימינה אל ארון העבודות, הדלתות נפתחות וצעד פנימה → #works
 //   אחרי הארון: שולחן העבודה (#bench) עולה ישר, בלי עוד הליכה בסדנה.
-import { $, $$, still, track } from "./util.js";
+import { $, $$, frozen, track } from "./util.js";
 import { createScene } from "./scroll-scene.js";
 
 const RATIO = 3856 / 2160; // תמונות השער והסדנה
@@ -115,6 +115,6 @@ export function initWalk() {
   const gate = $("#gate");
   const scenes = [];
   if (gate) scenes.push([createScene(gate, gateTracks, gateClasses($("#gate .stage"))), STATIC.gate]);
-  scenes.forEach(([s, k]) => s.start(still() ? k : null));
-  document.documentElement.addEventListener("a11ychange", () => scenes.forEach(([s, k]) => s.restart(still() ? k : null)));
+  scenes.forEach(([s, k]) => s.start(frozen() ? k : null));
+  document.documentElement.addEventListener("a11ychange", () => scenes.forEach(([s, k]) => s.restart(frozen() ? k : null)));
 }

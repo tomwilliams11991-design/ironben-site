@@ -11,6 +11,9 @@ export const FINE = matchMedia("(hover: hover) and (pointer: fine)").matches;
 
 /** האם לעצור תנועה: הגדרת מערכת ההפעלה, או "עצירת תנועה" מתפריט הנגישות. */
 export const still = () => REDUCED || document.documentElement.classList.contains("a11y-still");
+/** הקפאת סצנת השער: רק כשהגולש ביקש "עצירת אנימציות" בתפריט הנגישות. "הפחתת תנועה" של הטלפון לבד לא מקפיאה אותה,
+ *  כי השער זז רק כשהגולש גולל בעצמו (לא מתנגן לבד); בלעדיה האייפון נפתח על שער פתוח במקום על השער הסגור. */
+export const frozen = () => document.documentElement.classList.contains("a11y-still");
 
 /** מחיר בשקלים, מעוגל, עם מפריד אלפים עברי. */
 const nf = new Intl.NumberFormat("he-IL");

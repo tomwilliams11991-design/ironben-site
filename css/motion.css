@@ -1,9 +1,8 @@
 /* תנועה מופחתת והדפסה. */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .gate{height:auto}.stage{position:relative}.doors3d{display:none}.embers,.hint{display:none}
+  .embers{display:none} /* השער עצמו נשאר: הוא זז רק עם הגלילה של הגולש (עצירה מלאה: תפריט הנגישות, html.a11y-still) */
   .spots i::after{animation:none}
-  .walk-cap{display:none}
   *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.15s!important}
 }
 @media print{.top,.fab,.est-model,.embers,.doors3d,.shop-bg{display:none}body{background:#fff;color:#000}}
