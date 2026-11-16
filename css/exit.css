@@ -1,11 +1,11 @@
 /* היציאה לחצר: פרטי קשר, שעון הסדנה, קרדיט. */
-.exit{padding:112px 0 32px;border-top:1px solid var(--line);background:linear-gradient(rgb(70 58 45/.14),rgb(70 58 45/.14)),var(--plaster),var(--bg-2)}
+.exit{padding:112px 0 32px;border-top:1px solid var(--line);background:linear-gradient(rgb(70 58 45/.06),rgb(70 58 45/.06)),var(--plaster),var(--bg-2)}
 .exit-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
 .exit-grid > div > img{margin-bottom:24px;width:min(320px,80vw);height:auto}
 .exit-info{margin:0;display:grid;gap:22px}
-.exit-info dt{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.02em}
-.exit-info dd{margin:4px 0 0;font-size:17px}
-.exit-info #clock{display:block;color:var(--ink);font-weight:500}
+.exit-info dt{font-size:15px;color:var(--ink);font-weight:700;letter-spacing:.01em}
+.exit-info dd{margin:4px 0 0;font-size:19px;font-weight:500}
+.exit-info #clock{display:block;color:var(--ink);font-weight:700}
 .foot-links{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
 /* אינסטגרם ופייסבוק: דיסקיות מתכת עם טבעת פליז (תמונות, js/contact.js) */
 .social{display:inline-flex;gap:12px}
@@ -14,5 +14,8 @@
 .social a:active{transform:scale(.94)}
 .social a:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
 @media (hover:hover) and (pointer:fine){.social a:hover{transform:translateY(-2px)}}
-.copy{margin-top:56px;font-size:13px;color:var(--muted)}
-@media (max-width:820px){.exit-grid{grid-template-columns:1fr;gap:32px}.exit{padding-top:80px;padding-bottom:110px}} /* מקום לכפתורי הנגישות והוואטסאפ, שלא יסתירו את השורות האחרונות */
+/* הטקסט הקטן בתחתית: גדול ועבה מספיק כדי להיקרא על האבן */
+.exit .sub{font-size:20px;font-weight:500;color:var(--ink)}
+.exit .fine{font-size:16px;font-weight:500;color:var(--ink)}
+.copy{margin-top:48px;font-size:15px;font-weight:500;color:var(--ink)}
+@media (max-width:820px){.exit-grid{grid-template-columns:1fr;gap:32px}.exit{padding-top:80px;padding-bottom:110px}.copy{padding-inline-end:96px}} /* מקום לכפתורי הנגישות והוואטסאפ, שלא יסתירו את השורות האחרונות */
