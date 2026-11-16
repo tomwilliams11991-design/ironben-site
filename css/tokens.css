@@ -4,11 +4,11 @@
    --shade נשאר כהה: השכבות והתוויות שמעל צילום הסדנה. */
 :root{
   --bg:#cfc6ba;--bg-2:#bfb5a8;           /* צבע קיר האבן (כשהתמונה עוד לא נטענה, ולכותרת), ואבן כהה יותר לחצר (הפוטר) */
-  --ink:#1d2422;--muted:#454c49;--line:rgb(29 36 34/.17);
+  --ink:#121816;--muted:#2b3230;--line:rgb(29 36 34/.17);
   --shade:11 27 26;                      /* ירוק-פחם כ-RGB, לשכבות ולתוויות מעל צילום הסדנה: rgb(var(--shade)/.8) */
   --ember:#a8823f;--accent-word:#74531f; /* המבטא (פליז) לקווי פוקוס וסימון, וגוון כהה שלו לטקסט על בהיר. השם --ember נשאר מההיסטוריה */
   /* קיר הסדנה: אבן מסוידת, אריח שחוזר (תמונה משוקפת, בלי תפרים), ומעליו שכבת סיד שמרגיעה אותו כדי שהטקסט ייקרא */
-  --plaster:linear-gradient(rgb(207 198 186/.62),rgb(207 198 186/.62)),
+  --plaster:linear-gradient(rgb(210 202 190/.7),rgb(210 202 190/.7)),
     image-set(url("../img/wall/stone.webp") type("image/webp"),url("../img/wall/stone.jpg") type("image/jpeg")) 50% 0/1200px auto;
   --accent-paper:#8a6630;                /* פליז כהה, לקריאות על נייר השרטוט הבהיר */
   --brass:linear-gradient(160deg,#e2c48c,#b8925a 42%,#8d6a36);              /* משטח פליז מוברש: כפתורים ולוחיות */
@@ -28,5 +28,5 @@
   color-scheme:light;
 }
 @media (max-width:820px){:root{--way:30px;
-  --plaster:linear-gradient(rgb(207 198 186/.62),rgb(207 198 186/.62)),
+  --plaster:linear-gradient(rgb(210 202 190/.7),rgb(210 202 190/.7)),
     image-set(url("../img/wall/stone.webp") type("image/webp"),url("../img/wall/stone.jpg") type("image/jpeg")) 50% 0/760px auto}}
