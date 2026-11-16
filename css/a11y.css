@@ -1,6 +1,6 @@
 /* תפריט הנגישות (js/../a11y.js) ומצבי הנגישות כמחלקות על html. */
 .a11y{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));inset-inline-end:16px;z-index:26}
-/* הכפתור: דיסקית ברזל עם שפת פליז וסמל באמייל כחול, כמו כפתור הוואטסאפ (site/brand/a11y-metal-*.png, tools/images/badge.py) */
+/* הכפתור: דיסקית ברזל עם שפת פליז וסמל בפליז מלוטש, כמו כפתור הוואטסאפ (site/brand/a11y-metal-*.png, tools/images/badge.py) */
 .a11y-btn{width:56px;height:56px;padding:0;border:0;border-radius:50%;background:none;display:block;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .a11y-btn img{width:100%;height:100%;display:block;transition:transform .2s var(--ease);filter:drop-shadow(0 8px 14px rgb(0 0 0/.45))}
 .a11y-btn:active img{transform:scale(.94)}
