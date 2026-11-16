@@ -1,5 +1,6 @@
-// לידים: טבלה עם סינון וחיפוש, שינוי סטטוס והערות בשורה, תמונות והדמיות חתומות, וכפתור "הצעה".
-import { $, $$, sb, C, esc, ils, heDate, heTime, say, waNumber, options, KIND, LSTATUS } from "./lib.js";
+// לידים: טבלה עם סינון וחיפוש, שינוי סטטוס והערות בשורה, תמונות והדמיות חתומות, כפתור "הצעה" וכפתור "PDF"
+// (אותו דף שמגיע במייל, מהפונקציה lead-pdf).
+import { $, $$, sb, C, esc, ils, heDate, heTime, say, waNumber, options, invoke, KIND, LSTATUS } from "./lib.js";
 import { prefillFromLead } from "./builder.js";
 import { go } from "./nav.js";
 
@@ -17,7 +18,7 @@ function leadRow(L) {
     <td>${est}</td><td class="thumbs" data-id="${L.id}"></td>
     <td><select data-lead="${L.id}">${options(LSTATUS, L.status)}</select></td>
     <td><input class="wide" data-note="${L.id}" value="${esc(L.notes)}" placeholder="הערה"></td>
-    <td><button class="btn small" data-q="${L.id}">הצעה</button></td></tr>`;
+    <td><button class="btn small" data-q="${L.id}">הצעה</button> <button class="btn small" data-pdf="${L.id}">PDF</button></td></tr>`;
 }
 
 /** קישורים חתומים (שעה) להדמיות ולתמונות של ליד, לתוך התא שלו. */
@@ -38,7 +39,19 @@ function renderLeads() {
   $$("select[data-lead]", $("leadsT")).forEach((s) => s.onchange = async () => { const r = await sb.from("leads").update({ status: s.value }).eq("id", s.dataset.lead); say($("leadMsg"), r.error ? r.error.message : "עודכן", !r.error); });
   $$("input[data-note]", $("leadsT")).forEach((i) => i.onchange = async () => { await sb.from("leads").update({ notes: i.value.trim() || null }).eq("id", i.dataset.note); say($("leadMsg"), "ההערה נשמרה", true); });
   $$("button[data-q]", $("leadsT")).forEach((b) => b.onclick = () => { prefillFromLead(LEADS.find((x) => x.id === b.dataset.q)); go("builder"); });
+  $$("button[data-pdf]", $("leadsT")).forEach((b) => b.onclick = () => downloadPdf(b));
   list.forEach(fillThumbs);
+}
+
+/** מוריד את ה-PDF של הליד (נבנה בשרת, lead-pdf). */
+async function downloadPdf(b) {
+  b.disabled = true; b.textContent = "...";
+  const r = await invoke("lead-pdf", { lead_id: b.dataset.pdf });
+  b.disabled = false; b.textContent = "PDF";
+  if (!(r instanceof Blob)) { say($("leadMsg"), r.error || "ה-PDF לא נוצר", false); return; }
+  const L = LEADS.find((x) => x.id === b.dataset.pdf), a = document.createElement("a");
+  a.href = URL.createObjectURL(r); a.download = `ironben-lead-${(L?.name || "").replace(/\s+/g, "-")}.pdf`;
+  a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 5000);
 }
 
 export async function loadLeads() {
