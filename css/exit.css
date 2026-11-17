@@ -1,11 +1,21 @@
 /* היציאה לחצר: פרטי קשר, שעון הסדנה, קרדיט. */
 .exit{padding:112px 0 32px;border-top:1px solid var(--line);background:linear-gradient(rgb(70 58 45/.06),rgb(70 58 45/.06)),var(--plaster),var(--bg-2)}
-.exit-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-.exit-grid > div > img{margin-bottom:24px;width:min(320px,80vw);height:auto}
-.exit-info{margin:0;display:grid;gap:22px}
-.exit-info dt{font-size:15px;color:var(--ink);font-weight:700;letter-spacing:.01em}
-.exit-info dd{margin:4px 0 0;font-size:19px;font-weight:500}
+/* סדר: מימין הלוגו, הכותרת והמסר; משמאל כרטיס פרטי הקשר. מתחת שורת כפתורים לדפי העבודות, ובתחתית שורה דקה */
+.exit-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:56px;align-items:start}
+.exit-logo{margin-bottom:20px;width:min(280px,70vw);height:auto}
+.exit .sub{font-size:20px;font-weight:500;color:var(--ink);margin-top:12px}
+.exit .dream{margin:22px 0 0;padding:16px 20px;border-inline-start:4px solid #b8925a;border-radius:4px;background:rgb(250 247 241/.9);font-size:18px;font-weight:600;line-height:1.7;max-width:56ch;text-shadow:none}
+.exit-info{margin:0;display:grid;gap:18px;padding:28px 30px;border-radius:6px;background:rgb(250 247 241/.94);border-top:4px solid #b8925a;box-shadow:0 24px 44px -26px rgb(60 45 25/.5),0 0 0 1px rgb(60 45 25/.08);text-shadow:none}
+.exit-info dt{font-size:14px;color:var(--muted);font-weight:700;letter-spacing:.01em}
+.exit-info dd{margin:2px 0 0;font-size:18px;font-weight:500}
 .exit-info #clock{display:block;color:var(--ink);font-weight:700}
+.exit-pages{margin-top:48px}
+.exit-pages h3{font-size:clamp(22px,2.4vw,28px);font-weight:800;margin-bottom:14px}
+.exit-pages ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.exit-pages a{display:block;padding:10px 18px;border-radius:999px;background:rgb(250 247 241/.92);border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:16px;text-decoration:none;text-shadow:none;transition:background-color .2s var(--ease),color .2s var(--ease)}
+@media (hover:hover) and (pointer:fine){.exit-pages a:hover{background:var(--ink);color:#fff}}
+.exit-bottom{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px 32px;flex-wrap:wrap;font-size:15px;font-weight:500}
+.exit-bottom p{margin:0}
 .foot-links{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
 /* אינסטגרם ופייסבוק: דיסקיות מתכת עם טבעת פליז (תמונות, js/contact.js) */
 .social{display:inline-flex;gap:12px}
@@ -14,9 +24,5 @@
 .social a:active{transform:scale(.94)}
 .social a:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
 @media (hover:hover) and (pointer:fine){.social a:hover{transform:translateY(-2px)}}
-/* הטקסט הקטן בתחתית: גדול ועבה מספיק כדי להיקרא על האבן */
-.exit .sub{font-size:20px;font-weight:500;color:var(--ink)}
-.exit .fine{font-size:16px;font-weight:500;color:var(--ink)}
-.exit-info .dream{display:block;margin-bottom:8px;font-weight:600} /* "בלי גבול": המסר של הסדנה, מעל הקישורים לדפי העבודות */
-.copy{margin-top:48px;font-size:15px;font-weight:500;color:var(--ink)}
+.copy{color:var(--ink)}
 @media (max-width:820px){.exit-grid{grid-template-columns:1fr;gap:32px}.exit{padding-top:80px;padding-bottom:110px}.copy{padding-inline-end:96px}} /* מקום לכפתורי הנגישות והוואטסאפ, שלא יסתירו את השורות האחרונות */
