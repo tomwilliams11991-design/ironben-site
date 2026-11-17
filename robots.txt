@@ -1,6 +1,5 @@
-# IRON BEN: מנועי חיפוש מוזמנים לכל האתר, חוץ מממשק הניהול, דפי ההצעה האישיים ודף ההסרה מרשימת התפוצה.
+# IRON BEN: מנועי חיפוש מוזמנים לכל האתר, חוץ מדפי ההצעה האישיים ודף ההסרה מרשימת התפוצה.
 User-agent: *
-Disallow: /admin/
 Disallow: /quote.html
 Disallow: /unsubscribe.html
 
