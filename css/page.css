@@ -11,6 +11,7 @@
 .sheet-page ul,.sheet-page ol{padding-inline-start:22px;margin:0;display:grid;gap:8px}
 .sheet-page li b{font-weight:700}
 .steps li::marker{color:var(--accent-word);font-weight:800}
+.sheet-page .dream{margin:18px 0 0;padding:14px 18px;border-inline-start:4px solid #b8925a;background:rgb(184 146 90/.1);font-weight:700}
 .cta-box{margin-top:36px;padding:22px 24px;border-radius:6px;background:rgb(29 36 34/.05);border:1px solid var(--line)}
 .cta-box p{margin:0 0 12px}.cta-box p:last-child{margin:0;display:flex;gap:12px;flex-wrap:wrap}
 .faq{display:grid;gap:10px;margin-top:20px}

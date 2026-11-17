@@ -17,5 +17,6 @@
 /* הטקסט הקטן בתחתית: גדול ועבה מספיק כדי להיקרא על האבן */
 .exit .sub{font-size:20px;font-weight:500;color:var(--ink)}
 .exit .fine{font-size:16px;font-weight:500;color:var(--ink)}
+.exit-info .dream{display:block;margin-bottom:8px;font-weight:600} /* "בלי גבול": המסר של הסדנה, מעל הקישורים לדפי העבודות */
 .copy{margin-top:48px;font-size:15px;font-weight:500;color:var(--ink)}
 @media (max-width:820px){.exit-grid{grid-template-columns:1fr;gap:32px}.exit{padding-top:80px;padding-bottom:110px}.copy{padding-inline-end:96px}} /* מקום לכפתורי הנגישות והוואטסאפ, שלא יסתירו את השורות האחרונות */
