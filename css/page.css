@@ -1,0 +1,31 @@
+/* דפי התוכן (נבנים ב-tools/seo/build_pages.py): דף לכל סוג עבודה ושאלות נפוצות.
+   אותו קיר אבן ברקע, והטקסט על לוח בהיר עם פס פליז (כמו הסיפור של בן), כדי שייקרא בבירור. */
+.page{max-width:980px;margin:0 auto;padding:calc(var(--nav) + 28px) var(--gutter) 64px}
+.crumbs{font-size:15px;font-weight:500;margin-bottom:16px;text-shadow:0 0 10px rgb(224 217 205/.9)}
+.crumbs a{color:var(--ink)}
+.sheet-page{padding:40px 44px 34px;border-radius:6px;background:rgb(250 247 241/.95);border-top:4px solid #b8925a;box-shadow:0 24px 44px -26px rgb(60 45 25/.5),0 0 0 1px rgb(60 45 25/.08)}
+.sheet-page h1{font-size:clamp(34px,5vw,56px);margin-bottom:18px}
+.sheet-page h2{font-size:clamp(22px,2.6vw,28px);font-weight:800;margin:34px 0 12px}
+.sheet-page p,.sheet-page li{font-size:18px;font-weight:500;line-height:1.75}
+.sheet-page .lead{font-size:19px;margin:0 0 12px}
+.sheet-page ul,.sheet-page ol{padding-inline-start:22px;margin:0;display:grid;gap:8px}
+.sheet-page li b{font-weight:700}
+.steps li::marker{color:var(--accent-word);font-weight:800}
+.cta-box{margin-top:36px;padding:22px 24px;border-radius:6px;background:rgb(29 36 34/.05);border:1px solid var(--line)}
+.cta-box p{margin:0 0 12px}.cta-box p:last-child{margin:0;display:flex;gap:12px;flex-wrap:wrap}
+.faq{display:grid;gap:10px;margin-top:20px}
+.faq details{border:1px solid var(--line);border-radius:6px;background:#fff;padding:0 18px}
+.faq summary{cursor:pointer;padding:16px 0;font-size:19px;font-weight:700;list-style-position:inside}
+.faq details p{margin:0 0 16px}
+.gallery{margin-top:44px}
+.gallery h2{font-size:clamp(26px,3vw,34px);margin-bottom:16px;text-shadow:0 0 12px rgb(224 217 205/.9)}
+.gallery .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.gallery figure{margin:0;padding:8px 8px 0;background:#f6f1e8;border-radius:4px;box-shadow:0 14px 24px -14px rgb(40 30 20/.55)}
+.gallery img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:2px}
+.gallery figcaption{font-size:15px;font-weight:500;padding:8px 2px 10px}
+.more{margin-top:40px;display:flex;flex-wrap:wrap;gap:10px}
+.more a{padding:10px 16px;border-radius:999px;background:rgb(250 247 241/.92);border:1px solid var(--line);color:var(--ink);font-weight:600;text-decoration:none}
+.more a[aria-current]{background:var(--ink);color:#fff}
+.page-foot{padding:28px 0 100px;border-top:1px solid var(--line);background:rgb(250 247 241/.85);font-size:16px;font-weight:500}
+.page-foot p{margin:0 0 6px}.page-foot a{color:var(--ink)}
+@media (max-width:700px){.sheet-page{padding:28px 20px 24px}.sheet-page p,.sheet-page li{font-size:17px}.gallery .grid{grid-template-columns:1fr 1fr;gap:10px}}
