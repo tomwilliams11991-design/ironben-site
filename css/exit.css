@@ -1,21 +1,37 @@
 /* היציאה לחצר: פרטי קשר, שעון הסדנה, קרדיט. */
-.exit{padding:112px 0 32px;border-top:1px solid var(--line);background:linear-gradient(rgb(70 58 45/.06),rgb(70 58 45/.06)),var(--plaster),var(--bg-2)}
-/* סדר: מימין הלוגו, הכותרת והמסר; משמאל כרטיס פרטי הקשר. מתחת שורת כפתורים לדפי העבודות, ובתחתית שורה דקה */
-.exit-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:56px;align-items:start}
-.exit-logo{margin-bottom:20px;width:min(280px,70vw);height:auto}
-.exit .sub{font-size:20px;font-weight:500;color:var(--ink);margin-top:12px}
-.exit .dream{margin:22px 0 0;padding:16px 20px;border-inline-start:4px solid #b8925a;border-radius:4px;background:rgb(250 247 241/.9);font-size:18px;font-weight:600;line-height:1.7;max-width:56ch;text-shadow:none}
-.exit-info{margin:0;display:grid;gap:18px;padding:28px 30px;border-radius:6px;background:rgb(250 247 241/.94);border-top:4px solid #b8925a;box-shadow:0 24px 44px -26px rgb(60 45 25/.5),0 0 0 1px rgb(60 45 25/.08);text-shadow:none}
-.exit-info dt{font-size:14px;color:var(--muted);font-weight:700;letter-spacing:.01em}
-.exit-info dd{margin:2px 0 0;font-size:18px;font-weight:500}
-.exit-info #clock{display:block;color:var(--ink);font-weight:700}
-.exit-pages{margin-top:48px}
-.exit-pages h3{font-size:clamp(22px,2.4vw,28px);font-weight:800;margin-bottom:14px}
-.exit-pages ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
-.exit-pages a{display:block;padding:10px 18px;border-radius:999px;background:rgb(250 247 241/.92);border:1px solid var(--line);color:var(--ink);font-weight:600;font-size:16px;text-decoration:none;text-shadow:none;transition:background-color .2s var(--ease),color .2s var(--ease)}
-@media (hover:hover) and (pointer:fine){.exit-pages a:hover{background:var(--ink);color:#fff}}
-.exit-bottom{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px 32px;flex-wrap:wrap;font-size:15px;font-weight:500}
-.exit-bottom p{margin:0}
+.exit{padding:96px 0 48px;border-top:1px solid var(--line);background:linear-gradient(rgb(70 58 45/.06),rgb(70 58 45/.06)),var(--plaster),var(--bg-2)}
+/* לוח אגוז כהה (אותה טקסטורה של ארון העבודות) תלוי על קיר האבן: מסגרת פלדה, מסמרת פליז בכל פינה, טקסט שמנת ותוויות פליז.
+   שלוש עמודות: הכותרת והמסר, פרטי הקשר, ודפי העבודות. בטלפון אחת מתחת לשנייה */
+.board{--cream:#f4ecdf;--brass-t:#dcbc7e;position:relative;padding:56px 56px 26px;border-radius:6px;color:var(--cream);text-shadow:none;
+  background:
+    radial-gradient(circle at 20px 20px,#f3dcaa 0 2px,#b8925a 3px 5px,#5c4320 6px,transparent 7px),
+    radial-gradient(circle at calc(100% - 20px) 20px,#f3dcaa 0 2px,#b8925a 3px 5px,#5c4320 6px,transparent 7px),
+    radial-gradient(circle at 20px calc(100% - 20px),#f3dcaa 0 2px,#b8925a 3px 5px,#5c4320 6px,transparent 7px),
+    radial-gradient(circle at calc(100% - 20px) calc(100% - 20px),#f3dcaa 0 2px,#b8925a 3px 5px,#5c4320 6px,transparent 7px),
+    linear-gradient(rgb(18 10 4/.7),rgb(18 10 4/.82)),url("../img/chest/walnut.webp") center/cover;
+  box-shadow:inset 0 0 0 1px rgb(255 220 180/.08),inset 0 0 0 7px rgb(30 32 34/.9),inset 0 0 0 8px rgb(255 255 255/.06),inset 0 0 40px rgb(0 0 0/.45),0 34px 60px -30px rgb(40 28 14/.75)}
+.board-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) minmax(0,.9fr);gap:48px;align-items:start}
+.exit-logo{margin-bottom:18px;width:min(230px,60vw);height:auto;filter:drop-shadow(0 3px 6px rgb(0 0 0/.5))}
+.board h2{color:var(--cream);font-size:clamp(40px,4.4vw,60px)}
+.board .sub{font-size:19px;font-weight:500;color:rgb(244 236 223/.85);margin-top:10px}
+.board .dream{margin:22px 0 0;padding:4px 18px 4px 0;border-inline-start:3px solid var(--brass-t);font-size:17px;line-height:1.75;font-weight:400;color:rgb(244 236 223/.92)}
+.board .dream b{display:block;margin-top:8px;color:var(--brass-t);font-weight:700}
+/* תוויות פליז קטנות מעל כל פרט */
+.exit-info{margin:0;display:grid;gap:22px;padding-top:6px}
+.exit-info dt,.exit-pages h3{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--brass-t);margin-bottom:6px}
+.exit-info dd{margin:0;font-size:18px;font-weight:500;color:var(--cream)}
+.exit-info #clock{display:block;font-weight:700;color:#fff}
+.board a{color:var(--cream);text-decoration-color:rgb(220 188 126/.6);text-underline-offset:4px}
+@media (hover:hover) and (pointer:fine){.board a:hover{color:var(--brass-t)}}
+.exit-pages{padding-top:6px}
+.exit-pages ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.exit-pages li a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid rgb(220 188 126/.18);font-size:17px;font-weight:600;text-decoration:none}
+.exit-pages li a::after{content:"←";color:var(--brass-t);transition:transform .2s var(--ease)}
+@media (hover:hover) and (pointer:fine){.exit-pages li a:hover::after{transform:translateX(-4px)}}
+.exit-pages .biz{margin:18px 0 0;font-size:15px;line-height:1.65;color:rgb(244 236 223/.85)}
+.exit-pages .biz b{color:var(--cream)}
+.board-foot{margin-top:44px;padding-top:16px;border-top:1px solid rgb(220 188 126/.25);display:flex;justify-content:space-between;gap:8px 32px;flex-wrap:wrap;font-size:14px;color:rgb(244 236 223/.7)}
+.board-foot p{margin:0}
 .foot-links{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
 /* אינסטגרם ופייסבוק: דיסקיות מתכת עם טבעת פליז (תמונות, js/contact.js) */
 .social{display:inline-flex;gap:12px}
@@ -24,5 +40,5 @@
 .social a:active{transform:scale(.94)}
 .social a:focus-visible{outline:2px solid var(--ember);outline-offset:3px}
 @media (hover:hover) and (pointer:fine){.social a:hover{transform:translateY(-2px)}}
-.copy{color:var(--ink)}
-@media (max-width:820px){.exit-grid{grid-template-columns:1fr;gap:32px}.exit{padding-top:80px;padding-bottom:110px}.copy{padding-inline-end:96px}} /* מקום לכפתורי הנגישות והוואטסאפ, שלא יסתירו את השורות האחרונות */
+@media (max-width:980px){.board-grid{grid-template-columns:1fr 1fr}.exit-intro{grid-column:1/-1}}
+@media (max-width:820px){.exit{padding-top:72px;padding-bottom:110px}.board{padding:40px 22px 20px}.board-grid{grid-template-columns:1fr;gap:34px}.board-foot{flex-direction:column}.copy{padding-inline-end:84px}} /* מקום לכפתורי הנגישות והוואטסאפ, שלא יסתירו את השורות האחרונות */
