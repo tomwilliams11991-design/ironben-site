@@ -5,12 +5,15 @@ import { C } from "./supabase.js";
 /** קישור וואטסאפ עם הודעה מוכנה, או null אם אין מספר ב-config. */
 export const waLink = (msg) => (C.WHATSAPP ? `https://wa.me/${C.WHATSAPP}?text=${encodeURIComponent(msg || "")}` : null);
 
+/** מאיזה כפתור לחצו (לבוט בטלגרם): הכפתור הצף, שולחן העבודה, לאדריכלים, או אחרי שליחת הצעה (done: הליד כבר הגיע) */
+const waWhere = (a) => a.classList.contains("fab") ? "fab" : a.id === "doneWa" ? "done" : a.closest(".exit") ? "biz" : a.closest(".bench") ? "bench" : "other";
+
 /** כל .js-wa מקבל את הקישור (ההודעה מ-data-msg) ונספר כאירוע contact_click. */
 function initWhatsapp() {
   $$(".js-wa").forEach((a) => {
     const u = waLink(a.dataset.msg);
     if (u) { a.href = u; a.target = "_blank"; a.rel = "noopener"; }
-    a.addEventListener("click", () => track("contact_click", { channel: "whatsapp" }));
+    a.addEventListener("click", () => track("contact_click", { channel: "whatsapp", where: waWhere(a), product: $(".pick[aria-checked='true']")?.dataset.slug || null }));
   });
 }
 

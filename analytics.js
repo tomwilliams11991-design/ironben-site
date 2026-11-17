@@ -47,7 +47,7 @@
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("a[href]"); if (!a) return;
     var h = a.getAttribute("href"), ch = /^tel:/.test(h) ? "phone" : /^mailto:/.test(h) ? "email" : /instagram\.com/.test(h) ? "instagram" : /facebook\.com/.test(h) ? "facebook" : /wa\.me|whatsapp/.test(h) && !a.classList.contains("js-wa") && !a.closest(".fab") ? "whatsapp" : "";
-    if (ch) log("contact_click", { channel: ch });
+    if (ch) log("contact_click", ch === "whatsapp" ? { channel: ch, where: "page" } : { channel: ch });
   }, true);
 
   window.track = function (name, params) {
