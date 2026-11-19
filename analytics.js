@@ -27,7 +27,8 @@
     var m = /[?&]utm_source=([^&]+)/.exec(location.search); if (m) return decodeURIComponent(m[1]).toLowerCase().slice(0, 40);
     var h = ""; try { h = new URL(document.referrer).hostname.replace(/^www\.|^m\.|^l\./, ""); } catch (e) {}
     if (!h || h === location.hostname) return "direct";
-    var known = { google: /google\./, instagram: /instagram\.com/, facebook: /facebook\.com|fb\.com/, whatsapp: /whatsapp|wa\.me/, bing: /bing\.com/, chatgpt: /chatgpt\.com|openai\.com/ };
+    // גם כשהגיעו מתוך אפליקציה באנדרואיד (android-app://com.instagram.android) ולא רק מהאתר
+    var known = { email: /mail\.google|android\.gm|outlook|mail\./, google: /google/, instagram: /instagram/, facebook: /facebook|fb\.com|katana/, whatsapp: /whatsapp|wa\.me/, bing: /bing\.com/, chatgpt: /chatgpt|openai/, tiktok: /tiktok/, youtube: /youtube|youtu\.be/, linkedin: /linkedin|lnkd/ };
     for (var k in known) if (known[k].test(h)) return k;
     return h.slice(0, 40);
   });
@@ -42,7 +43,16 @@
       }).catch(function () {});
     } catch (e) { /* הספירה לא עוצרת את האתר */ }
   }
-  log("page_view");
+  // קישור מתויג (למשל ?utm_source=instagram&utm_campaign=bio): שם הקמפיין נשמר עם הדף הראשון של הביקור
+  var camp = /[?&]utm_campaign=([^&]+)/.exec(location.search);
+  log("page_view", camp ? { campaign: decodeURIComponent(camp[1]).slice(0, 40) } : null);
+  // עיר / אזור משוער, פעם אחת בביקור (supabase/functions/geo). ה-IP לא נשמר
+  if (LOG && store("ib_geo", function () { return "0"; }) === "0") {
+    try { sessionStorage.setItem("ib_geo", "1"); } catch (e) {}
+    setTimeout(function () {
+      fetch(C.SUPABASE_URL + "/functions/v1/ironben-geo", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json", apikey: C.SUPABASE_ANON_KEY }, body: JSON.stringify({ sid: sid }) }).catch(function () {});
+    }, 1500);
+  }
   // לחיצות על טלפון, מייל, אינסטגרם ופייסבוק (וואטסאפ נספר בנפרד, ב-js/contact.js)
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("a[href]"); if (!a) return;
