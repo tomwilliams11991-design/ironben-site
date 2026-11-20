@@ -1,7 +1,7 @@
 // שלב 1: מה בונים. טוען את המוצרים ומציג כרטיסי בחירה.
-import { $, $$, pic } from "../util.js";
-import { rpc } from "../supabase.js";
-import { state } from "./state.js";
+import { $, $$, pic } from "../util.js?v=f82c330";
+import { rpc } from "../supabase.js?v=f82c330";
+import { state } from "./state.js?v=f82c330";
 
 /** המוצרים הגלויים: מהשרת (public_products), ואם אין חיבור, מ-products.json. נטען פעם אחת. */
 let productsOnce = null;

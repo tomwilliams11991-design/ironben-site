@@ -1,6 +1,6 @@
 // לייטבוקס: <dialog> מסך מלא עם חיצים, מקלדת וסגירה בלחיצה על הרקע. מקבל רשימת עבודות ואינדקס.
-import { $ } from "./util.js";
-import { DOORS } from "./data/work.js";
+import { $ } from "./util.js?v=f82c330";
+import { DOORS } from "./data/work.js?v=f82c330";
 
 export function initLightbox() {
   const lb = $("#lb"), img = $("#lbImg"), cap = $("#lbCap"), cat = $("#lbCat"), count = $("#lbCount");

@@ -1,7 +1,7 @@
 // חומרים להדמיה: גימורי ברזל, סוגי עץ, וצבעי הסצנה. משותף לבונים (builders.js) ולמציג (model3d.js).
 // חומרים פיזיקליים (MeshPhysicalMaterial) עם מרקמים פרוצדורליים מ-3d/textures.js, ומשתקפים בסביבת התאורה של הסצנה.
 import * as THREE from "three";
-import { woodTextures, powderRoughness, galvTextures, cortenTextures } from "./textures.js";
+import { woodTextures, powderRoughness, galvTextures, cortenTextures } from "./textures.js?v=f82c330";
 
 /** גימורי ברזל לפי מפתח ה-finish במוצר (products.input_schema.finishes). */
 export const STEEL = {

@@ -2,8 +2,8 @@
 // וידית פלדה מחושלת. החומרים הם צילומים (site/img/chest, tools/images/chest.py), לא ציור ב-CSS.
 // לחיצה פותחת את המגירה (ורק אותה) ובתוכה התמונות: במחשב בגריד, בטלפון ברצועה שמחליקים עם חץ "עוד".
 // לחיצה על תמונה פותחת את הלייטבוקס. כשהשידה נכנסת למסך בפעם הראשונה, המגירה הראשונה "נפתחת קצת" וחוזרת, כרמז.
-import { $, $$, pic, track, still, scrollTo } from "./util.js";
-import { DOORS, worksOf } from "./data/work.js";
+import { $, $$, pic, track, still, scrollTo } from "./util.js?v=f82c330";
+import { DOORS, worksOf } from "./data/work.js?v=f82c330";
 
 const PHONE = matchMedia("(max-width:820px)");
 /** הטיה קטנה וקבועה לכל תמונה במגירה, כמו הדפסות שהונחו ביד. */

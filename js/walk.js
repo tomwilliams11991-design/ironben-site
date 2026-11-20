@@ -2,8 +2,8 @@
 // ומנוע הגלילה (js/scroll-scene.js) מריץ אותן על כרטיס המסך.
 //   #gate:  השער נפתח → שהייה על הכותרת → פונים ימינה אל ארון העבודות, הדלתות נפתחות וצעד פנימה → #works
 //   אחרי הארון: שולחן העבודה (#bench) עולה ישר, בלי עוד הליכה בסדנה.
-import { $, $$, frozen, track } from "./util.js";
-import { createScene } from "./scroll-scene.js";
+import { $, $$, frozen, track } from "./util.js?v=f82c330";
+import { createScene } from "./scroll-scene.js?v=f82c330";
 
 const RATIO = 3856 / 2160; // תמונות השער והסדנה
 

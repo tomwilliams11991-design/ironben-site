@@ -1,10 +1,10 @@
 // שלב 4: שליחת הבקשה. מעלה את תמונות הלקוח ל-Storage ויוצר ליד דרך create_lead (הערכה פנימית מחושבת בשרת, ללקוח לא מוצג מחיר).
-import { $, track } from "../util.js";
-import { C, sb, rpc, upload } from "../supabase.js";
-import { waLink } from "../contact.js";
-import { state } from "./state.js";
-import { goStep } from "./steps.js";
-import { measureLine } from "./measure.js";
+import { $, track } from "../util.js?v=f82c330";
+import { C, sb, rpc, upload } from "../supabase.js?v=f82c330";
+import { waLink } from "../contact.js?v=f82c330";
+import { state } from "./state.js?v=f82c330";
+import { goStep } from "./steps.js?v=f82c330";
+import { measureLine } from "./measure.js?v=f82c330";
 
 /** בדיקת שם וטלפון. מחזיר הודעת שגיאה או null. */
 function validate(name, phone) {

@@ -1,8 +1,8 @@
 // דף הצעת המחיר ללקוח (quote.html?t=...): טוען את ההצעה לפי הקוד, מציג, ומאפשר אישור. קובץ נפרד ולא בתוך הדף, בגלל מדיניות האבטחה (CSP).
 // דף ההצעה ללקוח: טוען הצעה לפי טוקן (get_quote), מציג פירוט, הדמיה מהפרמטרים ששמרנו, ואישור בשם מלא.
-import { $, ils, esc, heDate } from "./util.js";
-import { sb, rpc } from "./supabase.js";
-import { loadModel } from "./model-loader.js";
+import { $, ils, esc, heDate } from "./util.js?v=f82c330";
+import { sb, rpc } from "./supabase.js?v=f82c330";
+import { loadModel } from "./model-loader.js?v=f82c330";
 const box = $("#q"), token = new URLSearchParams(location.search).get("t");
 
 /** שורות הפריטים בטבלה. */
