@@ -6,7 +6,8 @@ import { $, track } from "../util.js";
 import { state } from "./state.js";
 import { dimFields } from "./photo.js";
 
-const MODEL_VIEWER = "https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js";
+// שמור באתר עצמו (site/vendor), לא נטען מאתר חיצוני
+const MODEL_VIEWER = "/vendor/model-viewer-4.4.0.min.js";
 const FORCE = new URLSearchParams(location.search).has("ar");
 
 /** האם המכשיר יכול להציג AR: אייפון/אייפד (Quick Look) או אנדרואיד עם WebXR. */

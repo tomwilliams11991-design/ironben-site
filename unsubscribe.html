@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="he" dir="rtl"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-zP1Y2MVMbPUe2HXgaykTO0MlAi919JJXBzcWN1exIDk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://fqgktyokknxxxpfounbv.supabase.co; connect-src 'self' blob: data: https://fqgktyokknxxxpfounbv.supabase.co; font-src 'self' data:; media-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>הסרה מרשימת הדיוור | IRON BEN</title><meta name="robots" content="noindex">
 <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
 <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="styles.css"></head>
@@ -9,15 +10,5 @@
 <p style="margin-top:24px"><a href="./">לאתר IRON BEN</a></p>
 </main>
 <script src="config.js"></script>
-<script>
-(async function(){
-  var p=new URLSearchParams(location.search),m=document.getElementById('msg'),C=window.IRONBEN_CONFIG||{};
-  if(!p.get('e')||!p.get('s')||!C.SUPABASE_URL){m.textContent='הקישור חסר או לא תקין. אפשר להשיב "הסר" למייל שקיבלתם.';return;}
-  try{
-    var r=await fetch(C.SUPABASE_URL+'/functions/v1/'+(C.FUNCTIONS_PREFIX||'ironben-')+'unsubscribe',{method:'POST',headers:{'Content-Type':'application/json','apikey':C.SUPABASE_ANON_KEY},body:JSON.stringify({e:p.get('e'),s:p.get('s')})});
-    var j=await r.json();
-    m.textContent=j.ok?'הכתובת '+p.get('e')+' הוסרה. לא נשלח אליה יותר פניות.':'הקישור לא תקין. אפשר להשיב "הסר" למייל שקיבלתם.';
-  }catch(e){m.textContent='ההסרה לא הצליחה כרגע. אפשר להשיב "הסר" למייל שקיבלתם ונסיר ידנית.';}
-})();
-</script><script src="analytics.js" defer></script><script src="a11y.js" defer></script>
+<script src="js/unsubscribe-page.js"></script><script src="analytics.js" defer></script><script src="a11y.js" defer></script>
 </body></html>

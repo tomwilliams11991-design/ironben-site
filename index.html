@@ -2,25 +2,9 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-zP1Y2MVMbPUe2HXgaykTO0MlAi919JJXBzcWN1exIDk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://fqgktyokknxxxpfounbv.supabase.co; connect-src 'self' blob: data: https://fqgktyokknxxxpfounbv.supabase.co; font-src 'self' data:; media-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>
-/* כל כניסה מתחילה בשער סגור (בלי # בכתובת). ספארי באייפון זוכר את מקום הגלילה, ובחזרה ללשונית (למשל מוואטסאפ)
-   מציג את הדף כמו שהושאר. לכן: בלי שחזור גלילה, חזרה לראש הדף בטעינה ובחזרה מהמטמון, ושוב אחרי load
-   (ספארי לפעמים משחזר מאוחר), רק אם הגולש עוד לא התחיל לגלול בעצמו. */
-(function () {
-  if (location.hash) return;
-  try { history.scrollRestoration = "manual"; } catch (e) {}
-  var touched = false, top = function () { if (!touched) scrollTo(0, 0); };
-  ["touchstart", "pointerdown", "wheel", "keydown", "mousedown", "hashchange"].forEach(function (t) { addEventListener(t, function () { touched = true; }, { once: true, passive: true }); });
-  top();
-  /* ספארי באייפון משחזר את הגלילה גם מאוחר (אחרי load, ובטאב שנטען מחדש מהזיכרון). כל גלילה שקורית
-     בשלוש השניות הראשונות לפני שהגולש נגע במסך היא שחזור, לא הגולש: חוזרים לשער */
-  var until = Date.now() + 3000;
-  addEventListener("scroll", function () { if (!touched && Date.now() < until && scrollY > 0) scrollTo(0, 0); }, { passive: true });
-  addEventListener("load", function () { until = Date.now() + 3000; top(); setTimeout(top, 60); setTimeout(top, 400); });
-  addEventListener("pageshow", function (e) { if (e.persisted) { touched = false; until = Date.now() + 3000; scrollTo(0, 0); } });
-})();
-</script>
+<script src="js/start-at-gate.js"></script>
 <title>IRON BEN | סדנת ברזל ועץ בהזמנה אישית</title>
 <meta name="description" content="IRON BEN, סדנת ברזל ועץ בוטיקית בבית עובד ליד נס ציונה. מדרגות, שערים, פרגולות, מעקות, ספריות ושולחנות בהזמנה אישית. הצעה ראשונית חינם ומדידה אצלכם בבית.">
 <meta name="theme-color" content="#0b1b1a">
@@ -42,7 +26,7 @@
 <link rel="preload" as="image" imagesrcset="img/scene/gate-960.avif 960w, img/scene/gate-1600.avif 1600w, img/scene/gate-2400.avif 2400w" imagesizes="100vw" type="image/avif" media="(min-width: 821px)" fetchpriority="high">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="styles.css">
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<script type="importmap">{"imports":{"three":"/vendor/three-0.170.0/three.module.min.js","three/addons/":"/vendor/three-0.170.0/addons/"}}</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"HomeAndConstructionBusiness","name":"IRON BEN","description":"סדנת ברזל ועץ בהזמנה אישית","address":{"@type":"PostalAddress","addressLocality":"בית עובד","addressCountry":"IL"},"sameAs":["https://www.instagram.com/ironben.eindor","https://www.facebook.com/IRONBENeindor"],"areaServed":{"@type":"Country","name":"ישראל"},"telephone":"+972549788277","email":"ironben.eindor@gmail.com","url":"https://ironben.art"}
 </script>
@@ -314,7 +298,7 @@
 </dialog>
 
 <script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" integrity="sha384-0w2KAL2YHP6wKOkUDzkCDGgVvfmHnj02DHeQ6XcHOgTfFsGyonKOpShMH1x6nk9o" crossorigin="anonymous" defer></script>
+<script src="/vendor/supabase-2.119.2.js"></script>
 <script type="module" src="app.js"></script>
 <script src="analytics.js" defer></script>
 <script src="a11y.js" defer></script>

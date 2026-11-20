@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="he" dir="rtl" class="lit"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="he" dir="rtl" class="lit"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-zP1Y2MVMbPUe2HXgaykTO0MlAi919JJXBzcWN1exIDk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://fqgktyokknxxxpfounbv.supabase.co; connect-src 'self' blob: data: https://fqgktyokknxxxpfounbv.supabase.co; font-src 'self' data:; media-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>הצהרת נגישות | IRON BEN</title>
 <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
 <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="styles.css">
@@ -38,13 +39,6 @@
 <p class="meta">נשתדל להשיב לכל פנייה בנושא נגישות בתוך 5 ימי עסקים.</p>
 </main>
 <script src="config.js"></script>
-<script>
-(function(){var C=window.IRONBEN_CONFIG||{};document.getElementById("a-date").textContent=C.A11Y_STATEMENT_DATE||"";
-var parts=[];if(C.A11Y_CONTACT_NAME)parts.push("רכז/ת הנגישות: "+C.A11Y_CONTACT_NAME+".");
-if(C.PHONE_DISPLAY)parts.push('טלפון: <a href="tel:'+C.PHONE_DISPLAY.replace(/[^0-9+]/g,"")+'">'+C.PHONE_DISPLAY+"</a>.");
-if(C.EMAIL)parts.push('מייל: <a href="mailto:'+C.EMAIL+'">'+C.EMAIL+"</a>.");
-if(C.WHATSAPP)parts.push('וואטסאפ: <a href="https://wa.me/'+C.WHATSAPP+'" target="_blank" rel="noopener">שליחת הודעה</a>.');
-document.getElementById("a-contact").innerHTML=parts.join(" ");})();
-</script>
+<script src="js/a11y-statement.js"></script>
 <script src="analytics.js" defer></script><script src="a11y.js" defer></script>
 </body></html>
