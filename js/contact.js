@@ -6,7 +6,7 @@ import { C } from "./supabase.js";
 export const waLink = (msg) => (C.WHATSAPP ? `https://wa.me/${C.WHATSAPP}?text=${encodeURIComponent(msg || "")}` : null);
 
 /** מאיזה כפתור לחצו (לבוט בטלגרם): הכפתור הצף, שולחן העבודה, לאדריכלים, או אחרי שליחת הצעה (done: הליד כבר הגיע) */
-const waWhere = (a) => a.classList.contains("fab") ? "fab" : a.id === "doneWa" ? "done" : a.closest(".exit") ? "biz" : a.closest(".bench") ? "bench" : "other";
+const waWhere = (a) => a.classList.contains("fab") ? "fab" : a.id === "doneWa" ? "done" : a.closest(".drawer") ? "drawer" : a.closest(".exit") ? "biz" : a.closest(".bench") ? "bench" : "other";
 
 /** כל .js-wa מקבל את הקישור (ההודעה מ-data-msg) ונספר כאירוע contact_click. */
 function initWhatsapp() {
