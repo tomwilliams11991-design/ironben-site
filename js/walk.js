@@ -15,8 +15,8 @@ const SPOT = {
 
 /** אורכי הגלילה בתוך #gate, ביחידות גובה מסך. הסכום + 1 = הגובה של .gate ב-css/gate.css (265vh, בטלפון 330vh). קצר בכוונה: בטלפון כל מסך הוא תנועת אצבע. */
 export const GATE = matchMedia("(max-width:820px)").matches
-  ? { open: 1.3, dwell: 0.45, walk: 0.55 }  // טלפון: 330vh. החלקה אחת עוברת יותר ממסך, אז הפתיחה ארוכה יותר
-  : { open: 0.8, dwell: 0.3, walk: 0.55 };  // מחשב: 265vh
+  ? { open: 1.3, dwell: 0.45, walk: 0.3 }  // טלפון: 305vh. החלקה אחת עוברת יותר ממסך, אז הפתיחה ארוכה יותר
+  : { open: 0.8, dwell: 0.3, walk: 0.3 };  // מחשב: 240vh. ההליכה לארון קצרה: בלי צעד ארוך פנימה, שלא ייראה כאילו האתר נתקע
 const GATE_LEN = GATE.open + GATE.dwell + GATE.walk;
 
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
@@ -60,14 +60,14 @@ function gatePhase(k) {
   return { p, w, h: span(p, 0.6, 0.9) * (1 - span(w, 0, 0.16)) };
 }
 
-/** מצלמת השער: זום כניסה (1.16 → 1), ואז ההליכה לארון (w 0..0.4), ואז צעד פנימה (w 0.45..1) בזמן שהשידה עולה מלמטה.
+/** מצלמת השער: זום כניסה (1.16 → 1), ואז ההליכה לארון (w 0..0.75) ורק צעד קטן פנימה (w 0.75..1), בזמן שהשידה כבר עולה מלמטה.
  *  הזום הכולל נשאר מתחת ל-~2: זום גדול יותר מחייב את הדפדפן לצייר שכבה ענקית, ובטלפון המסך נהיה שחור. */
 function gateCamera(k, f) {
   const { p, w } = gatePhase(k);
   const sCab = zoomFor(SPOT.cabinet, f);
-  let cam = walkBetween(SPOT.entry, SPOT.cabinet, 1, sCab, span(w, 0, 0.4), -5, f);
-  const push = Math.pow(span(w, 0.45, 1), 2);
-  if (push > 0) cam = aim(SPOT.cabinet.x, SPOT.cabinet.y, sCab * (1 + 0.3 * push), f);
+  let cam = walkBetween(SPOT.entry, SPOT.cabinet, 1, sCab, span(w, 0, 0.75), -5, f);
+  const push = span(w, 0.75, 1);
+  if (push > 0) cam = aim(SPOT.cabinet.x, SPOT.cabinet.y, sCab * (1 + 0.12 * push), f);
   cam.s *= 1.16 - 0.16 * p;
   return cam;
 }
@@ -75,7 +75,7 @@ function gateCamera(k, f) {
 function gateTracks(vh) {
   const f = frame(vh), ph = gatePhase;
   const T = (sel, fn) => $$(sel).map((el) => ({ el, fn }));
-  const doorOpen = (k) => easeOut(span(ph(k).w, 0.3, 0.52));
+  const doorOpen = (k) => easeOut(span(ph(k).w, 0.3, 0.75));
   return [
     ...T("#gate .leaf.l", (k) => ({ transform: `rotateY(${r2(ph(k).p * 104)}deg)`, opacity: String(r2(span(0.96 - ph(k).p, 0, 0.18))) })),
     ...T("#gate .leaf.r", (k) => ({ transform: `rotateY(${r2(ph(k).p * -104)}deg)`, opacity: String(r2(span(0.96 - ph(k).p, 0, 0.18))) })),
@@ -89,7 +89,7 @@ function gateTracks(vh) {
     ...T("#gate .cab-leaf.r", (k) => ({ transform: `rotateY(${r2(doorOpen(k) * 112)}deg)` })),
     ...T("#gate .cab-leaf .shade", (k) => op(doorOpen(k) * 0.55)),
     ...T("#gate .cab-dark", (k) => op((1 - doorOpen(k)) * 0.5)),
-    ...T("#gate .walk-cap", (k) => op(span(ph(k).w, 0.16, 0.26) * (1 - span(ph(k).w, 0.36, 0.44)))),
+    ...T("#gate .walk-cap", (k) => op(span(ph(k).w, 0.05, 0.18) * (1 - span(ph(k).w, 0.5, 0.65)))),
   ];
 }
 

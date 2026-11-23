@@ -1,10 +1,10 @@
 /* השער שנפתח אל הסדנה: כנפיים ב-3D, הסדנה מאחור, הכותרת, נקודות על הכלים, גחלים, רמז הגלילה.
    כאן רק המצב ההתחלתי (שער סגור). כל התנועה בגלילה היא אנימציות מ-js/walk.js (דרך js/scroll-scene.js). */
-/* גובה: מסך + פתיחה (80vh) + שהייה על הכותרת (30vh) + ההליכה לארון (55vh). חייב להתאים ל-GATE ב-js/walk.js.
-   בטלפון הפתיחה והשהייה ארוכות יותר (130vh + 45vh = 330vh), כי החלקה אחת עם תנופה עוברת יותר ממסך ודילגה על השער.
+/* גובה: מסך + פתיחה (80vh) + שהייה על הכותרת (30vh) + ההליכה לארון (30vh). חייב להתאים ל-GATE ב-js/walk.js.
+   בטלפון הפתיחה והשהייה ארוכות יותר (130vh + 45vh, סה"כ 305vh), כי החלקה אחת עם תנופה עוברת יותר ממסך ודילגה על השער.
    ארון העבודות (.works) עולה על 20lvh האחרונים (אחרי שהדלתות נפתחו) (margin שלילי ב-css/works.css), כך שאין עצירה עם ארון פתוח */
-.gate{position:relative;height:265vh}
-@media (max-width:820px){.gate{height:330vh}}
+.gate{position:relative;height:240vh}
+@media (max-width:820px){.gate{height:305vh}}
 .gate .anchor{position:absolute;top:85vh;left:0;width:1px;height:1px}
 .stage{position:sticky;top:0;height:100vh;height:100lvh;overflow:hidden;background:#061110;isolation:isolate}
 /* הסדנה מאחורי השער: נכנסים פנימה (זום קטן) והחושך מתבהר */
