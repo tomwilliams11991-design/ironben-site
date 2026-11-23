@@ -3,7 +3,8 @@
    מגירה פתוחה נשלפת קצת קדימה ומתחתיה תיבה מעץ אלון בהיר עם התמונות. רק מגירה אחת פתוחה בכל רגע.
    בתיבה: העבודה הראשונה גדולה (2×2) והשאר סביבה, 4 עמודות במחשב ו-2 בטלפון (שם 7 ראשונות ו"עוד"). בסוף: כפתור להמשך. */
 /* הרקע: קיר האבן של הסדנה (--plaster) */
-.works{position:relative;z-index:2;margin-top:-20lvh;padding:calc(var(--nav) + var(--way) + 40px) 0 64px;background:var(--plaster),var(--bg)}
+/* הפרדה ברורה מהסדנה: קורת פלדה כהה עם קו פליז, וצל קל כלפי מעלה. הארון מתחיל רק אחרי שהשער והכותרת עברו (בלי חפיפה) */
+.works{position:relative;z-index:2;border-top:8px solid #121a18;box-shadow:inset 0 1px 0 rgb(214 176 112/.35),0 -10px 24px -8px rgb(0 0 0/.55);padding:calc(var(--nav) + var(--way) + 40px) 0 64px;background:var(--plaster),var(--bg)}
 .works-head{margin-bottom:28px}
 
 /* גוף השידה: מסגרת אגוז כהה (אותה טקסטורה, מוחשכת) עם צל על הרצפה */
