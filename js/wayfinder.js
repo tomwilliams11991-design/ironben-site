@@ -12,7 +12,7 @@ function measureStops() {
   return [
     0,                                              // השער
     gate + GATE.open * vh * 0.75,                    // הסדנה: כשהשער כמעט פתוח
-    gate + (GATE.open + GATE.dwell) * vh,           // ארון העבודות: מתחילים ללכת אליו
+    top("#works") - vh * 0.35,                      // ארון העבודות
     top("#bench") - vh * 0.35,                      // שולחן העבודה
     top("#about") - vh * 0.5,                       // החצר: מבן ועד פרטי הקשר
   ];
