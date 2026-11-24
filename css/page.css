@@ -1,4 +1,4 @@
-/* דפי התוכן (נבנים ב-tools/seo/build_pages.py): דף לכל סוג עבודה ושאלות נפוצות.
+/* דפי התוכן (נבנים ב-tools/seo/build_pages.py): דף לכל סוג עבודה.
    אותו קיר אבן ברקע, והטקסט על לוח בהיר עם פס פליז (כמו הסיפור של בן), כדי שייקרא בבירור. */
 .page{max-width:980px;margin:0 auto;padding:calc(var(--nav) + 28px) var(--gutter) 64px}
 .crumbs{font-size:15px;font-weight:500;margin-bottom:16px;text-shadow:0 0 10px rgb(224 217 205/.9)}
@@ -14,10 +14,6 @@
 .sheet-page .dream{margin:18px 0 0;padding:14px 18px;border-inline-start:4px solid #b8925a;background:rgb(184 146 90/.1);font-weight:700}
 .cta-box{margin-top:36px;padding:22px 24px;border-radius:6px;background:rgb(29 36 34/.05);border:1px solid var(--line)}
 .cta-box p{margin:0 0 12px}.cta-box p:last-child{margin:0;display:flex;gap:12px;flex-wrap:wrap}
-.faq{display:grid;gap:10px;margin-top:20px}
-.faq details{border:1px solid var(--line);border-radius:6px;background:#fff;padding:0 18px}
-.faq summary{cursor:pointer;padding:16px 0;font-size:19px;font-weight:700;list-style-position:inside}
-.faq details p{margin:0 0 16px}
 .gallery{margin-top:44px}
 .gallery h2{font-size:clamp(26px,3vw,34px);margin-bottom:16px;text-shadow:0 0 12px rgb(224 217 205/.9)}
 .gallery .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
