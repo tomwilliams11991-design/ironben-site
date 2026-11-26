@@ -1,6 +1,6 @@
 // שלב 2: מידות וגימור. השדות נבנים מ-input_schema של המוצר (סליידר לכל מידה, צ'יפים לבחירות).
-import { $, $$ } from "../util.js";
-import { state } from "./state.js";
+import { $, $$ } from "../util.js?v=1db38d4";
+import { state } from "./state.js?v=1db38d4";
 
 /** HTML של שדה אחד: בחירה (צ'יפים) או מידה (סליידר עם ערך). */
 function fieldHTML(f) {

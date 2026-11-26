@@ -1,14 +1,14 @@
 // שולחן העבודה: ההצעה הראשונית בארבעה שלבים. כאן רק החיווט בין החלקים:
 // products (שלב 1) → fields + photo + measure (שלב 2) → steps/photos (שלב 3) → submit (שלב 4). ar: התמונה בחדר דרך הטלפון.
-import { $ } from "../util.js";
-import { state, resetState } from "./state.js";
-import { loadProducts, renderPicks } from "./products.js";
-import { renderFields, bindFields } from "./fields.js";
-import { initMeasure, resetMeasure } from "./measure.js";
-import { showProduct, updateDims } from "./photo.js";
-import { goStep, initStepNav, initPhotos } from "./steps.js";
-import { initAR } from "./ar.js";
-import { initSubmit } from "./submit.js";
+import { $ } from "../util.js?v=1db38d4";
+import { state, resetState } from "./state.js?v=1db38d4";
+import { loadProducts, renderPicks } from "./products.js?v=1db38d4";
+import { renderFields, bindFields } from "./fields.js?v=1db38d4";
+import { initMeasure, resetMeasure } from "./measure.js?v=1db38d4";
+import { showProduct, updateDims } from "./photo.js?v=1db38d4";
+import { goStep, initStepNav, initPhotos } from "./steps.js?v=1db38d4";
+import { initAR } from "./ar.js?v=1db38d4";
+import { initSubmit } from "./submit.js?v=1db38d4";
 
 /** כל שינוי בקלטים: קווי המידה על התמונה. */
 function onInputsChanged() { updateDims(); }

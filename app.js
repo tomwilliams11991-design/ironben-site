@@ -6,15 +6,15 @@
 //   wayfinder.js  המפה: איפה אנחנו בסדנה (מוט ברזל עם תחנות)
 //   magnet.js     כפתורים מגנטיים                util.js / supabase.js / data/work.js  שכבת העזר
 // (החזרה לשער בכל כניסה נמצאת בראש index.html, כדי שתרוץ לפני שספארי משחזר גלילה)
-import { initGate } from "./js/gate.js";
-import { initWalk } from "./js/walk.js";
-import { initWayfinder } from "./js/wayfinder.js";
-import { initLightbox } from "./js/lightbox.js";
-import { initWorks } from "./js/works.js";
-import { initContact } from "./js/contact.js";
-import { initMagnets } from "./js/magnet.js";
-import { initEstimate } from "./js/estimate/index.js";
-import { initFabDodge } from "./js/fab-dodge.js";
+import { initGate } from "./js/gate.js?v=1db38d4";
+import { initWalk } from "./js/walk.js?v=1db38d4";
+import { initWayfinder } from "./js/wayfinder.js?v=1db38d4";
+import { initLightbox } from "./js/lightbox.js?v=1db38d4";
+import { initWorks } from "./js/works.js?v=1db38d4";
+import { initContact } from "./js/contact.js?v=1db38d4";
+import { initMagnets } from "./js/magnet.js?v=1db38d4";
+import { initEstimate } from "./js/estimate/index.js?v=1db38d4";
+import { initFabDodge } from "./js/fab-dodge.js?v=1db38d4";
 
 initGate();
 initWalk();

@@ -3,7 +3,7 @@
 // להוספת מוצר: להוסיף בונה כאן, ולהגדיר במוצר input_schema.model עם אותו שם.
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
-import { STEEL } from "./materials.js";
+import { STEEL } from "./materials.js?v=1db38d4";
 
 /** מספר עם יחידה לתווית מידה. */
 const fmt = (n, u) => `${Number.isInteger(n) ? n : n.toFixed(2).replace(/\.?0+$/, "")}${u ? " " + u : ""}`;

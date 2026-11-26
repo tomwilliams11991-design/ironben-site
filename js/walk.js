@@ -2,8 +2,8 @@
 // ומנוע הגלילה (js/scroll-scene.js) מריץ אותן על כרטיס המסך.
 //   #gate:  השער נפתח → שהייה על הכותרת → ארון העבודות (#works) עולה מלמטה.
 //   ההליכה אל הארון ירדה (לבקשת תום, 23.11.2026): ארון שכבר נראה פתוח נראה כמו באג.
-import { $, $$, frozen, track } from "./util.js";
-import { createScene } from "./scroll-scene.js";
+import { $, $$, frozen, track } from "./util.js?v=1db38d4";
+import { createScene } from "./scroll-scene.js?v=1db38d4";
 
 const RATIO = 3856 / 2160; // תמונות השער והסדנה
 

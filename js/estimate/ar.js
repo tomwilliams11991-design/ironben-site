@@ -2,9 +2,9 @@
 // בונים בדפדפן קובץ GLB של לוח שקוף עם התמונה (Three.js + GLTFExporter), ו-<model-viewer> של Google מציג אותו:
 //   אנדרואיד: WebXR (כרום עם ARCore). אייפון: AR Quick Look (model-viewer ממיר ל-USDZ לבד). נטען רק בלחיצה.
 // במחשב הכפתור מוסתר ומופיעה שורה שאפשר לעשות את זה בטלפון. בדיקה במחשב: ?ar=1.
-import { $, track } from "../util.js";
-import { state } from "./state.js";
-import { dimFields } from "./photo.js";
+import { $, track } from "../util.js?v=1db38d4";
+import { state } from "./state.js?v=1db38d4";
+import { dimFields } from "./photo.js?v=1db38d4";
 
 // שמור באתר עצמו (site/vendor), לא נטען מאתר חיצוני
 const MODEL_VIEWER = "/vendor/model-viewer-4.4.0.min.js";

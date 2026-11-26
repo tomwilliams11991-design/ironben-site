@@ -1,16 +1,16 @@
 /* IRON BEN: גיליון הסגנון הראשי. רק מייבא, לפי סדר: טוקנים → בסיס → רכיב לרכיב → נגישות → תנועה.
    כל רכיב בקובץ משלו תחת css/. ראו DESIGN.md. */
-@import url("fonts.css");
-@import url("css/tokens.css");
-@import url("css/base.css");
-@import url("css/header.css");
-@import url("css/wayfinder.css");
-@import url("css/gate.css");
-@import url("css/works.css");
-@import url("css/bench.css");
-@import url("css/about.css");
-@import url("css/exit.css");
-@import url("css/lightbox.css");
-@import url("css/fab.css");
-@import url("css/a11y.css");
-@import url("css/motion.css");
+@import url("fonts.css?v=1db38d4");
+@import url("css/tokens.css?v=1db38d4");
+@import url("css/base.css?v=1db38d4");
+@import url("css/header.css?v=1db38d4");
+@import url("css/wayfinder.css?v=1db38d4");
+@import url("css/gate.css?v=1db38d4");
+@import url("css/works.css?v=1db38d4");
+@import url("css/bench.css?v=1db38d4");
+@import url("css/about.css?v=1db38d4");
+@import url("css/exit.css?v=1db38d4");
+@import url("css/lightbox.css?v=1db38d4");
+@import url("css/fab.css?v=1db38d4");
+@import url("css/a11y.css?v=1db38d4");
+@import url("css/motion.css?v=1db38d4");

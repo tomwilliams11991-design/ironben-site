@@ -1,9 +1,9 @@
 // המפה של הסדנה: מוט ברזל עם תחנות (השער, הסדנה, ארון העבודות, שולחן העבודה, החצר) שמלווה את כל האתר,
 // וגחלת שמראה איפה אנחנו. במחשב: מוט אנכי בצד; בטלפון: פס דק מתחת לכותרת עם שם התחנה.
 // מחשבים רק scrollY מול נקודות התחלה שנמדדות מראש (ובשינוי גודל), בלי מדידות בזמן הגלילה.
-import { $, $$ } from "./util.js";
-import { GATE } from "./walk.js";
-import { stableVH } from "./scroll-scene.js";
+import { $, $$ } from "./util.js?v=1db38d4";
+import { GATE } from "./walk.js?v=1db38d4";
+import { stableVH } from "./scroll-scene.js?v=1db38d4";
 
 /** איפה מתחילה כל תחנה (בפיקסלים של גלילה), לפי סדר. */
 function measureStops() {

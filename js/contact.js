@@ -1,6 +1,6 @@
 // יצירת קשר: קישורי וואטסאפ, כתובת ופרטי קשר מה-config, ושעון "הסדנה פתוחה עכשיו".
-import { $, $$, track } from "./util.js";
-import { C } from "./supabase.js";
+import { $, $$, track } from "./util.js?v=1db38d4";
+import { C } from "./supabase.js?v=1db38d4";
 
 /** קישור וואטסאפ עם הודעה מוכנה, או null אם אין מספר ב-config. */
 export const waLink = (msg) => (C.WHATSAPP ? `https://wa.me/${C.WHATSAPP}?text=${encodeURIComponent(msg || "")}` : null);

@@ -1,6 +1,6 @@
 // ניווט בין ארבעת שלבי הטופס, והעלאת תמונות בשלב 3.
-import { $, $$, track, scrollTo } from "../util.js";
-import { state } from "./state.js";
+import { $, $$, track, scrollTo } from "../util.js?v=1db38d4";
+import { state } from "./state.js?v=1db38d4";
 
 const MAX_FILES = 5, MAX_SIZE = 8 * 1024 * 1024;
 

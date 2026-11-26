@@ -7,6 +7,6 @@ let modulePromise = null;
 /** המודול model3d.js, פעם אחת. מחזיר null אם הטעינה נכשלה (האתר ממשיך בלי הדמיה). */
 export function loadModel() {
   if (!hasWebGL) return Promise.resolve(null);
-  if (!modulePromise) modulePromise = import("../model3d.js").catch((e) => { console.warn("3D לא נטען", e); return null; });
+  if (!modulePromise) modulePromise = import("../model3d.js?v=1db38d4").catch((e) => { console.warn("3D לא נטען", e); return null; });
   return modulePromise;
 }

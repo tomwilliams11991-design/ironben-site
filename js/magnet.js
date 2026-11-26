@@ -1,5 +1,5 @@
 // כפתורים "מגנטיים": זזים עד 6px אחרי הסמן. רק במחשב עם עכבר, ולא כשמפחיתים תנועה.
-import { $$, FINE, still } from "./util.js";
+import { $$, FINE, still } from "./util.js?v=1db38d4";
 
 export function initMagnets() {
   if (!FINE || still()) return;

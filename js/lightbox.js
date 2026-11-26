@@ -1,9 +1,9 @@
 // לייטבוקס: <dialog> מסך מלא. תמונה גדולה, שורת תמונות קטנות מאותה מגירה, חיצים, מקלדת, וכפתור וואטסאפ עם שם העבודה.
 // פתיחה "מהמקום": התמונה גדלה מהמקום שלה במגירה אל המסך המלא וחוזרת בסגירה (View Transitions, בדפדפנים שתומכים).
 // בטלפון: החלקה הצידה מחליפה תמונה, החלקה למטה סוגרת.
-import { $, still, track } from "./util.js";
-import { DOORS } from "./data/work.js";
-import { waLink } from "./contact.js";
+import { $, still, track } from "./util.js?v=1db38d4";
+import { DOORS } from "./data/work.js?v=1db38d4";
+import { waLink } from "./contact.js?v=1db38d4";
 
 const VT = "lb-photo"; // שם המעבר המשותף בין התמונה הקטנה לגדולה
 

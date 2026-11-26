@@ -5,9 +5,9 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
-import { contactShadow } from "./3d/textures.js";
-import BUILDERS from "./3d/builders.js";
-import { materials, ACCENT, THEME } from "./3d/materials.js";
+import { contactShadow } from "./3d/textures.js?v=1db38d4";
+import BUILDERS from "./3d/builders.js?v=1db38d4";
+import { materials, ACCENT, THEME } from "./3d/materials.js?v=1db38d4";
 
 export const PRODUCT_MODELS = Object.keys(BUILDERS);
 
